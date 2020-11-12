@@ -1,0 +1,72 @@
+{% load static %}
+{% load socialaccount %}
+{% providers_media_js %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Travelix</title>
+    <!--Font awesome CDN-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'user/login/css/main.css' %}">
+</head>
+<body>
+    
+    <div class="hero">
+        <div class="form-box">
+          <div class="div button-box" style="display: flex;">
+            <div id="btn"></div>
+            <button type="button" class="toggle-btn" onclick="login()">Log In</button>
+            <button type="button" class="toggle-btn" onclick="register()">Register</button>
+          </div>
+      
+          <div class="social-icons">
+            <div class="social-media">
+                <a href="{% provider_login_url 'google' %}" class="sm-link"><i class="fab fa-google-plus-g"></i></a>
+                <a href="{% provider_login_url 'facebook' method='oauth2' %}" class="sm-link"><i class="fab fa-facebook-square"></i></a>
+               
+               
+               
+            </div>
+          </div>
+         
+          <form id="login" class="input-group" action="{%url 'user_login' %}" method="POST" >
+              {% csrf_token %}
+            <input type="text" class="input-field" name="username" placeholder="Username" required>
+            <input type="text" class="input-field" name="password" placeholder="Password" required>
+            <!-- <input type="checkbox" class="check-box"><span>Remember Password</span> -->
+           <h5 style="display: block; text-align: center;"> OR</h5>
+           <a href="/mobail" style="margin: auto;" class="sm-link"><i class="fa fa-mobile-alt" aria-hidden="true"></i></a>
+            <!-- <a href="" style="float: right;;">Login with Mobail</a> -->
+            <button class="submit-btn" type="submit" style=" margin-top: 25px;">Log In</button>
+            <p style="color: red;">{{error}}</p>
+          </form>
+      
+          <form id="register" class="input-group" method="POST" action="{% url 'register_user' %}">
+            {% csrf_token %}
+            <input type="text" class="input-field" name="username" value="{{username}}" placeholder="Username" required>
+            <input type="email" class="input-field" name="email" placeholder="Email" value="{{email}}" required>
+            
+            <input type="text" class="input-field" name="password" placeholder="Password" required>
+            <div class="mobailfield" style="display: flex;">
+                <input type="text" class="input-field" id="mobile_reg" name="mobile" placeholder="Mobail" pattern="[6-9]{1}[0-9]{9}" required>
+                <a href="" ><button class="submit-btn" id="verify">verify</button></a>
+                </div>
+                <input type="hidden" id="otp" name="otp" class="input-field" placeholder="OTP" required>
+                <span class="check-box"></span>
+            <button class="submit-btn" type="submit" style=" margin-top: 25px;">Register</button>
+            {%for message in messages %}
+                <p style="color: red;">{{message}}</p>
+            {%endfor%}
+            
+          </form>
+        </div>
+      </div>
+      
+<script src="{% static 'user/login/js/main.js' %}"></script>
+<script src="{% static 'user/login/js/otp.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+{% extends 'hotel/hotel-base.html' %}
+{% load static %}
+{% block content %}
+<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"> -->
+
+
+
+   <link rel="stylesheet" href="{% static 'hotel/rooms-table/css/main.css' %}">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+						<h2>Manage <b>Rooms</b></h2>
+					</div>
+					<div class="col-sm-6">
+						<a href="{% url 'add_room' hotel.id %}" class="btn btn-success" ><i class="material-icons">&#xE147;</i> <span>Add New Rooms</span></a>
+						
+					</div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+						<th>
+							
+							
+						</th>
+                        <th>Name</th>
+                        <th>Price</th>
+						<th>Booked</th>
+                        <th>Available Rooms</th>
+                        <th>Total Rooms</th>
+                        <th>Room Feature</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+						<td>
+							
+						</td>
+                        <td>Thomas Hardy</td>
+                        <td>thomashardy@mail.com</td>
+						<td>89 Chiaroscuro Rd, Portland, USA</td>
+                        <td>(171) 555-2222</td>
+                        <td>
+                            dd
+                        </td>
+                        <td></td>
+                        <td>
+                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        </td>
+                    </tr>
+                    
+					
+                    		
+					
+                </tbody>
+            </table>
+			
+        </div>
+    </div>
+	
+	
+	
+	{%endblock%}

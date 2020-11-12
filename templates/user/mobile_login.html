@@ -1,0 +1,57 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Travelix</title>
+  <!--Font awesome CDN-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'user/login/css/main.css' %}">
+</head>
+
+<body>
+
+  <div class="hero">
+    <div class="form-box">
+      <h4 class="heading">login</h4>
+
+      <div class="social-icons">
+        <div class="social-media">
+          <a href="#" class="sm-link"><i class="fab fa-google-plus-g"></i></a>
+          <a href="#" class="sm-link"><i class="fab fa-facebook-square"></i></a>
+
+
+
+        </div>
+      </div>
+
+      <form id="login" class="input-group" action="{% url 'mobile_login' %}" method="POST">
+        {% csrf_token %}
+
+        <input type="text" class="input-field" name="mobile" id="mobile_reg" placeholder="Mobile" required>
+        <a href=""><button class="submit-btn" id="verify" >verify</button></a>
+
+        <input type="hidden"  class="input-field" id="otp" name="otp" placeholder="OTP" required>
+
+        <h5 style="display: block; text-align: center;"></h5>
+        
+        <button class="submit-btn" type="submit" style=" margin-top: 25px;">Log In</button>
+        <p style="color: red;">{{error}}</p>
+        {%for message in messages %}
+        <p style="color: red;">{{message}}</p>
+    {%endfor%}
+    <a href="/login" style="margin: auto;" class="sm-link"><i class="fas fa-arrow-left"></i></a>
+
+      </form>
+    </div>
+  </div>
+
+  <script src="{% static 'user/login/js/main.js' %}"></script>
+  <script src="{% static 'user/login/js/otp.js' %}"></script>
+</body>
+
+</html>

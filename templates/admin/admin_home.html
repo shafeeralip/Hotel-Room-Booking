@@ -1,0 +1,167 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block heading %}
+<span class='location'>HOME</span>
+{%endblock%}
+{% block content %}
+
+<div class="container" style="display: flex;">
+    <div class="card card-1">
+      <div class="card__icon"><i class="fas fa-bolt"></i></div>
+      <p class="card__exit"><i class="fas fa-times"></i></p>
+      <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+      <p class="card__apply"><a href="#">Apply Now <i class="fas fa-arrow-right"></i></a></p>
+      
+    </div>
+    <div class="card card-1">
+        <div class="card__icon"><i class="fas fa-bolt"></i></div>
+        <p class="card__exit"><i class="fas fa-times"></i></p>
+        <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+        <p class="card__apply"><a href="#">Apply Now <i class="fas fa-arrow-right"></i></a></p>
+        
+      </div>
+      <div class="card card-1">
+        <div class="card__icon"><i class="fas fa-bolt"></i></div>
+        <p class="card__exit"><i class="fas fa-times"></i></p>
+        <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+        <p class="card__apply"><a href="#">Apply Now <i class="fas fa-arrow-right"></i></a></p>
+        
+      </div>
+      <div class="card card-1">
+        <div class="card__icon"><i class="fas fa-bolt"></i></div>
+        <p class="card__exit"><i class="fas fa-times"></i></p>
+        <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+        <p class="card__apply"><a href="#">Apply Now <i class="fas fa-arrow-right"></i></a></p>
+        
+      </div>
+      <div class="card card-1">
+        <div class="card__icon"><i class="fas fa-bolt"></i></div>
+        <p class="card__exit"><i class="fas fa-times"></i></p>
+        <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+        <p class="card__apply"><a href="#">Apply Now <i class="fas fa-arrow-right"></i></a></p>
+        
+      </div>
+</div>
+
+  <style>
+      a,
+.card__exit,
+.card__icon {
+  position: relative;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+a::after {
+  position: absolute;
+  top: 25px;
+  left: 0;
+  content: "";
+  width: 0%;
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.6);
+  transition: all 0.5s;
+}
+
+a:hover::after {
+  width: 100%;
+}
+
+.main-container {
+  padding: 30px;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card {
+  margin: 20px;
+  padding: 20px;
+  width: 500px;
+  min-height: 200px;
+  display: grid;
+  grid-template-rows: 20px 50px 1fr 50px;
+  border-radius: 10px;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+  transition: all 0.5s;
+}
+
+.card:hover {
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
+  transform: scale(1.01);
+}
+
+.card__exit {
+  grid-row: 1/2;
+  justify-self: end;
+}
+
+.card__icon {
+  grid-row: 2/3;
+  font-size: 30px;
+}
+
+.card__title {
+  grid-row: 3/4;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.card__apply {
+  grid-row: 4/5;
+  align-self: center;
+}
+
+.card-1 {
+  background: radial-gradient(#1fe4f5, #3fbafe);
+}
+
+.card-2 {
+  background: radial-gradient(#fbc1cc, #fa99b2);
+}
+
+.card-3 {
+  background: radial-gradient(#76b2fe, #b69efe);
+}
+
+.card-4 {
+  background: radial-gradient(#60efbc, #58d5c9);
+}
+
+.card-5 {
+  background: radial-gradient(#f588d8, #c0a3e5);
+}
+
+@media (max-width: 1600px) {
+  .card-container {
+    justify-content: center;
+  }
+}
+  </style>
+<!-- <div class="card card-1"></div>
+<style>
+    .card {
+  background: #fff;
+  border-radius: 2px;
+  display: inline-block;
+  height: 150px;
+  margin: 1rem;
+  position: relative;
+  width: 400px;
+}
+
+.card-1 {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
+}
+
+.card-1:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+</style> -->
+{%endblock%}

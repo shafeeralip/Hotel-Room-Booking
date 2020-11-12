@@ -1,0 +1,95 @@
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<form class="form-horizontal" action="{% url 'add_room' hotel.id %}" method="POST">
+  {% csrf_token %}
+  <fieldset>
+
+    <!-- Form Name -->
+    <legend style="text-align: center;">NEW ROOM</legend>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="product_id">Room Name</label>
+      <div class="col-md-4">
+        <input id="product_id" name="room_name" placeholder="Room Name" class="form-control input-md"
+          required="Please enter room name" type="text">
+
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="product_id">Room Type</label>
+      <div class="col-md-4">
+        <select id="product_id" name="room_name" placeholder="Room Name" class="form-control input-md"
+          required="Please enter room name">
+          <option></option>
+          <option>Single Room</option>
+          <option>Double Room</option>
+          <option>Suit Room</option>
+        </select>
+
+        <!-- <input id="product_id" name="room_name" placeholder="Room Name" class="form-control input-md" required="Please enter room name" type="text">
+     -->
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="product_name">Room Price</label>
+      <div class="col-md-4">
+        <input id="product_name" name="room_price" placeholder="Room Price" class="form-control input-md" required=""
+          type="number">
+
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="product_name_fr">Available Rooms</label>
+      <div class="col-md-4">
+        <input id="product_name_fr" name="available_room" placeholder="Available Rooms" class="form-control input-md"
+          required="" type="number">
+
+      </div>
+    </div>
+
+
+
+
+
+    <!-- Textarea -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="product_name_fr">Room Features</label>
+      <div class="col-md-4">
+        <textarea class="form-control" id="product_name_fr" name="room_feature"></textarea>
+      </div>
+    </div>
+
+    <!-- File Button -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="filebutton">main_image</label>
+      <div class="col-md-4">
+        <input id="filebutton" name="image1" class="input-file" type="file">
+      </div>
+    </div>
+    <!-- File Button -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="filebutton">auxiliary_images</label>
+      <div class="col-md-4">
+        <input id="filebutton" name="image2" class="input-file" type="file">
+        <input id="filebutton" name="image3" class="input-file" type="file">
+      </div>
+    </div>
+
+    <!-- Button -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="singlebutton"></label>
+      <div class="col-md-4">
+        <button id="singlebutton" name="singlebutton" class="btn btn-primary">submit</button>
+      </div>
+    </div>
+
+  </fieldset>
+</form>

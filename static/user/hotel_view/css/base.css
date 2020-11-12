@@ -1,0 +1,11 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700"); 		/* Fonts */
+
+@import url("animate.min.css"); 									/* Animate */
+@import url("bootstrap.min.css"); 									/* Main Bootstrap */
+@import url("menu.css");													/* Menu styles */
+@import url("style.css");													/* Main theme styles */
+@import url("responsive.css");											/* Responsive */
+@import url("fontello/css/icon_set_1.css");					/* Icon pack */
+@import url("fontello/css/icon_set_2.css");					/* Icon pack */
+@import url("fontello/css/fontello.css");						/* Icon pack */
+@import url("magnific-popup.css");								/* Lightbox & dialog script */

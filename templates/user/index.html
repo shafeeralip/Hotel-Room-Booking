@@ -1,0 +1,210 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block content%}
+
+
+
+<div class="hero">
+    <div class="container">
+        <div class="main-heading">
+            <h1 class="title">Discover</h1>
+            <h2 class="subtitle">Luxury hotels</h2>
+        </div>
+        <a href="#" class="btn btn-gradient">Explore Now 
+        <span class="dots"><i class="fas fa-ellipsis-h"></i></span></a>
+    </div>
+</div>
+<section class="booking">
+  <div class="container">
+      <form action="" class="form book-form">
+          <div class="input-group">
+              <label for="destination" class="input-label">Destination</label>
+              <input type="text" class="input" id="destination">
+
+          </div>
+          <div class="input-group">
+              <label for="check-in" class="input-label">check-in</label>
+              <input type="date" class="input" id="check-in">
+
+          </div>
+          <div class="input-group">
+              <label for="check-out" class="input-label">check-out</label>
+              <input type="date" class="input" id="check-out">
+
+          </div>
+          <div class="input-group">
+              <label for="adults" class="input-label">adults</label>
+              <select class="options" id="adults">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+              </select>
+
+          </div>
+          <div class="input-group">
+              <label for="children" class="input-label">children</label>
+              <select class="options" id="children">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+              </select>
+
+          </div>
+          <button class="btn form-btn btn-purple">search
+              <span class="dots"><i class="fas fa-ellipsis-h"></i></span>
+          </button>
+      </form>
+  </div>
+</section>
+<section class="hotels">
+  <div class="container">
+      <h5 class="section-head">
+          <span class="heading">explore</span>
+          <span class="sub-heading">our beautiful hotels</span>
+
+      </h5>
+      <div class="grid">
+          <div class="grid-item featured-hotels">
+             <img src="/static/images/hotel_astro_resort.jpg" alt="" class="hotel-image"></a>
+              <h5 class="hotel-name">Astro hotel</h5>
+              <span class="hotel-price">From $200/Night</span>
+              <div class="hotel-rating">
+                  <i class="fas fa-star rating"></i>
+                  <i class="fas fa-star rating"></i>
+                  <i class="fas fa-star rating"></i>
+                  <i class="fas fa-star rating"></i>
+                  <i class="fas fa-star-half rating"></i>
+              </div>
+              <a href="{%url 'hotel_view' %}" class="btn btn-gradient">Book now
+              <span class="dots"><i class="fas fa-ellipsis-h"></i></span>
+              </a>
+          </div>
+          <div class="grid-item featured-hotels">
+              <img src="/static/images/hotel_astro_resort.jpg" alt="" class="hotel-image">
+              <h5 class="hotel-name">Astro hotel</h5>
+              <span class="hotel-price">From $200/Night</span>
+              <div class="hotel-rating">
+                  <i class="fas fa-star rating"></i>
+                  <i class="fas fa-star rating"></i>
+                  <i class="fas fa-star rating"></i>
+                  <i class="fas fa-star rating"></i>
+                  <i class="fas fa-star-half rating"></i>
+              </div>
+              <a href="#" class="btn btn-gradient">Book now
+              <span class="dots"><i class="fas fa-ellipsis-h"></i></span>
+              </a>
+          </div>
+          <div class="grid-item featured-hotels">
+              <img src="/static/images/hotel_astro_resort.jpg" alt="" class="hotel-image">
+              <h5 class="hotel-name">Astro hotel</h5>
+              <span class="hotel-price">From $200/Night</span>
+              <div class="hotel-rating">
+                  <i class="fas fa-star rating"></i>
+                  <i class="fas fa-star rating"></i>
+                  <i class="fas fa-star rating"></i>
+                  <i class="fas fa-star rating"></i>
+                  <i class="fas fa-star-half rating"></i>
+              </div>
+              <a href="#" class="btn btn-gradient">Book now
+              <span class="dots"><i class="fas fa-ellipsis-h"></i></span>
+              </a>
+          </div>
+         
+         
+      </div>
+  </div>
+</section>
+<section class="offer">
+<div class="container">
+    <div class="offer-content">
+        <div class="discount">
+            40% off
+        </div>
+        <h5 class="hotel-name">Astro hotel</h5>
+        <span class="hotel-price">From $200/Night</span>
+        <div class="hotel-rating">
+            <i class="fas fa-star rating"></i>
+            <i class="fas fa-star rating"></i>
+            <i class="fas fa-star rating"></i>
+            <i class="fas fa-star rating"></i>
+            <i class="fas fa-star-half rating"></i>
+        </div>
+        <p class="paragraph">
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy 
+        </p>
+        <a href="#" class="btn btn-gradient">Redeem offer
+        <span class="dots"><i class="fas fa-ellipsis-h"></i></span>
+        </a>
+    </div>
+</div>
+</section>
+<section class="rooms">
+  <div class="container">
+      <h5 class="section-head">
+          <span class="heading">Luxuries</span>
+          <span class="sub-heading">Affordable rooms </span>
+
+      </h5>
+      <div class="grid">
+          <div class="gird rooms-grid featured-rooms">
+              <div class="image-wrap">
+                  <img src="/static/images/room_1.jpg" alt="" class="room-image">
+                  <h5 class="room-name">Astro hotel</h5>
+              </div>
+              <div class="room-info-wrap">
+                  <span class="room-price">$200 <span class="per-night">per Night</span></span>
+                  <p class="paragraph">
+                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                      the industry's standard dummy
+
+                  </p>
+                  <a href="#" class="btn rooms-btn">Book now &rarr;</a>
+
+              </div>
+
+          </div>
+          <div class="gird rooms-grid featured-rooms">
+              <div class="image-wrap">
+                  <img src="/static/images/room_2.jpg" alt="" class="room-image">
+                  <h5 class="room-name">Astro hotel</h5>
+              </div>
+              <div class="room-info-wrap">
+                  <span class="room-price">$200 <span class="per-night">per Night</span></span>
+                  <p class="paragraph">
+                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                      the industry's standard dummy
+
+                  </p>
+                  <a href="#" class="btn rooms-btn">Book now &rarr;</a>
+
+              </div>
+
+          </div>
+           <div class="gird rooms-grid featured-rooms">
+              <div class="image-wrap">
+                  <img src="/static/images/room_2.jpg" alt="" class="room-image">
+                  <h5 class="room-name">Astro hotel</h5>
+              </div>
+              <div class="room-info-wrap">
+                  <span class="room-price">$200 <span class="per-night">per Night</span></span>
+                  <p class="paragraph">
+                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                      the industry's standard dummy
+
+                  </p>
+                  <a href="#" class="btn rooms-btn">Book now &rarr;</a>
+
+              </div>
+
+          </div>
+      </div>
+
+  </div>
+</section>
+{%endblock%}
