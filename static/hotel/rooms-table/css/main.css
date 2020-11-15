@@ -47,7 +47,7 @@
 		vertical-align: middle;
     }
 	table.table tr th:first-child {
-		width: 60px;
+		width: 150px;
 	}
 	table.table tr th:last-child {
 		width: 100px;

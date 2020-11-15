@@ -41,8 +41,16 @@
                 {%  if request.user.is_authenticated %}
 
                 <li class="nav-item">
-                    <a href="/logout" class="nav-link">Logout</a>  
+                    <div class="dropdown">
+                        <button class="dropbtn"><i class="fa fa-user fa-2x" aria-hidden="true"></i></button>
+                        <div class="dropdown-content">
+                          <a href="#">Profile</a>
+                          <a href="{% url 'user_logout' %}">LOGOUT</a>
+                        </div>
+                      </div> 
+                    
                 </li>
+             
                 {%else%}
                 <li class="nav-item">
                     <a href="/login" class="nav-link">Login</a>  

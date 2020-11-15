@@ -1,0 +1,194 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPDATE ROOM</title>
+</head>
+<body>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/fontello.css' %}">
+<link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/icon_set_1.css' %}">
+<link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/icon_set_2.css' %}">
+<!------ Include the above in your HEAD tag ---------->
+
+<form class="form-horizontal" action="{%url 'room_edit' room.id %}" method="POST" enctype="multipart/form-data">
+  {% for message in messages %}
+  <p style="color:red;text-align: center;">{{message}}</p>
+  {%endfor%}
+  {% csrf_token %}
+  <fieldset>
+
+    <!-- Form Name -->
+    <legend style="text-align: center;">UPDATE ROOM</legend>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="product_id">Room Type</label>
+      <div class="col-md-4">
+        <input id="product_id" name="room_type" placeholder="Room Name" class="form-control input-md"
+           type="text" value="{{room.room_type}}">
+
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="product_id">Room Type</label>
+      <div class="col-md-4">
+        <select id="product_id" name="sleeps" placeholder="Room Name" class="form-control input-md"
+          required="Please enter room name">
+          <option>{{room.sleeps}}</option>
+          <option>Single</option>
+          <option>Double</option>
+          
+        </select>
+
+        <!-- <input id="product_id" name="room_name" placeholder="Room Name" class="form-control input-md" required="Please enter room name" type="text">
+     -->
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="product_name">Room Price</label>
+      <div class="col-md-4">
+        <input id="product_name" name="room_price" placeholder="Room Price" class="form-control input-md" required=""
+          type="number" value="{{room.room_price}}">
+
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="product_name_fr">Available Rooms</label>
+      <div class="col-md-4">
+        <input id="product_name_fr" name="available_room"  class="form-control input-md"
+          required="" type="number" value="{{room.room_available}}">
+
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="product_name_fr">FEATURES </label>
+      <div class="col-md-4">
+       
+        <input id="product_name_fr" name="features"  value="Free_wifi" class=" input-md" type="checkbox" {%if room_feature.Free_wifi %} checked {%endif%} ><label for=""><i class="icon_set_1_icon-86"></i>Free Wifi</label>
+          <input id="product_name_fr" name="features" value="king_size_bed" class=" input-md" type="checkbox" {%if room_feature.king_size_bed %} checked {%endif%}><label for=""><i class="icon_set_2_icon-104"></i>King size bed</label>
+          <input id="product_name_fr" name="features" value="TV" class=" input-md" type="checkbox" {%if room_feature.TV %} checked {%endif%}><label for=""><i class="icon_set_2_icon-116"></i>TV</label>
+          <input id="product_name_fr" name="features" value="Safe_box" class=" input-md" type="checkbox" {%if room_feature.Safe_box %} checked {%endif%}><label for=""><i class="icon_set_2_icon-106"></i>Safe box</label>
+          <input id="product_name_fr" name="features" value="Bath_Tube" class=" input-md" type="checkbox" {%if room_feature.Bath_Tube %} checked {%endif%}><label for=""><i class="icon_set_2_icon-111"></i>Bath Tube</label><br>
+          <input id="product_name_fr" name="features" value="Welcome_bottle" class=" input-md" type="checkbox" {%if room_feature.Welcome_bottle %} checked {%endif%}><label for=""><i class="icon_set_1_icon-15"></i>Welcome bottle</label>
+
+
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="product_name_fr">Food included </label>
+      <div class="col-md-4">
+        <input id="product_name_fr" name="food" value="Breakfast" class=" input-md" type="checkbox" {%if room_feature.Breakfast %} checked {%endif%}><label style="padding-left: 5px;" for="">BREAKFAST</label>
+          <input id="product_name_fr" name="food" value="Lunch" class=" input-md" type="checkbox" {%if room_feature.Lunch %} checked {%endif%}><label style="padding-left: 5px;" for="">LUNCH</label>
+          <input id="product_name_fr" name="food" value="Dinner" class=" input-md" type="checkbox" {%if room_feature.Dinner %} checked {%endif%}><label style="padding-left: 5px;" for="">DINNER</label>
+          
+
+
+      </div>
+    </div>
+
+
+    <!-- Textarea -->
+    <!-- <div class="form-group">
+      <label class="col-md-4 control-label" for="product_name_fr">Room Features</label>
+      <div class="col-md-4">
+        <textarea class="form-control" id="textarea" name="room_description"></textarea>
+      </div>
+    </div> -->
+
+    <!-- current file -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="filebutton">current_images</label>
+      <div class="col-md-4">
+        {% for room_image in room_images %}
+        <img src="/static/image/{{room_image.image}}" alt="" style="width: 100px;height: 100px;">
+        {%endfor%}
+      </div>
+    </div>
+    <!-- File upload -->
+    <div class="form-group "  >
+      <label class="col-md-4 control-label" for="filebutton"></label>
+      <div class="col-md-4" id="images">
+       
+        
+        
+      </div>
+    </div>
+    <div class="form-group " >
+      <label class="col-md-4 control-label" for="filebutton"></label>
+      <div class="col-md-4">
+        
+        <input type="button" value="add_image" id="add_image" name="add_image">
+        
+      </div>
+    </div>
+    
+
+    <!-- Button -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="singlebutton"></label>
+      <div class="col-md-4">
+        <button id="singlebutton" name="singlebutton" class="btn btn-primary">submit</button>
+      </div>
+    </div>
+
+  </fieldset>
+</form>
+<script>
+  
+
+  document.getElementById('add_image').onclick=function(){
+      var image=document.getElementById('images');
+
+      var preview=document.createElement('img')
+      preview.style.width="100px";
+      preview.style.height='100px';
+
+      
+      var newinput = document.createElement("input")
+      newinput.type="file";
+      newinput.name="file[]";
+
+      var br =document.createElement("br");
+
+
+      newinput.onchange=function(){
+        if(this.files[0]){
+          var fileReader = new FileReader();
+
+          fileReader.onload=function(ev2){
+            preview.src=ev2.target.result;
+
+          };
+
+          fileReader.readAsDataURL(this.files[0])
+
+        }
+      }      
+
+      image.appendChild(preview)
+      image.appendChild(br)
+      image.appendChild(newinput);
+      
+
+
+
+
+  }
+</script>
+<!-- <script>
+    document.getElementById("textarea").value = "{{room.room_description}}";
+
+</script> -->
+</body>
+</html>

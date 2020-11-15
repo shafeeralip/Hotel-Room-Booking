@@ -18,12 +18,19 @@
             <div class="card-heading">
                 <h2 class="title">CREATE NEW HOTEL</h2>
             </div>
+           
             <div class="card-body">
+                {%for message in messages %}
+                <p style="color: red;text-align: center;">{{message}}</p>
+                {%endfor%}
                 <form method="POST" action="{% url 'create_hotel' %}">
                     {%csrf_token%}
                    
                     <div class="form-row">
-                        <div class="name">Hotel name </div>
+                        <div class="name">Hotel name 
+                            
+                        </div>
+                        
                         <div class="value">
                             <div class="input-group">
                                 <input class="input--style-5" type="text" name="hotelname" value="{{hotelname}}">
@@ -46,7 +53,7 @@
                                 
                                 <div class="col-9">
                                     <div class="input-group-desc">
-                                        <input class="input--style-5" type="text" name="contactnumber" value="{{contactnumber}}">
+                                        <input class="input--style-5" type="tel" name="contactnumber" value="{{contactnumber}}" pattern="[5-9]{1}[0-9]{9}">
                                         
                                     </div>
                                 </div>
@@ -61,7 +68,7 @@
                                     <select name="location" >
                                        
                                         <option>{{location}}</option>
-                                        <option>KERALA</option>
+                                        <option>KOCHI</option>
                                         <option>BENGALURE</option>
                                         <option>GOA</option>
                                         <option>MUMBAI</option>
@@ -88,9 +95,7 @@
                     </div>
                     <div>
                         <button class="btn btn--radius-2 btn--red" type="submit">Create</button>
-                        {%for message in messages %}
-                        <p style="color: red;text-align: center;">{{message}}</p>
-                        {%endfor%}
+                       
                     </div>
                 </form>
             </div>

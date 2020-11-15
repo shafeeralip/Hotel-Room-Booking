@@ -10,6 +10,8 @@ urlpatterns=[
     path('add_room/<int:id>/',views.add_room,name='add_room'),
     path('hotel_profile/<int:id>/',views.hotel_profile,name='hotel_profile'),
     path('hotel_update/<int:id>/',views.hotel_update,name='hotel_update'),
+    path('room_edit/<int:id>/',views.room_edit,name='room_edit'),
+    path('room_delete/<int:id>/',views.room_delete,name='room_delete'),
 
 
 ]

@@ -3,7 +3,105 @@
 {% block content %}
 <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"> -->
 
+<style>
+    * {box-sizing: border-box}
+body {font-family: Verdana, sans-serif; margin:0}
+.mySlides {display: none}
+img {vertical-align: middle;}
 
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
+}
+</style>
 
    <link rel="stylesheet" href="{% static 'hotel/rooms-table/css/main.css' %}">
         <div class="table-wrapper">
@@ -21,46 +119,140 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-						<th>
-							
-							
-						</th>
-                        <th>Name</th>
+                        <th>
+            
+            
+                        </th>
+                        <th>Room Type</th>
                         <th>Price</th>
-						<th>Booked</th>
-                        <th>Available Rooms</th>
+                        <th>sleeps</th>
+                        <th>Features</th>
                         <th>Total Rooms</th>
-                        <th>Room Feature</th>
+                        <!-- <th>Room Feature</th> -->
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% for room in rooms %}
                     <tr>
-						<td>
-							
-						</td>
-                        <td>Thomas Hardy</td>
-                        <td>thomashardy@mail.com</td>
-						<td>89 Chiaroscuro Rd, Portland, USA</td>
-                        <td>(171) 555-2222</td>
+            
                         <td>
-                            dd
+                           
+                            
+                            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                <ol class="carousel-indicators">
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                                </ol>
+                                <div class="carousel-inner">
+                                    {% for images in room.room_image_set.all %}
+                                    {% if forloop.first %}
+                                    <div class="carousel-item active">
+                                        <img class="d-block w-100"
+                                            src="{{images.image.url}}"
+                                            alt="First slide">
+                                    </div>
+                                    {%else%}
+                                    <div class="carousel-item ">
+                                        <img class="d-block w-100"
+                                            src="{{images.image.url}}"
+                                            alt="Second slide">
+                                    </div>
+                                    {%endif%}
+                                    {%endfor%}
+                                    
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                    <!-- <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                    <!-- <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+            
+            
+            
+                            <!-- <img style="width: 100%;" src="/static/image/{{room.room_image1}}" alt=""> -->
                         </td>
-                        <td></td>
+            
+                        <td>{{room.room_type}}</td>
+                        <td>{{room.room_price}}</td>
+                        <td>{{room.sleeps}}</td>
+
                         <td>
-                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                          <ul>
+                            {%for feature in features %}
+                            <li></li>
+                          </ul>
+                        </td>
+                        <td>{{room.room_available}}</td>
+                        <!-- <td></td> -->
+            
+                        <td>
+                            <a href="{%url 'room_edit' room.id %}" class="edit"><i class="material-icons" data-toggle="tooltip"
+                                    title="Edit">&#xE254;</i></a>
+                            <a href="{%url 'room_delete' room.id %}" class="delete" onclick="window.mytest('{{room}}')"
+                                id="delcheck{{room}}" data-id="{{room.room_name}}"><i class="material-icons" data-toggle="tooltip"
+                                    title="Delete">&#xE872;</i></a>
                         </td>
                     </tr>
-                    
-					
-                    		
-					
+                    {%endfor%}
+            
+            
+            
                 </tbody>
             </table>
 			
         </div>
     </div>
+    <script>
+        var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}
+    </script>
 	
-	
+	<script>
+       
+        window.mytest=function(room){
+
+          
+            var v= document.getElementById("delcheck"+room)
+            var roomname = v.dataset.id
+           
+            var isValid =confirm("are you sure do you want delete  "+roomname+" room");
+            if(!isValid){
+                event.preventDefault();
+                alert("it wont be delete");
+    
+            }
+            
+        }
+    </script>
 	
 	{%endblock%}

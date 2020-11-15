@@ -45,6 +45,11 @@ class JSONField(CheckFieldDefaultMixin, Field):
             if not router.allow_migrate_model(db, self.model):
                 continue
             connection = connections[db]
+            if (
+                self.model._meta.required_db_vendor and
+                self.model._meta.required_db_vendor != connection.vendor
+            ):
+                continue
             if not (
                 'supports_json_field' in self.model._meta.required_db_features or
                 connection.features.supports_json_field
@@ -369,27 +374,26 @@ class KeyTransformIsNull(lookups.IsNull):
 
 
 class KeyTransformIn(lookups.In):
-    def process_rhs(self, compiler, connection):
-        rhs, rhs_params = super().process_rhs(compiler, connection)
-        if not connection.features.has_native_json_field:
-            func = ()
+    def resolve_expression_parameter(self, compiler, connection, sql, param):
+        sql, params = super().resolve_expression_parameter(
+            compiler, connection, sql, param,
+        )
+        if (
+            not hasattr(param, 'as_sql') and
+            not connection.features.has_native_json_field
+        ):
             if connection.vendor == 'oracle':
-                func = []
-                for value in rhs_params:
-                    value = json.loads(value)
-                    function = 'JSON_QUERY' if isinstance(value, (list, dict)) else 'JSON_VALUE'
-                    func.append("%s('%s', '$.value')" % (
-                        function,
-                        json.dumps({'value': value}),
-                    ))
-                func = tuple(func)
-                rhs_params = ()
-            elif connection.vendor == 'mysql' and connection.mysql_is_mariadb:
-                func = ("JSON_UNQUOTE(JSON_EXTRACT(%s, '$'))",) * len(rhs_params)
+                value = json.loads(param)
+                if isinstance(value, (list, dict)):
+                    sql = "JSON_QUERY(%s, '$.value')"
+                else:
+                    sql = "JSON_VALUE(%s, '$.value')"
+                params = (json.dumps({'value': value}),)
             elif connection.vendor in {'sqlite', 'mysql'}:
-                func = ("JSON_EXTRACT(%s, '$')",) * len(rhs_params)
-            rhs = rhs % func
-        return rhs, rhs_params
+                sql = "JSON_EXTRACT(%s, '$')"
+        if connection.vendor == 'mysql' and connection.mysql_is_mariadb:
+            sql = 'JSON_UNQUOTE(%s)' % sql
+        return sql, params
 
 
 class KeyTransformExact(JSONExact):

@@ -1,9 +1,17 @@
+{%load static %}
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/fontello.css' %}">
+<link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/icon_set_1.css' %}">
+<link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/icon_set_2.css' %}">
+
 <!------ Include the above in your HEAD tag ---------->
 
-<form class="form-horizontal" action="{% url 'add_room' hotel.id %}" method="POST">
+<form class="form-horizontal" action="{% url 'add_room' hotel.id %}" method="POST" enctype="multipart/form-data">
+  {% for message in messages %}
+  <p style="color:red;text-align: center;">{{message}}</p>
+  {%endfor%}
   {% csrf_token %}
   <fieldset>
 
@@ -12,26 +20,24 @@
 
     <!-- Text input-->
     <div class="form-group">
-      <label class="col-md-4 control-label" for="product_id">Room Name</label>
+      <label class="col-md-4 control-label" for="product_id">Room Type</label>
       <div class="col-md-4">
-        <input id="product_id" name="room_name" placeholder="Room Name" class="form-control input-md"
+        <input id="product_id" name="room_type" placeholder="Room Name" class="form-control input-md"
           required="Please enter room name" type="text">
 
       </div>
     </div>
     <div class="form-group">
-      <label class="col-md-4 control-label" for="product_id">Room Type</label>
+      <label class="col-md-4 control-label" for="product_id">Sleeps</label>
       <div class="col-md-4">
-        <select id="product_id" name="room_name" placeholder="Room Name" class="form-control input-md"
+        <select id="product_id" name="sleeps" placeholder="Room Name" class="form-control input-md"
           required="Please enter room name">
           <option></option>
-          <option>Single Room</option>
-          <option>Double Room</option>
-          <option>Suit Room</option>
+          <option>Single</option>
+          <option>Double </option>
+         
         </select>
 
-        <!-- <input id="product_id" name="room_name" placeholder="Room Name" class="form-control input-md" required="Please enter room name" type="text">
-     -->
       </div>
     </div>
 
@@ -55,33 +61,60 @@
       </div>
     </div>
 
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="product_name_fr">FEATURES </label>
+      <div class="col-md-4">
+        <input id="product_name_fr" name="features"  value="Free_wifi" class=" input-md" type="checkbox"><label for=""><i class="icon_set_1_icon-86"></i>Free Wifi</label>
+          <input id="product_name_fr" name="features" value="king_size_bed" class=" input-md" type="checkbox"><label for=""><i class="icon_set_2_icon-104"></i>King size bed</label>
+          <input id="product_name_fr" name="features" value="TV" class=" input-md" type="checkbox"><label for=""><i class="icon_set_2_icon-116"></i>TV</label>
+          <input id="product_name_fr" name="features" value="Safe_box" class=" input-md" type="checkbox"><label for=""><i class="icon_set_2_icon-106"></i>Safe box</label>
+          <input id="product_name_fr" name="features" value="Bath_Tube" class=" input-md" type="checkbox"><label for=""><i class="icon_set_2_icon-111"></i>Bath Tube</label><br>
+          <input id="product_name_fr" name="features" value="Welcome_bottle" class=" input-md" type="checkbox"><label for=""><i class="icon_set_1_icon-15"></i>Welcome bottle</label>
 
 
+      </div>
+    </div>
+<div class="form-group">
+      <label class="col-md-4 control-label" for="product_name_fr">Food included </label>
+      <div class="col-md-4">
+        <input id="product_name_fr" name="food" value="Breakfast" class=" input-md" type="checkbox"><label style="padding-left: 5px;" for="">BREAKFAST</label>
+          <input id="product_name_fr" name="food" value="Lunch" class=" input-md" type="checkbox"><label style="padding-left: 5px;" for="">LUNCH</label>
+          <input id="product_name_fr" name="food" value="Dinner" class=" input-md" type="checkbox"><label style="padding-left: 5px;" for="">DINNER</label>
+          
+
+
+      </div>
+    </div>
 
 
     <!-- Textarea -->
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label class="col-md-4 control-label" for="product_name_fr">Room Features</label>
       <div class="col-md-4">
-        <textarea class="form-control" id="product_name_fr" name="room_feature"></textarea>
+        <textarea class="form-control" id="product_name_fr" name="room_description"></textarea>
       </div>
-    </div>
+    </div> -->
 
     <!-- File Button -->
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="filebutton">main_image</label>
-      <div class="col-md-4">
-        <input id="filebutton" name="image1" class="input-file" type="file">
+    
+    <div class="form-group "  >
+      <label class="col-md-4 control-label" for="filebutton">image</label>
+      <div class="col-md-4" id="images">
+        
+        
+        
       </div>
     </div>
-    <!-- File Button -->
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="filebutton">auxiliary_images</label>
+    <div class="form-group " >
+      <label class="col-md-4 control-label" for="filebutton"></label>
       <div class="col-md-4">
-        <input id="filebutton" name="image2" class="input-file" type="file">
-        <input id="filebutton" name="image3" class="input-file" type="file">
+        
+        <input type="button" value="add_image" id="add_image" name="add_image">
+        
       </div>
     </div>
+    
+    
 
     <!-- Button -->
     <div class="form-group">
@@ -93,3 +126,45 @@
 
   </fieldset>
 </form>
+<script>
+  
+
+  document.getElementById('add_image').onclick=function(){
+      var image=document.getElementById('images');
+
+      var preview=document.createElement('img')
+      preview.style.width="100px";
+      preview.style.height='100px';
+
+      
+      var newinput = document.createElement("input")
+      newinput.type="file";
+      newinput.name="file[]";
+
+      var br =document.createElement("br");
+
+
+      newinput.onchange=function(){
+        if(this.files[0]){
+          var fileReader = new FileReader();
+
+          fileReader.onload=function(ev2){
+            preview.src=ev2.target.result;
+
+          };
+
+          fileReader.readAsDataURL(this.files[0])
+
+        }
+      }      
+
+      image.appendChild(preview)
+      image.appendChild(br)
+      image.appendChild(newinput);
+      
+
+
+
+
+  }
+</script>

@@ -53,7 +53,7 @@ def create_hotel(request):
         password=request.POST['password']
         contactnumber=request.POST['contactnumber']
         location=request.POST['location']
-        dict={'contactnumber':username,
+        dict={'contactnumber':contactnumber,
                'hotelname':hotelname,
                 'location':location,
                 'username':username 
@@ -67,7 +67,7 @@ def create_hotel(request):
           
             user.save();
             messages.info(request,'Hotel is created')
-            return render(request, 'admin/create-hotel-form.html',dict)
+            return render(request, 'admin/create-hotel-form.html')
 
     return render(request, 'admin/create-hotel-form.html')
 

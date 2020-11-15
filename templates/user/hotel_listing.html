@@ -1,4 +1,12 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel List</title>
+</head>
+<body>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
   <header class="header">
     <div class="container">
@@ -43,13 +51,14 @@
 
 <div class="hero">
     <div class="container">
-        <div class="main-heading" style="align-self: center;">
-           <h2 style="align-items: center;">delhi</h2>
+        <div class="main-heading">
+          <h1 class="title">Discover</h1>
+           
         </div>
         
     </div>
 </div>
-<section class="booking">
+<section class="booking" >
   <div class="container">
       <form action="" class="form book-form">
           <div class="input-group">
@@ -97,365 +106,683 @@
       </form>
   </div>
 </section>
-    <div class="container">
-    <aside>
-      <h3>Starting / Reserves</h3>
-      <div>
-        <div><input type="checkbox" name="startingReserves" value="starting" id="starting"><label for="starting">Starting</label></div>
-        <div><input type="checkbox" name="startingReserves" value="reserves" id="reserves"><label for="reserves">Reserves</label></div>
+<section class="search-container">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="row my-3">
+          <div class="col-sm-12 text-center">
+            <input name="map" id="" class="" type="button" value="map">
+          </div>
+        </div>
+        <div class="row mt-2 pl-5 justify-content-between">
+          <div class="filter-card">
+            <h1 style="text-align: center;">Filter</h1>
+            <form action="#">
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <label for="date-start">Price Range</label>: £
+                  <span id="price" class="price">1000</span>
+                  <input type="range" min="23" max="1000" value="1000" class="slider" id="myRange">
+                  </p>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <label for="mintopay">STAR RATING</label>
+                  <p>
+                    <div><input type="checkbox" name="startingReserves" value="starting" id="starting"><label > 5 STAR</label></div>
+                    <div><input type="checkbox" name="startingReserves" value="reserves" id="reserves"><label > 4 STAR</label></div>
+                  </p>
+                </div>
+                <div class="col-md-12">
+                  <label for="maxtopay">HOTEL FACILITIES</label>
+                  <p>
+                    <div><input type="checkbox" name="startingReserves" value="starting" id="starting"><label for="starting">Swimming Pool</label></div>
+                    <div><input type="checkbox" name="startingReserves" value="reserves" id="reserves"><label for="reserves">Parking </label></div>
+                    <!-- <input type="date" name="checkout" id="checkout" class="form-control"> -->
+                  </p>
+                </div>
+              </div>
+              
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <input type="submit" class="btn btn-primary btn-block" value="Limit">
+                </div>
+              </div>
+            </form>
+          </div>
+
+        </div>
       </div>
-      <h3>Injured</h3>
-      <div>
-        <div><input type="checkbox" name="injured" value="injured" id="injured"><label for="injured">Injured</label></div>
+
+
+
+      <div class="col-lg-9  px-4">
+        <div class="row mt-3">
+          <div class="col-md-6 align-self-center">
+            <p class="m-0">
+              <b>123</b> out of 1987</p>
+          </div>
+          <div class="col-md-6">
+            <div class="form-inline">
+              <label class="m-4" for="exampleFormControlSelect1">Sort by</label>
+              <select class="form-control" id="exampleFormControlSelect1">
+                <option>Recommended</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row search-card-result">
+          <div class="col-md-3">
+            <img class="img-fluid" src="http://placeimg.com/640/640/arch" alt="Card image cap">
+          </div>
+          <div class="col-md-5">
+            <h1>Choose The Best Plan For You</h1>
+            <div class="review">
+
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star"></span>
+              <span class="fa fa-star"></span>
+            </div>
+            <p>Join over 1 Million of users. Dignissimos asperiores vitae velit veniam</p>
+            <p>
+              <span class="badge badge-primary">8.5</span> Excellent (2323 reviews)</p>
+            <p>
+              <i class="fa fa-bath"></i>
+              <i class="fa fa-phone"></i>
+              <i class="fa fa-wifi"></i>
+              <i class="fa fa-tv"></i>
+            </p>
+          </div>
+          <div class="col-md-2 border-left text-center more-offers">
+            <p>place.com</p>
+            <p>
+              <s>£123</s>
+            </p>
+            <p>Place.com</p>
+            <p>£65</p>
+            <p class="border-top additional">More Deals from £65</p>
+          </div>
+          <div class="col-md-2 border-left text-center more-offers">
+            <h4>
+              <span class="badge badge-success">Top Deal</span>
+            </h4>
+            <div class="text-warning">
+              <p>place.com</p>
+              <p>
+                <s>£123</s>
+              </p>
+
+            </div>
+            <div class="text-success">
+              <p>Place.com</p>
+              <h5>£65</h5>
+            </div>
+
+            <div class="btn btn-success "><a href="{%url 'hotel_view' %}" style="text-decoration: none;">View deatails</a>  ></div>
+          </div>
+        </div>
+        <div class="row search-card-result ">
+          <div class="col-md-3 ">
+            <img class="img-fluid" src="http://placeimg.com/640/640/arch" alt="Card image cap">
+          </div>
+          <div class="col-md-5">
+            <h5>Choose The Best Plan For You</h5>
+            <div class="review">
+
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star"></span>
+              <span class="fa fa-star"></span>
+            </div>
+            <p>Join over 1 Million of users. Dignissimos asperiores vitae velit veniam</p>
+            <p>
+              <span class="badge badge-primary">8.5</span> Excellent (2323 reviews)</p>
+            <p>
+              <i class="fa fa-bath"></i>
+              <i class="fa fa-phone"></i>
+              <i class="fa fa-wifi"></i>
+              <i class="fa fa-tv"></i>
+            </p>
+          </div>
+          <div class="col-md-2 border-left text-center more-offers">
+            <p>place.com</p>
+            <p>
+              <s>£123</s>
+            </p>
+            <p>Place.com</p>
+            <p>£65</p>
+            <p class="border-top additional">More Deals from £65</p>
+          </div>
+          <div class="col-md-2 border-left text-center more-offers">
+            <h4>
+              <span class="badge badge-success">Top Deal</span>
+            </h4>
+            <div class="text-warning">
+              <p>place.com</p>
+              <p>
+                <s>£123</s>
+              </p>
+
+            </div>
+            <div class="text-success">
+              <p>Place.com</p>
+              <h5>£65</h5>
+            </div>
+
+            <div class="btn btn-success">View deal ></div>
+          </div>
+        </div> 
       </div>
-      <h3>Position</h3>
-      <div>
-        <div><input type="checkbox" name="position" value="guard" id="guard"><label for="guard">Guard</label></div>
-        <div><input type="checkbox" name="position" value="forward" id="forward"><label for="forward">Forward</label></div>
-        <div><input type="checkbox" name="position" value="center" id="center"><label for="center">Center</label></div>
-      </div>
-      <h3>Conference</h3>
-      <div>
-        <div><input type="checkbox" name="conference" value="east" id="east"><label for="east">Eastern</label></div>
-        <div><input type="checkbox" name="conference" value="west" id="west"><label for="west">Western</label></div>
-      </div>
-      <h3>NBA Team</h3>
-      <div>
-        <div><input type="checkbox" name="nbaTeam" value="bos" id="bos"><label for="bos">Boston Celtics</label></div>
-        <div><input type="checkbox" name="nbaTeam" value="cle" id="cle"><label for="cle">Cleveland Cavaliers</label></div>
-        <div><input type="checkbox" name="nbaTeam" value="cha" id="cha"><label for="cha">Charlotte Hornets</label></div>
-        <div><input type="checkbox" name="nbaTeam" value="det" id="det"><label for="det">Detroit Pistons</label></div>
-        <div><input type="checkbox" name="nbaTeam" value="gsw" id="gsw"><label for="gsw">Golden State Warriors</label></div>
-        <div><input type="checkbox" name="nbaTeam" value="hou" id="hou"><label for="hou">Houston Rockets</label></div>
-        <div><input type="checkbox" name="nbaTeam" value="ind" id="ind"><label for="ind">Indiana Pacers</label></div>
-        <div><input type="checkbox" name="nbaTeam" value="mia" id="mia"><label for="mia">Miami Heat</label></div>
-        <div><input type="checkbox" name="nbaTeam" value="mil" id="mil"><label for="mil">Milwaukee Bucks</label></div>
-        <div><input type="checkbox" name="nbaTeam" value="min" id="min"><label for="min">Minnesota Timberwolves</label></div>
-        <div><input type="checkbox" name="nbaTeam" value="nop" id="nop"><label for="nop">New Orleans Pelicans</label></div>
-        <div><input type="checkbox" name="nbaTeam" value="nyk" id="nyk"><label for="nyk">New York Knicks</label></div>
-        <div><input type="checkbox" name="nbaTeam" value="okc" id="okc"><label for="okc">Oklahoma City Thunder</label></div>
-        <div><input type="checkbox" name="nbaTeam" value="phi" id="phi"><label for="phi">Philadelphia 76ers</label></div>
-        <div><input type="checkbox" name="nbaTeam" value="por" id="por"><label for="por">Portland Trail Blazers</label></div>
-        <div><input type="checkbox" name="nbaTeam" value="sas" id="sas"><label for="sas">San Antonio Spurs</label></div>
-        <div><input type="checkbox" name="nbaTeam" value="was" id="was"><label for="was">Washington Wizards</label></div>
-        <div><input type="checkbox" name="nbaTeam" value="tor" id="tor"><label for="tor">Toronto Raptors</label></div>
-      </div>
-    </aside>
-    <main>
-      <section>
-        <h2>Team LeBron</h2>
-        <div class="player center nop west injured starting lebron">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202326.png">
-          <h3>DeMarcus Cousins</h3>
-          <p>#0 | Center</p>
-          <p>25.2 PPG 5.4 APG 12.9 RPG</p>
-          <p>[New Orleans Pelicans]</p>
-          <p>INJURED | Four-time All-Star | No. 5 overall pick in 2010</p>
-        </div>
-        <div class="player forward center nop west starting lebron">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203076.png">
-          <h3>Anthony Davis</h3>
-          <p>#23 | Forward-Center</p>
-          <p>27.1 PPG 2.4 APG 10.7 RPG</p>
-          <p>[New Orleans Pelicans]</p>
-          <p>Five-time All-Star | Scored 52 points in 2017 All-Star Game</p>
-        </div>
-        <div class="player forward gsw west starting lebron">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201142.png">
-          <h3>Kevin Durant</h3>
-          <p>#35 | Forward</p>
-          <p>25.5 PPG 5.5 APG 6.8 RPG</p>
-          <p>[Golden State Warriors]</p>
-          <p>Nine-time All-Star | 2014 Kia NBA MVP | 2017 Finals MVP</p>
-        </div>
-        <div class="player guard bos east starting lebron">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202681.png">
-          <h3>Kyrie Irving</h3>
-          <p>#11 | Guard</p>
-          <p>24.6 PPG 5 APG 3.6 RPG</p>
-          <p>[Boston Celtics]</p>
-          <p>Five-time All-Star | 2014 Kia All-Star Game MVP</p>
-        </div>
-        <div class="player guard forward cle east starting lebron">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/2544.png">
-          <h3>LeBron James</h3>
-          <p>#23 | Forward-Guard</p>
-          <p>26.5 PPG 8.9 APG 8.1 RPG</p>
-          <p>[Cleveland Cavaliers]</p>
-          <p>CAPTAIN | 14-time All-Star | Four-time Kia NBA MVP</p>
-        </div>
-        <div class="player forward sas west reserves lebron">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/200746.png">
-          <h3>LaMarcus Aldridge</h3>
-          <p>#12 | Forward</p>
-          <p>22.4 PPG 2 APG 8.4 RPG</p>
-          <p>[San Antonio Spurs]</p>
-          <p>Six-time All-Star | 2014-15 Second Team All-NBA</p>
-        </div>
-        <div class="player guard was east reserves lebron">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203078.png">
-          <h3>Bradley Beal</h3>
-          <p>#3 | Guard</p>
-          <p>23.4 PPG 4.2 APG 4.5 RPG</p>
-          <p>[Washington Wizards]</p>
-          <p>First-time All-Star | 2012-13 First Team All-Rookie</p>
-        </div>
-        <div class="player guard mia east reserves lebron">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201609.png">
-          <h3>Goran Dragic</h3>
-          <p>#7 | Guard</p>
-          <p>17.4 PPG 4.8 APG 4 RPG</p>
-          <p>[Miami Heat]</p>
-          <p>First-time All-Star | First player from Slovenia to earn All-Star honor</p>
-        </div>
-        <div class="player center det east reserves lebron">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203083.png">
-          <h3>Andre Drummond</h3>
-          <p>#0 | Center</p>
-          <p>15.1 PPG 3.7 APG 15.7 RPG</p>
-          <p>[Detroit Pistons]</p>
-          <p>Second-time All-Star | 2015-16 NBA rebounding leader</p>
-        </div>
-        <div class="player forward okc west reserves lebron">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202331.png">
-          <h3>Paul George</h3>
-          <p>#13 | Forward</p>
-          <p>22.4 PPG 3.1 APG 5.4 RPG</p>
-          <p>[Oklahoma City Thunder]</p>
-          <p>Five-time All-Star, third in a row | Three-time Third Team All-NBA</p>
-        </div>
-        <div class="player forward center cle east injured reserves lebron">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201567.png">
-          <h3>Kevin Love</h3>
-          <p>#0 | Forward-Center</p>
-          <p>17.9 PPG 1.6 APG 9.4 RPG</p>
-          <p>[Cleveland Cavaliers]</p>
-          <p>INJURED | Five-time All-Star | 2011 Kia NBA Most Improved Player</p>
-        </div>
-        <div class="player guard ind east reserves lebron">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203506.png">
-          <h3>Victor Oladipo</h3>
-          <p>#4 | Guard</p>
-          <p>24.4 PPG 4.1 APG 5.4 RPG</p>
-          <p>[Indiana Pacers]</p>
-          <p>First-time All-Star | No. 2 overall pick in 2013</p>
-        </div>
-        <div class="player forward center nyk east injured reserves lebron">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/204001.png">
-          <h3>Kristaps Porzingis</h3>
-          <p>#6 | Forward-Center</p>
-          <p>22.7 PPG 1.2 APG 6.6 RPG</p>
-          <p>[New York Knicks]</p>
-          <p>INJURED | First-time All-Star | 2017 Taco Bell Skills Challenge champ</p>
-        </div>
-        <div class="player guard cha east reserves lebron">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202689.png">
-          <h3>Kemba Walker</h3>
-          <p>#15 | Guard</p>
-          <p>22.9 PPG 5.8 APG 3.3 RPG</p>
-          <p>[Charlotte Hornets]</p>
-          <p>Second-time All-Star | Hornets' all-time leader in 3-pointers made</p>
-        </div>
-        <div class="player guard was east injured reserves lebron">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202322.png">
-          <h3>John Wall</h3>
-          <p>#2 | Guard</p>
-          <p>19.4 PPG 9.3 APG 3.6 RPG</p>
-          <p>[Washington Wizards]</p>
-          <p>INJURED | Five-time All-Star | No. 1 overall pick in 2010</p>
-        </div>
-        <div class="player guard okc west reserves lebron">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201566.png">
-          <h3>Russell Westbrook</h3>
-          <p>#0 | Guard</p>
-          <p>25.5 PPG 10.3 APG 9.3 RPG</p>
-          <p>[Oklahoma City Thunder]</p>
-          <p>Seven-time All-Star | 2017 Kia NBA MVP | Two-time Kia All-Star MVP</p>
-        </div>
-      </section>
-      <section>
-        <h2>Team Steph</h2>
-        <div class="player forward mil east starting steph">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203507.png">
-          <h3>Giannis Antetokounmpo</h3>
-          <p>#34 | Forward</p>
-          <p>27.6 PPG 4.7 APG 10.4 RPG</p>
-          <p>[Milwaukee Bucks]</p>
-          <p>Two-time All-Star | Consecutive All-Star starter</p>
-        </div>
-        <div class="player guard gsw west starting steph">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201939.png">
-          <h3>Stephen Curry</h3>
-          <p>#30 | Guard</p>
-          <p>26.8 PPG 6.5 APG 5.2 RPG</p>
-          <p>[Golden State Warriors]</p>
-          <p>CAPTAIN | Five-time All-Star | Two-time Kia NBA MVP</p>
-        </div>
-        <div class="player guard tor east starting steph">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201942.png">
-          <h3>DeMar DeRozan</h3>
-          <p>#10 | Guard</p>
-          <p>24 PPG 5.1 APG 4 RPG</p>
-          <p>[Toronto Raptors]</p>
-          <p>Four-time All-Star | Toronto's all-time leading scorer</p>
-        </div>
-        <div class="player center phi east starting steph">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203954.png">
-          <h3>Joel Embiid</h3>
-          <p>#21 | Center</p>
-          <p>23.7 PPG 3.1 APG 11.1 RPG</p>
-          <p>[Philadelphia 76ers]</p>
-          <p>PHI</p>
-          First-time All-Star | 2016-17 First Team All-Rookie
-        </div>
-        <div class="player guard hou west starting steph">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201935.png">
-          <h3>James Harden</h3>
-          <p>#13 | Guard</p>
-          <p>31.4 PPG 9 APG 5 RPG</p>
-          <p>[Houston Rockets]</p>
-          <p>Six-time All-Star | Leads NBA in scoring this season</p>
-        </div>
-        <div class="player guard min west reserves steph">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202710.png">
-          <h3>Jimmy Butler</h3>
-          <p>#23 | Guard</p>
-          <p>22.4 PPG 5 APG 5.5 RPG</p>
-          <p>[Minnesota Timberwolves]</p>
-          <p>Four-time All-Star | 2015 Kia NBA Most Improved Player</p>
-        </div>
-        <div class="player forward gsw west reserves steph">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203110.png">
-          <h3>Draymond Green</h3>
-          <p>#23 | Forward</p>
-          <p>11.3 PPG 7.3 APG 7.9 RPG</p>
-          <p>[Golden State Warriors]</p>
-          <p>Three-time All-Star | 2016-17 Kia Defensive Player of the Year</p>
-        </div>
-        <div class="player forward center bos east reserves steph">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201143.png">
-          <h3>Al Horford</h3>
-          <p>#42 | Forward-Center</p>
-          <p>13.2 PPG 5.2 APG 7.8 RPG</p>
-          <p>[Boston Celtics]</p>
-          <p>Five-time All-Star | No. 3 overall pick in 2007</p>
-        </div>
-        <div class="player guard por west reserves steph">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/203081.png">
-          <h3>Damian Lillard</h3>
-          <p>#0 | Guard</p>
-          <p>25.8 PPG 6.5 APG 4.5 RPG</p>
-          <p>[Portland Trail Blazers]</p>
-          <p>Three-time All-Star | 2013 Kia Rookie of the Year</p>
-        </div>
-        <div class="player guard tor east reserves steph">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/200768.png">
-          <h3>Kyle Lowry</h3>
-          <p>#7 | Guard</p>
-          <p>16.5 PPG 6.4 APG 5.7 RPG</p>
-          <p>[Toronto Raptors]</p>
-          <p>Four-time All-Star | 2015-16 Third Team All-NBA</p>
-        </div>
-        <div class="player guard gsw west reserves steph">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202691.png">
-          <h3>Klay Thompson</h3>
-          <p>#11 | Guard</p>
-          <p>20.1 PPG 2.6 APG 3.9 RPG</p>
-          <p>[Golden State Warriors]</p>
-          <p>Four-time All-Star | 2016 Three-Point Contest Champion</p>
-        </div>
-        <div class="player center min west reserves steph">
-          <img src="//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1626157.png">
-          <h3>Karl-Anthony Towns</h3>
-          <p>#32 | Center</p>
-          <p>20.4 PPG 2.4 APG 12.1 RPG</p>
-          <p>[Minnesota Timberwolves]</p>
-          <p>First-time All-Star | 2016 Kia NBA Rookie of the Year</p>
-        </div>
-      </section>
-    </main>
+    </div>
+
   </div>
+</section>
 
-  <style>
-      h1 {
+<!-- <section class="py-4">
+  <div class="container">
+    <div class="row justify-content-center">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#">1</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#">2</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#">3</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</section> -->
+<style>
+  /* grouped css attributes via type */
+body {
+  /* font-family: "Lato", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 1.7;
+  background: #fff;
+  color: #777; */
+}
+
+/* nav */
+nav {
+  margin-bottom: 1rem;
+}
+
+nav a {
+  color: white;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+
+nav a:hover,
+a:active,
+a:focus {
+  color: red;
+  outline: none;
+  text-decoration: none;
+}
+
+/* jumbotron*/
+.colorful {
+  background: #4b79a1;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #283e51, #4b79a1);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #283e51, #4b79a1);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border-radius: 0px;
+  padding: 0px 0 1rem 0 !important;
+}
+
+.form-card {
+  background: #fff;
+  border-bottom: 7px solid #1e3c72;
+  border-top: 7px solid #1e3c72;
+  color: black;
+  padding: 0 2rem;
+}
+
+.form-card h3 {
+  color: #000;
+  padding: 1rem 0 0.1rem 0;
+}
+
+/* hotel card */
+.hotel-card {
+  border: none !important;
+}
+.hotel-card .card-img-top {
+  border-radius: 0px;
+  height: 230px;
+}
+
+.hotel-card .card-body {
+  padding: 0px !important;
+}
+
+.hotel-card .card-body h5 {
+  margin: 0.5rem 0;
+}
+
+.hotel-card .card-body h5 a {
+  color: #777;
+}
+
+.hotel-card .card-body p {
+  font-size: 0.9rem;
+}
+/* end of hotel cards */
+
+/* business process section */
+#process {
+  background: #2980b9;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #2c3e50, #2980b9);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #2c3e50, #2980b9);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: #fff;
+}
+
+#process h2,
+h3 {
+  border-bottom: 2px solid #fff;
+  color: #fff;
+  margin: 1rem 0;
+  padding: 0 0 1rem 0;
+}
+
+#process h2 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+#process h3 {
+  font-size: 1.7rem;
+}
+
+#process p {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.icon {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  padding: 33px 29px;
+
+  background: #2980b9;
+  color: #fff;
+}
+
+#process .icon {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+}
+
+#process .icon .fa {
+  font-size: 2rem;
+  margin: 11px 2px;
+}
+
+#process .process-step {
   text-align: center;
-  margin-bottom: 0;
-}
-.container {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  font-size: 13px;
-}
-aside {
-  padding: 0 1em;
-}
-aside div {
-  margin: .25em 0;
-}
-input {
-  margin-right: 5px;
-}
-main {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: 30px;
-  margin-bottom: 5em;
-}
-.player {
-  margin: 2em 0;
-}
-.player h3 {
-  margin-bottom: 0;
-}
-p {
-  margin: 0;
-}
-  </style>
-
-
-<script>
-    // not exactly vanilla as there is one lodash function
-
-var allCheckboxes = document.querySelectorAll('input[type=checkbox]');
-var allPlayers = Array.from(document.querySelectorAll('.player'));
-var checked = {};
-
-getChecked('startingReserves');
-getChecked('injured');
-getChecked('position');
-getChecked('nbaTeam');
-getChecked('conference');
-
-Array.prototype.forEach.call(allCheckboxes, function (el) {
-  el.addEventListener('change', toggleCheckbox);
-});
-
-function toggleCheckbox(e) {
-  getChecked(e.target.name);
-  setVisibility();
 }
 
-function getChecked(name) {
-  checked[name] = Array.from(document.querySelectorAll('input[name=' + name + ']:checked')).map(function (el) {
-    return el.value;
-  });
+#process .process-step h3 {
+  color: white;
+  margin-top: 2.2rem;
 }
 
-function setVisibility() {
-  allPlayers.map(function (el) {
-    var startingReserves = checked.startingReserves.length ? _.intersection(Array.from(el.classList), checked.startingReserves).length : true;
-    var injured = checked.injured.length ? _.intersection(Array.from(el.classList), checked.injured).length : true;
-    var position = checked.position.length ? _.intersection(Array.from(el.classList), checked.position).length : true;
-    var nbaTeam = checked.nbaTeam.length ? _.intersection(Array.from(el.classList), checked.nbaTeam).length : true;
-    var conference = checked.conference.length ? _.intersection(Array.from(el.classList), checked.conference).length : true;
-    if (startingReserves && injured && position && nbaTeam && conference) {
-      el.style.display = 'block';
-    } else {
-      el.style.display = 'none';
-    }
-  });
+#stat-counter {
+  text-align: center;
 }
-</script>
+#stat-counter h2 {
+  font-size: 3rem;
+
+  border-bottom: 1px solid #777;
+  margin-bottom: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+#stat-counter p {
+  padding-top: 1rem;
+}
+
+#stat-counter .counter {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #2980b9;
+  font-size: 50px;
+  font-weight: 100;
+}
+
+#subscribe-panel {
+  background: #1e3c72; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #2a5298,
+    #1e3c72
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #2a5298,
+    #1e3c72
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  padding: 5rem 1rem;
+}
+
+#subscribe-panel h2 {
+  position: relative;
+
+  margin-bottom: 10px;
+
+  color: white;
+  line-height: 1.5;
+  font-size: 50px;
+  font-weight: 300;
+}
+
+#subscribe-panel.form-control {
+  width: 100%;
+
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+
+  background: #fff;
+  color: #fff;
+  font-size: 16px !important;
+}
+
+#subscribe-panel.form-control:focus {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+#subscribe-panel.form-control::-webkit-input-placeholder,
+#subscribe-panel.form-control:-moz-placeholder,
+#subscribe-panel.form-control::-moz-placeholder,
+#subscribe-panel.form-control:-ms-input-placeholder {
+  color: #fff;
+}
+
+#subscribe-panel.btn {
+  height: 46px;
+  border: none !important;
+  padding-left: 50px;
+  padding-right: 50px;
+
+  background: #09c6ab;
+
+  color: #fff;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+#subscribe-panel.form-inline .form-group {
+  width: 100% !important;
+  margin-bottom: 10px;
+}
+
+#subscribe-panel.form-inline .form-group .form-control {
+  width: 100%;
+}
+
+#subscribe-panel.gtco-heading {
+  margin-bottom: 30px;
+}
+
+#subscribe-panel.gtco-heading h2 {
+  color: #fff;
+}
+
+#subscribe-panel.gtco-heading p {
+  color: rgba(255, 255, 255, 0.5);
+}
+.copyright {
+  background: #005c97; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #363795,
+    #005c97
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #363795,
+    #005c97
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.copyright h3 {
+  color: #fff;
+  font-size: 2.5rem;
+}
+.copyright p {
+  color: #fff;
+}
+
+.footer-nav a {
+  color: #777;
+}
+
+/* destination page */
+.destination-container {
+  height: 70vh;
+  padding: 7rem;
+}
+
+.hotels-form {
+  background: #283e51; /* fallback for old browsers */
+  padding: 1rem;
+}
+
+.hotels-container {
+  padding: 0.5rem 0 7rem 0;
+}
+
+.search-container {
+  background: #d3d3d3;
+}
+
+.search-card-result {
+  box-shadow: 0px 1px 4px rgba(41, 51, 57, 0.5);
+  margin: 1rem 0;
+  padding: 0.5rem 0;
+  background-color: #fff;
+}
+.search-card-result img {
+  height: 190px;
+}
+.search-card-result h5 {
+  font-style: 1.1rem;
+  font-weight: 700;
+}
+.search-card-result p {
+  font-size: 0.9rem;
+}
+
+.search-card-result .more-offers p {
+  margin-bottom: 0.3rem;
+}
+
+.more-offers .additional {
+  padding-top: 0.2rem;
+  font-weight: 700;
+}
+
+.fa.checked {
+  color: orange;
+}
+
+.map-container-btn {
+  height: 100px;
+
+  box-shadow: 0px 1px 4px rgba(41, 51, 57, 0.5);
+  background-color: wheat;
+}
+
+.map-container-btn .btn {
+  margin-top: 30px;
+}
+
+.filter-card {
+  padding: 0;
+  background: #fff;
+  color: black;
+}
+
+.filter-card h5 {
+  margin: 10px 0;
+  padding: 1rem;
+
+  box-shadow: 0px 1px 4px rgba(41, 51, 57, 0.5);
+  color: #000;
+}
+.filter-card form {
+  box-shadow: 0px 1px 4px rgba(41, 51, 57, 0.5);
+  padding: 0.5rem 2rem;
+}
+.map-btn {
+  background-color: #fff !important;
+}
+
+/* SOCIAL ICONS.CSS */
+
+  .nav .fa {
+    margin: 5px 2px;
+    padding: 20px;
+    
+    font-size: 30px;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  .fa:hover {
+      opacity: 0.7;
+  }
+  
+  .fa-facebook {
+    background: #3B5998;
+    color: white;
+  }
+  
+  .fa-twitter {
+    background: #55ACEE;
+    color: white;
+  }
+  
+  .fa-google {
+    background: #dd4b39;
+    color: white;
+  }
+  
+  .fa-linkedin {
+    background: #007bb5;
+    color: white;
+  }
+  
+  .fa-youtube {
+    background: #bb0000;
+    color: white;
+  }
+  
+  .fa-instagram {
+    background: #DA4453;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #89216B, #DA4453);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #89216B, #DA4453); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
+    color: white;
+  }
+  
+  .fa-pinterest {
+    background: #cb2027;
+    color: white;
+  }
+  
+  .fa-snapchat-ghost {
+    background: #fffc00;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  }
+
+ .slidecontainer {
+    width: 100%;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 25px;
+  
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+  
+  background: #1e3c72;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+  
+  background: #1e3c72;
+    cursor: pointer;
+}
+
+</style>
+
+
+
+
+
 <style>
     /*Import the fonts used*/
 @import url('https://fonts.googleapis.com/css?family=Courgette|Open+Sans:400,800&display=swap');
@@ -501,6 +828,7 @@ ul{
 section{
     padding: 5rem 0;
     display: block;
+   
    
 }
 /* reusable style */
@@ -655,7 +983,7 @@ section{
 
 .hero{
     width: 100%;
-    height: 100vh;
+    height: 50vh;
     background: url("/static/images/hero_background.jpg") center no-repeat;
     background-size: cover;
     display: flex;
@@ -687,6 +1015,7 @@ section{
     font-size: 4.8rem;
     text-transform: uppercase;
     letter-spacing: 3px;
+    text-align: center;
 
 }
 .subtitle{
@@ -706,6 +1035,8 @@ section{
 }
 .input-group{
     margin-bottom: 1.5rem;
+    padding-left: 25px;
+
 }
 .input-label{
     display: block;
@@ -819,3 +1150,7 @@ section{
 
 
 </style>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+</body>
+</html>

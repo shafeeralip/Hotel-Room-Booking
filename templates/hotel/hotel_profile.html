@@ -6,6 +6,11 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
+<!-- feature icons -->
+<link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/fontello.css' %}">
+<link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/icon_set_1.css' %}">
+<link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/icon_set_2.css' %}">
+<!-- /end feature icon -->
 <style>
     /* body{
     background: -webkit-linear-gradient(left, #3931af, #00c6ff);
@@ -118,9 +123,9 @@
                     </div>
                     <div class="col-md-6">
                         <div class="profile-head">
-                                    <h5>
-                                      {{hotel.hotel_name}}
-                                    </h5>
+                                    <h3><b>
+                                      {{hotel.hotel_name}}</b>
+                                    </h3>
                                     <h6>
                                         {{hotel.location}}
                                     </h6>
@@ -143,9 +148,9 @@
                     <div class="col-md-4">
                         <div class="profile-work">
                             <p>FEATURES</p>
-                            <a href="">Website Link</a><br/>
-                            <a href="">Bootsnipp Profile</a><br/>
-                            <a href="">Bootply Profile</a>
+                            {% for feature in features %}
+                            <a href="">{{feature}}</a><br/>
+                            {%endfor%}
                             <p>ROOMS</p>
                             <a href="">Single Room</a><br/>
                             <a href="">Double Room</a><br/>
