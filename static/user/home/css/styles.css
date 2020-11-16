@@ -727,7 +727,7 @@ padding:1rem 1rem;
 
  /* Dropdown Button */
  .dropbtn {
-    background-color: var(--purple-solid);
+    /* background-color: var(--purple-solid); */
     color: white;
     padding: 16px;
     font-size: 16px;

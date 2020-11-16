@@ -72,7 +72,7 @@
         <div class="grid">
             <div class="gird rooms-grid featured-rooms">
                 <div class="images-w">
-                    <a href="">
+                    <a href="{% url 'hotel_list' city='GOA' %}">
                     <img src="/static/images/GOA.jpg" alt="" class="room-image">
                     <h5 class="room-name">GOA</h5>
                     <span class="per-night">520 hotels</span></a>
@@ -80,6 +80,7 @@
             </div>
             <div class="gird rooms-grid featured-rooms">
                 <div class="images-w">
+                    <a href="{% url 'hotel_list' city='BENGALURE' %}">
                     <img src="/static/images/Bengaluru.jpg" alt="" class="room-image">
                     <h5 class="room-name">BENGALURE</h5>
                     <span class="per-night">520 hotels</span></a>
@@ -89,6 +90,7 @@
             </div>
              <div class="gird rooms-grid featured-rooms">
                 <div class="images-w">
+                    <a href="{% url 'hotel_list' city='MUMBAI' %}">
                     <img src="/static/images/Mumbaijpg" alt="" class="room-image">
                     <h5 class="room-name">MUMBAI</h5>
                     <span class="per-night">520 hotels</span></a>
@@ -99,6 +101,7 @@
             </div>
             <div class="gird rooms-grid featured-rooms">
                 <div class="images-w">
+                    <a href="{% url 'hotel_list' city='MUMBAI' %}">
                     <img src="/static/images/KOCHI-1-1.jpg" alt="" class="room-image">
                     <h5 class="room-name">KOCHI</h5>
                     <span class="per-night">520 hotels</span></a>
@@ -130,7 +133,7 @@
                   <i class="fas fa-star rating"></i>
                   <i class="fas fa-star-half rating"></i>
               </div>
-              <a href="{%url 'hotel_view' %}" class="btn btn-gradient">Book now
+              <a href="#" class="btn btn-gradient">Book now
               <span class="dots"><i class="fas fa-ellipsis-h"></i></span>
               </a>
           </div>

@@ -79,20 +79,7 @@ def hotel_rooms(request,id):
 
     hotel=Hoteladmin.objects.get(id=id)
     rooms=Rooms.objects.filter(hotel=hotel)
-    room_features=Room_features.objects.filter(hotel=hotel)
-    features=[]
-    # for feature in room_features:
-
-    #     if room_features.Free_wifi == True:
-    #         features.append("FREE Wifi")
-    #     if room_features.Loundry_service==True:
-    #         features.append("Loundry Service")
-    #     if room_features.Swimming_pool==True:
-    #         features.append("Swimming Pool")
-    #     if room_features.Restaurant==True:
-    #         features.append("Restaurant")
-    #     if room_features.Parking==True:
-    #         features.append("Parking")
+    
     context={'hotel':hotel,
                 'rooms':rooms}
 

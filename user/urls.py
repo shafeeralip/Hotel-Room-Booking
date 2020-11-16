@@ -10,9 +10,9 @@ urlpatterns=[
     path('otp_generate',views.otp_generate,name='otp_generate'),
     path('register_user',views.register_user,name='register_user'),
     path('logout',views.user_logout,name="user_logout"),
-    path('hotel-view',views.hotel_view,name="hotel_view"),
+    path('hotel-view/<int:id>/',views.hotel_view,name="hotel_view"),
     path('booking',views.booking,name="booking"),
-    path('hotel_list',views.hotel_list,name='hotel_list')
+    path('hotel_list/<str:city>/',views.hotel_list,name='hotel_list')
 
 
     

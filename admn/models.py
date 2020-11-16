@@ -12,6 +12,42 @@ class Hoteladmin(models.Model):
     description=models.TextField(max_length=1000,verbose_name='description')
     categories=models.CharField(max_length=200,null=True)
     hotelimage1=models.ImageField(null=True ,blank=True)
+
+
+    @property
+    def get_lowest_price(self):
+        try:
+            rooms =self.rooms_set.all()
+            price=[]
+            
+            for room in rooms:
+                price.append(room.room_price)
+            
+            lowest_price=min(price)
+        except:
+            lowest_price='NOT ENTERD'
+        return lowest_price
+
+
+    @property
+    def imageURL(self):
+        try:
+            url= self.hotelimage1.url
+        except:
+            url=''
+        return url
+            
+
+            
+            
+
+
+
+    
+
+
+
+
     
 
 class Features(models.Model):

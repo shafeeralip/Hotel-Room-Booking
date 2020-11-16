@@ -2,8 +2,125 @@
 {% extends 'user/base.html' %}
 {% load static %}
 {% block content%}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<style>
+    /* Styles the lightbox, removes it from sight and adds the fade-in transition */
 
+.lightbox-target {
 
+top:80%;
+bottom: 0;
+left: 0;
+right: 0;
+
+position: fixed;
+
+width: 50%;
+height: 50%;
+background: rgba(0,0,0,.7);
+
+opacity: 0;
+-webkit-transition: opacity .5s ease-in-out;
+-moz-transition: opacity .5s ease-in-out;
+-o-transition: opacity .5s ease-in-out;
+transition: opacity .5s ease-in-out;
+overflow: hidden;
+z-index: 6;
+}
+
+/* Styles the lightbox image, centers it vertically and horizontally, adds the zoom-in transition and makes it responsive using a combination of margin and absolute positioning */
+
+.lightbox-target img {
+
+/* position: absolute; */
+top: 5rem;
+left:0;
+right:0;
+bottom: 0;
+max-height: 0%;
+max-width: 0%;
+border: 3px solid white;
+box-shadow: 0px 0px 8px rgba(0,0,0,.3);
+box-sizing: border-box;
+-webkit-transition: .5s ease-in-out;
+-moz-transition: .5s ease-in-out;
+-o-transition: .5s ease-in-out;
+transition: .5s ease-in-out;
+}
+
+/* Styles the close link, adds the slide down transition */
+
+a.lightbox-close {
+display: block;
+width:50px;
+height:50px;
+box-sizing: border-box;
+background: white;
+color: black;
+text-decoration: none;
+position: absolute;
+top: -80px;
+right: 0;
+-webkit-transition: .5s ease-in-out;
+-moz-transition: .5s ease-in-out;
+-o-transition: .5s ease-in-out;
+transition: .5s ease-in-out;
+}
+
+/* Provides part of the "X" to eliminate an image from the close link */
+
+a.lightbox-close:before {
+content: "";
+display: block;
+height: 30px;
+width: 1px;
+background: black;
+position: absolute;
+left: 26px;
+top:10px;
+-webkit-transform:rotate(45deg);
+-moz-transform:rotate(45deg);
+-o-transform:rotate(45deg);
+transform:rotate(45deg);
+}
+
+/* Provides part of the "X" to eliminate an image from the close link */
+
+a.lightbox-close:after {
+content: "";
+display: block;
+height: 30px;
+width: 1px;
+background: black;
+position: absolute;
+left: 26px;
+top:10px;
+-webkit-transform:rotate(-45deg);
+-moz-transform:rotate(-45deg);
+-o-transform:rotate(-45deg);
+transform:rotate(-45deg);
+}
+
+/* Uses the :target pseudo-class to perform the animations upon clicking the .lightbox-target anchor */
+
+.lightbox-target:target {
+opacity: 1;
+top: 197px;
+bottom: 0;
+left: 0;
+
+}
+
+.lightbox-target:target img {
+max-height: 100%;
+max-width: 100%;
+}
+
+.lightbox-target:target a.lightbox-close {
+top: 0px;
+}
+
+</style>
     <!-- Favicons-->
     <link rel="shortcut icon" href="{% static 'user/hotel_view/img/favicon.ico' %}" type="image/x-icon">
     <link rel="apple-touch-icon" type="image/x-icon" href="{% static 'user/hotel_view/img/apple-touch-icon-57x57-precomposed.png' %}">
@@ -26,7 +143,7 @@
     <!-- End Header =============================================== -->
     
 	<!-- SubHeader =============================================== -->
-    <div class="parallax-window" id="booking" data-parallax="scroll" data-image-src="static/user/hotel_view/img/sub_header_home.jpg" data-natural-width="1400" data-natural-height="550">
+    <div class="parallax-window" id="booking" data-parallax="scroll" style="background: url('{{hotel.imageURL}}') ;"  data-natural-width="1400" data-natural-height="550">
         <div id="subheader_home">
             <div id="sub_content">
                 <div id="book_container">
@@ -68,7 +185,7 @@
                                     <option value="">Choose Room </option>
                                     <option value="">Single Room</option>
                                     <option value="">Double Room</option>
-                                    <option value="">suit Room</option>
+                                    
                                     
                                 </select>
                                 <!-- <input type="text" class="form-control" name="name_booking" id="name_booking" placeholder="Name and Last name"> -->
@@ -90,11 +207,57 @@
     <!-- End SubHeader ============================================ -->
             
     <div class="container margin_60_35">
-        <h1 class="main_title"><em></em>Welcome to Recom <span>Hotel and Bed&amp;Breakfast</span></h1>
+        <h1 class="main_title"><em></em>Welcome to {{hotel.hotel_name}}<span>Hotel and Bed&amp;Breakfast</span></h1>
         <p class="lead styled">
-            Usu habeo equidem sanctus no. Suas summo id sed, erat erant oporteat cu pri. In eum omnes molestie. Sed ad debet scaevola, ne mel lorem legendos. Unum etiam cum te, an elit assueverit vix, falli aliquam complectitur ex ius.
+           {{hotel.description}}
         </p>
-        <div class="row">
+        <!--Carousel Wrapper-->
+<div id="carousel-example-2" class="carousel slide carousel-fade z-depth-1-half" data-ride="carousel">
+  <!--Indicators-->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-example-2" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-2" data-slide-to="1"></li>
+    <li data-target="#carousel-example-2" data-slide-to="2"></li>
+  </ol>
+  <!--/.Indicators-->
+  <!--Slides-->
+  <div class="carousel-inner" role="listbox">
+      {%for images in hotel.hotel_image_set.all %}
+      {% if forloop.first %}
+    <div class="carousel-item active">
+      <div class="view">
+        <img class="d-block w-100" src="{{images.image.url}}" alt="First slide">
+        <div class="mask rgba-black-light"></div>
+      </div>
+     
+    </div>
+    {%else%}
+    <div class="carousel-item">
+      <!--Mask color-->
+      <div class="view">
+        <img class="d-block w-100" src="{{images.image.url}}">
+        <div class="mask rgba-black-light"></div>
+      </div>
+     
+    </div>
+    {%endif%}
+    {%endfor%}
+ 
+  </div>
+  <!--/.Slides-->
+  <!--Controls-->
+  <a class="carousel-control-prev" href="#carousel-example-2" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carousel-example-2" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+  <!--/.Controls-->
+</div>
+<!--/.Carousel Wrapper-->
+        <!-- <div class="row">
             <div class="col-sm-6">
                 <div class="mosaic_container">
                     <img src="static/user/hotel_view/img/mosaic_1.jpg" alt="" class="img-responsive add_bottom_30"><span class="caption_2">Nice Outdoor</span>
@@ -117,7 +280,7 @@
                     </div>
                 </div>
             </div>
-        </div><!-- End row -->
+        </div>End row -->
     </div><!-- End container -->
     <div id="subheader">
         <h1 style="text-align: center;">Our Wonderfull Rooms</h1>
@@ -125,15 +288,38 @@
     <div class="container margin_60">
     	<div class="row">
  			<div class="col-lg-9 col-md-8">
+                 {%for room in rooms %}
             	<div class="row">
                 
-                	<div class="room_desc clearfix" onclick="location.href='room_detail.html';">
-                	<div class="col-md-7">
-                    	<figure><img src="img/room_list_1.jpg" alt="" class="img-responsive"></figure>
+                	<div class="room_desc clearfix" >
+                        {%for images in room.room_image_set.all %}
+                        {%if forloop.first%}
+                    <div class="col-md-7" style="height: 100%;" >
+                        
+                        <div class="main col-md-12 " style="height:60%;">
+                            <a href="#{{images.id}}" class="lightbox">
+                            <img src="{{images.image.url}}" style="width: 100%; height: 100%;" alt="" class="img-responsive"></a>
+                            <div class="lightbox-target" id="{{images.id}}">
+                                <img src="{{images.image.url}}" style="width: 100%; height: 100%;"/>
+                                <a class="lightbox-close" href="#"></a>
+                             </div>
+                        </div>
+                        {%else%}
+                         <div class="col-xs-3 pt-2">
+                            <a href="#{{images.id}}" >
+                            <img src="{{images.image.url}}" style="width: 100%; height: 100%;" alt="" class="img-responsive"></a>
+                            <div class="lightbox-target" id="{{images.id}}">
+                                <img src="{{images.image.url}}" style="width: 100%; height: 100%;"/>
+                                <a class="lightbox-close" href="#"></a>
+                             </div>
+                        </div>
+                        {%endif%}
+                        {%endfor%}
+                                    
+
                     </div>
                     <div class="col-md-5 room_list_desc">
-                    	<h3>Single Room</h3>
-                        <p>Id tale utinam ius, an mei omnium recusabo iracundia. Mea ad postea meliore fuisset.....</p>
+                    	<h3>{{room.room_type}}</h3>
                         <ul>
                         	<li>
                             <div class="tooltip_styled tooltip-effect-4">
@@ -154,129 +340,18 @@
                               </div>
                               </li>
                         </ul>
-                        <div class="price">from <strong>$115</strong> /night<small>Breakafst included</small></div>
+                        <div class="price">from <strong>{{room.room_price}}</strong> /night<small>Breakafst included</small></div>
                         <a href="{%url 'booking' %}"> <input type="submit" value="Book The Room" class="btn_1" id="submit-booking"> </a>
                     </div>
                    
                     </div>
-                </div><!-- End row room -->  
+                </div>{%endfor%}<!-- End row room -->  
                 
-                <div class="row">
-                	<div class="room_desc clearfix wow fadeIn" onclick="location.href='room_detail.html';" data-wow-delay="0.1s">
-                	<div class="col-md-7">
-                    	<figure><img src="img/room_list_2.jpg" alt="" class="img-responsive"></figure>
-                    </div>
-                    <div class="col-md-5 room_list_desc">
-                    	<h3>Double Room</h3>
-                        <p>Id tale utinam ius, an mei omnium recusabo iracundia. Mea ad postea meliore fuisset.....</p>
-                        <ul>
-                        	<li>
-                            <div class="tooltip_styled tooltip-effect-4">
-                            	<span class="tooltip-item"><i class="icon_set_2_icon-104"></i></span>
-                                	<div class="tooltip-content">King size bed</div>
-                              </div>
-                              </li>
-                            <li>
-                            <div class="tooltip_styled tooltip-effect-4">
-                            	<span class="tooltip-item"><i class="icon_set_2_icon-118"></i></span>
-                                	<div class="tooltip-content">Shower</div>
-                              </div>
-                              </li>
-                            <li>
-                            <div class="tooltip_styled tooltip-effect-4">
-                            	<span class="tooltip-item"><i class="icon_set_2_icon-116"></i></span>
-                                	<div class="tooltip-content">Plasma TV</div>
-                              </div>
-                              </li>
-                        </ul>
-                        <div class="price">from <strong>$115</strong> /night<small>Breakafst included</small></div>
-                    </div>
-                    </div>
-                </div><!-- End row room --> 
+                 
                 
-                <div class="row">
-                	<div class="room_desc clearfix wow fadeIn" onclick="location.href='room_detail.html';" data-wow-delay="0.1s">
-                	<div class="col-md-7">
-                    	<figure><img src="img/room_list_3.jpg" alt="" class="img-responsive"></figure>
-                    </div>
-                    <div class="col-md-5 room_list_desc">
-                    	<h3>Double Room Luxury</h3>
-                        <p>Id tale utinam ius, an mei omnium recusabo iracundia. Mea ad postea meliore fuisset.....</p>
-                        <ul>
-                        	<li>
-                            <div class="tooltip_styled tooltip-effect-4">
-                            	<span class="tooltip-item"><i class="icon_set_2_icon-104"></i></span>
-                                	<div class="tooltip-content">King size bed</div>
-                              </div>
-                              </li>
-                            <li>
-                            <div class="tooltip_styled tooltip-effect-4">
-                            	<span class="tooltip-item"><i class="icon_set_2_icon-118"></i></span>
-                                	<div class="tooltip-content">Shower</div>
-                              </div>
-                              </li>
-                            <li>
-                            <div class="tooltip_styled tooltip-effect-4">
-                            	<span class="tooltip-item"><i class="icon_set_2_icon-116"></i></span>
-                                	<div class="tooltip-content">Plasma TV</div>
-                              </div>
-                              </li>
-                                <li>
-                            <div class="tooltip_styled tooltip-effect-4">
-                            	<span class="tooltip-item"><i class="icon_set_2_icon-106"></i></span>
-                                	<div class="tooltip-content">Safe box</div>
-                              </div>
-                              </li>
-                        </ul>
-                        <div class="price">from <strong>$115</strong> /night<small>Breakafst included</small></div>
-                    </div>
-                    </div>
-                </div><!-- End row room --> 
+               
                 
-                <div class="row">
-                	<div class="room_desc clearfix wow fadeIn" onclick="location.href='room_detail.html';" data-wow-delay="0.1s">
-                	<div class="col-md-7">
-                    	<figure><img src="img/room_list_4.jpg" alt="" class="img-responsive"></figure>
-                    </div>
-                    <div class="col-md-5 room_list_desc">
-                    	<h3>Suite Room</h3>
-                        <p>Id tale utinam ius, an mei omnium recusabo iracundia. Mea ad postea meliore fuisset.....</p>
-                        <ul>
-                        	<li>
-                            <div class="tooltip_styled tooltip-effect-4">
-                            	<span class="tooltip-item"><i class="icon_set_2_icon-104"></i></span>
-                                	<div class="tooltip-content">King size bed</div>
-                              </div>
-                              </li>
-                            <li>
-                            <div class="tooltip_styled tooltip-effect-4">
-                            	<span class="tooltip-item"><i class="icon_set_2_icon-111"></i></span>
-                                	<div class="tooltip-content">Bathtub</div>
-                              </div>
-                              </li>
-                            <li>
-                            <div class="tooltip_styled tooltip-effect-4">
-                            	<span class="tooltip-item"><i class="icon_set_2_icon-116"></i></span>
-                                	<div class="tooltip-content">Plasma TV</div>
-                              </div>
-                              </li>
-                               <li>
-                            <div class="tooltip_styled tooltip-effect-4">
-                            	<span class="tooltip-item"><i class="icon_set_1_icon-15"></i></span>
-                                	<div class="tooltip-content">Welcome bottle</div>
-                              </div>
-                              </li>
-                              <li>
-                            <div class="tooltip_styled tooltip-effect-4">
-                            	<span class="tooltip-item"><i class="icon_set_2_icon-106"></i></span>
-                                	<div class="tooltip-content">Safe box</div>
-                              </div>
-                              </li>
-                        </ul>
-                        <div class="price">from <strong>$115</strong> /night<small>Breakafst included</small></div>
-                    </div>
-                    </div>
-                </div><!-- End row room -->    
+               
                 
             </div>
             <div class="col-lg-3 col-md-4 sidebar">
@@ -285,17 +360,23 @@
             <div class="box_style_3" id="general_facilities">
 				<h3>General facilities</h3>
 				<ul>
-					<li><i class="icon_set_1_icon-86"></i>Free Wifi</li>
-					<li><i class="icon_set_2_icon-103"></i>Loundry service</li>
-					<li><i class="icon_set_2_icon-110"></i>Swimming pool</li>
-					<li><i class="icon_set_1_icon-58"></i>Restaurant</li>
-					<li><i class="icon_set_1_icon-27"></i>Parking</li>
+                    {% for feature in hotel.features_set.all %}
+                    {% if feature.Free_wifi == True %}
+                    <li><i class="icon_set_1_icon-86"></i>Free Wifi</li>{%endif%}
+                    {% if feature.Loundry_service == True %}
+                    <li><i class="icon_set_2_icon-103"></i>Loundry service</li>{%endif%}
+                    {%if feature.Swimming_pool == True %}
+                    <li><i class="icon_set_2_icon-110"></i>Swimming pool</li>{%endif%}
+                    {%if feature.Restaurant == True %}
+                    <li><i class="icon_set_1_icon-58"></i>Restaurant</li>{%endif%}
+                    {% if feature.Parking == True %}
+					<li><i class="icon_set_1_icon-27"></i>Parking</li>{%endif%}{%endfor%}
 				</ul>
 			</div>
 			<div class="box_style_2">
 				<i class="icon_set_1_icon-90"></i>
 				<h4>Need help? Call us</h4>
-				<a href="tel://004542344599" class="phone">+45 423 445 99</a>
+				<a href="tel://004542344599" class="phone">+91 7559953783</a>
 				<small>Monday to Friday 9.00am - 7.30pm</small>
 			</div>
 
@@ -365,6 +446,9 @@
 <div id="toTop"></div><!-- Back to top button -->
         
 <!-- COMMON SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script src="{% static 'user/hotel_view/js/jquery-1.11.2.min.js'%}"></script>
 <script src="{% static 'user/hotel_view/js/common_scripts_min.js'%}"></script>
 <script src="{% static 'user/hotel_view/assets/validate.js'%}"></script>

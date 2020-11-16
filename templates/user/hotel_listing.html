@@ -1,13 +1,19 @@
+{%load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hotel List</title>
+  <title>TRAVELIX</title>
 </head>
 <body>
+  <!-- feature icons -->
+<link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/fontello.css' %}">
+<link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/icon_set_1.css' %}">
+<link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/icon_set_2.css' %}">
+<!-- /end feature icon -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
   <header class="header">
     <div class="container">
         <nav class="nav">
@@ -35,8 +41,16 @@
               {%  if request.user.is_authenticated %}
 
               <li class="nav-item">
-                  <a href="/logout" class="nav-link">Logout</a>  
+                  <div class="dropdown">
+                      <a class="dropbtn"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a>
+                      <div class="dropdown-content">
+                        <a href="#">Profile</a>
+                        <a href="{% url 'user_logout' %}">LOGOUT</a>
+                      </div>
+                    </div> 
+                  
               </li>
+           
               {%else%}
               <li class="nav-item">
                   <a href="/login" class="nav-link">Login</a>  
@@ -49,10 +63,13 @@
 </header> 
 
 
-<div class="hero">
+<div class="hero" {% if city_name == 'GOA' %} style="background:url('/static/images/goa.jpg')center no-repeat ;"
+ {%elif city_name == 'BENGALURE'%} style="background:url('/static/images/bengalure.jpg') center no-repeat ;"
+ {%else%} style="background:url('/static/images/delhiw.webp')center no-repeat ;" {{%endif%} >
     <div class="container">
         <div class="main-heading">
-          <h1 class="title">Discover</h1>
+          <h2 class="title">{{city_name}}</h2>
+          <h5 class="heading">Hotels</h5>
            
         </div>
         
@@ -77,7 +94,7 @@
 
           </div>
           <div class="input-group">
-              <label for="adults" class="input-label">adults</label>
+              <label for="adults" class="input-label">Guest</label>
               <select class="options" id="adults">
                   <option value="0">0</option>
                   <option value="1">1</option>
@@ -88,7 +105,7 @@
               </select>
 
           </div>
-          <div class="input-group">
+          <!-- <div class="input-group">
               <label for="children" class="input-label">children</label>
               <select class="options" id="children">
                   <option value="0">0</option>
@@ -99,7 +116,7 @@
                   <option value="5">5</option>
               </select>
 
-          </div>
+          </div> -->
           <button class="btn form-btn btn-purple">search
               <span class="dots"><i class="fas fa-ellipsis-h"></i></span>
           </button>
@@ -178,13 +195,13 @@
 
           </div>
         </div>
-
+{% for hotel in hotels %}
         <div class="row search-card-result">
           <div class="col-md-3">
-            <img class="img-fluid" src="http://placeimg.com/640/640/arch" alt="Card image cap">
+            <img class="img-fluid"  src="{{hotel.imageURL}}" style="width: 100%; height: 100%;" alt="Card image cap">
           </div>
-          <div class="col-md-5">
-            <h1>Choose The Best Plan For You</h1>
+          <div class="col-md-6">
+            <h1>{{hotel.hotel_name}}</h1>
             <div class="review">
 
               <span class="fa fa-star checked"></span>
@@ -193,96 +210,44 @@
               <span class="fa fa-star"></span>
               <span class="fa fa-star"></span>
             </div>
-            <p>Join over 1 Million of users. Dignissimos asperiores vitae velit veniam</p>
-            <p>
-              <span class="badge badge-primary">8.5</span> Excellent (2323 reviews)</p>
-            <p>
-              <i class="fa fa-bath"></i>
-              <i class="fa fa-phone"></i>
-              <i class="fa fa-wifi"></i>
-              <i class="fa fa-tv"></i>
-            </p>
-          </div>
-          <div class="col-md-2 border-left text-center more-offers">
-            <p>place.com</p>
-            <p>
-              <s>£123</s>
-            </p>
-            <p>Place.com</p>
-            <p>£65</p>
-            <p class="border-top additional">More Deals from £65</p>
-          </div>
-          <div class="col-md-2 border-left text-center more-offers">
+            <h4>{{hotel.description}}</h4>
             <h4>
-              <span class="badge badge-success">Top Deal</span>
-            </h4>
-            <div class="text-warning">
-              <p>place.com</p>
+              <span class="badge badge-primary">8.5</span> Excellent (2323 reviews)</h4>
+            <h4 style="display: flex;">
+              
+{% for feature in hotel.features_set.all %}
+              {% if feature.Free_wifi == True %}
+            <p> <i class="icon_set_1_icon-86  fa-2x "></i>Free Wifi</p>{%endif%}
+            {% if feature.Loundry_service == True %}
+              <p><i  class="icon_set_2_icon-103  fa-2x "></i>Loundry service </p>{%endif%}
+              {%if feature.Swimming_pool == True %}
+              <P> <i class="icon_set_2_icon-110 fa-2x"></i> Swimming pool</P>{%endif%} </h4>
+              {%if feature.Restaurant == True %}
+              <h4 style="display: flex;">
+              <P><i class="icon_set_1_icon-58 fa-2x"></i>Restaurant</P>{%endif%}
+              {% if feature.Parking == True %}
+              <P><i class="icon_set_1_icon-27 fa-2x"></i> Parking </P>
+            </h4>{%endif%}{%endfor%}
+          </div>
+         
+          <div class="col-md-3 border-left text-center more-offers">
+            <h1 class="text-danger">{{hotel.get_lowest_price}}/Night <p>lowest price</p> </h1>
+            <div class="">
+             
               <p>
-                <s>£123</s>
+                
               </p>
 
             </div>
             <div class="text-success">
-              <p>Place.com</p>
-              <h5>£65</h5>
+              <h3 class="text-success">excluding taxes & fees</h3>
+              <h5</h5>
             </div>
 
-            <div class="btn btn-success "><a href="{%url 'hotel_view' %}" style="text-decoration: none;">View deatails</a>  ></div>
+            <div class="btn btn-success "><a href="{%url 'hotel_view' hotel.id %}" style="text-decoration: none;">View deatails</a>  ></div>
           </div>
         </div>
-        <div class="row search-card-result ">
-          <div class="col-md-3 ">
-            <img class="img-fluid" src="http://placeimg.com/640/640/arch" alt="Card image cap">
-          </div>
-          <div class="col-md-5">
-            <h5>Choose The Best Plan For You</h5>
-            <div class="review">
-
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
-            </div>
-            <p>Join over 1 Million of users. Dignissimos asperiores vitae velit veniam</p>
-            <p>
-              <span class="badge badge-primary">8.5</span> Excellent (2323 reviews)</p>
-            <p>
-              <i class="fa fa-bath"></i>
-              <i class="fa fa-phone"></i>
-              <i class="fa fa-wifi"></i>
-              <i class="fa fa-tv"></i>
-            </p>
-          </div>
-          <div class="col-md-2 border-left text-center more-offers">
-            <p>place.com</p>
-            <p>
-              <s>£123</s>
-            </p>
-            <p>Place.com</p>
-            <p>£65</p>
-            <p class="border-top additional">More Deals from £65</p>
-          </div>
-          <div class="col-md-2 border-left text-center more-offers">
-            <h4>
-              <span class="badge badge-success">Top Deal</span>
-            </h4>
-            <div class="text-warning">
-              <p>place.com</p>
-              <p>
-                <s>£123</s>
-              </p>
-
-            </div>
-            <div class="text-success">
-              <p>Place.com</p>
-              <h5>£65</h5>
-            </div>
-
-            <div class="btn btn-success">View deal ></div>
-          </div>
-        </div> 
+         {%endfor%}
       </div>
     </div>
 
@@ -322,14 +287,7 @@
 </section> -->
 <style>
   /* grouped css attributes via type */
-body {
-  /* font-family: "Lato", Arial, sans-serif;
-  font-weight: 400;
-  font-size: 50px;
-  line-height: 1.7;
-  background: #fff;
-  color: #777; */
-}
+
 
 /* nav */
 nav {
@@ -984,7 +942,7 @@ section{
 .hero{
     width: 100%;
     height: 50vh;
-    background: url("/static/images/hero_background.jpg") center no-repeat;
+    /* background: url("/static/images/hero_background.jpg") center no-repeat; */
     background-size: cover;
     display: flex;
     align-items: center;
@@ -994,16 +952,7 @@ section{
 
 }
 
-.hero::before{
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: inherit;
-    height: inherit;
-    background-color:var(--purple-transparent-alt);
-    z-index: -1;
-}
+
 .main-heading{
     color: white;
     line-height: 1;
@@ -1148,6 +1097,46 @@ section{
         margin-left: 1.5rem;
     }
 
+ /* Dropdown Button */
+ .dropbtn {
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  }
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #ddd;}
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown:hover .dropbtn {background-color: #3e8e41;} 
 
 </style>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

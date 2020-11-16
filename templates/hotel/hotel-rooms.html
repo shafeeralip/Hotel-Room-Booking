@@ -184,8 +184,34 @@ img {vertical-align: middle;}
 
                         <td>
                           <ul>
-                            {%for feature in features %}
-                            <li></li>
+                            {%for room_features in room.room_features_set.all %}
+                              {% if room_features.Free_wifi == True %}
+                            <li>FREE Wifi</li>
+                            {%endif%}
+                            {% if room_features.king_size_bed == True %}
+                            <li>king size bed</li>
+                            {%endif%}
+                            {% if room_features.TV == True %}
+                            <li>TV</li>
+                            {%endif%}
+                            {% if room_features.Bath_Tube == True %}
+                            <li>Bath Tube</li>
+                            {%endif%}
+                            {% if room_features.Welcome_bottle == True %}
+                            <li>Welcome bottle</li>
+                            {%endif%}
+                            {% if room_features.Breakfast == True %}
+                            <li>Breakfast</li>
+                            {%endif%}
+                            {% if room_features.Lunch == True %}
+                            <li>Lunch</li>
+                            {%endif%}
+                            {% if room_features.Dinner == True %}
+                            <li>Dinner</li>
+                            {%endif%}
+
+                            {%endfor%}
+                            
                           </ul>
                         </td>
                         <td>{{room.room_available}}</td>

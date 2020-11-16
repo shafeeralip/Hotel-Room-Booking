@@ -5,12 +5,14 @@ import requests
 from django.contrib.auth.models import auth,User
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
+from admn.models import *
 # Create your views here.
 
 
 
 
 def home(request):
+    
     return render(request,'user/index.html')
 
 
@@ -187,12 +189,23 @@ def mobile_login(request):
 
     
 
-def hotel_view(request):
-    return render(request,'user/hotel_view.html')
+def hotel_view(request,id):
+    hotel=Hoteladmin.objects.get(id=id)
+    rooms=Rooms.objects.filter(hotel=hotel)
+    context={'hotel':hotel,'rooms':rooms}
+    return render(request,'user/hotel_view.html',context)
 
 def booking(request):
     return render(request,'user/booking.html')
 
 
-def hotel_list(request):
-    return render (request,'user/hotel_listing.html')
+def hotel_list(request,city):
+    city_name=city
+    hotels= Hoteladmin.objects.filter(location=city)
+    
+    
+    context={'city_name':city_name,'hotels':hotels}
+
+
+
+    return render (request,'user/hotel_listing.html',context)

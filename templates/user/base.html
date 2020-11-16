@@ -10,6 +10,7 @@
     <!--Font awesome CDN-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'user/home/css/styles.css' %}">
+    
 </head>
 <body>
 
@@ -42,7 +43,7 @@
 
                 <li class="nav-item">
                     <div class="dropdown">
-                        <button class="dropbtn"><i class="fa fa-user fa-2x" aria-hidden="true"></i></button>
+                        <a class="dropbtn"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a>
                         <div class="dropdown-content">
                           <a href="#">Profile</a>
                           <a href="{% url 'user_logout' %}">LOGOUT</a>
@@ -98,5 +99,6 @@
 
 
     <script src="{% static 'user/home/js/main.js' %}"></script>
+    
 </body>
 </html>
