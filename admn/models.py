@@ -1,6 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 # Create your models here.
+
+
+class Customer(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE, null=True,blank=True)
+    name=models.CharField(max_length=200,null=True)
+    email=models.CharField(max_length=200,null=True)
+    mobile=models.BigIntegerField()
 
 class Hoteladmin(models.Model):
 
@@ -39,14 +48,6 @@ class Hoteladmin(models.Model):
             
 
             
-            
-
-
-
-    
-
-
-
 
     
 
@@ -93,6 +94,16 @@ class Room_image(models.Model):
     image=models.ImageField(null=True ,blank=True)
 
 
+
+
+class Booking(models.Model):
+    customer=models.ForeignKey(Customer,on_delete=models.SET_NULL,null=True,blank=True)
+    hotel=models.ForeignKey(Hoteladmin,on_delete=models.SET_NULL,null=True,blank=True)
+    room=room=models.ForeignKey(Rooms,on_delete=models.SET_NULL,null=True,blank=True)
+    check_in=models.DateField()
+    check_out=models.DateField()
+    complete=models.BooleanField(default=False,null=True,blank=True)
+    total_price=models.BigIntegerField()
 
 
 

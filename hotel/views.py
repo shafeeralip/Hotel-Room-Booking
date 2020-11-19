@@ -340,30 +340,121 @@ def room_edit(request,id):
         room.sleeps=request.POST['sleeps']
         room.room_price=request.POST['room_price']
         room.room_available=request.POST['available_room']
+        features=request.POST.getlist('features')
+        print(features)
+        images=request.FILES.getlist('file[]')
+
+
+        for feature in features:
+            if feature == 'Free_wifi':
+                room_features.Free_wifi = True
+                break
+            else:
+                room_features.Free_wifi = False
+        for feature in features:
+
+            if feature =='king_size_bed':
+                room_features.king_size_bed = True
+                break
+            else:
+                room_features.king_size_bed = False
+
+        for feature in features:
+
+            if feature=='TV':
+                room_features.TV = True
+                break
+            else:
+                room_features.TV = False
+
+        for feature in features:
+            
+            if feature=='Bath_Tube':
+                room_features.Bath_Tube = True
+                break
+            else:
+                room_features.Bath_Tube = False
+        for feature in features:
+
+            if feature=='Safe_box':
+                room_features.Safe_box = True
+                break
+            else:
+                room_features.Safe_box = False
+
+        for feature in features:
+
+            if feature=='Welcome_bottle':
+                room_features.Welcome_bottle = True
+                break
+            else:
+                room_features.Welcome_bottle = False
+            
+
+        foods=request.POST.getlist('food')
+        print(foods)
+
+        for food in foods:
+
+            if food=='Breakfast':
+                room_features.Breakfast = True
+                break
+            else:
+                room_features.Breakfast = False
+        
+        for food in foods:
+
+            if food =='Lunch':
+                room_features.Lunch = True
+                break
+            else:
+                room_features.Lunch = False
+
+        for food in foods:
+
+            if food == 'Dinner':
+                room_features.Dinner = True
+                break
+            else:
+                room_features.Dinner = False
+
+           
+           
+        room_features.save();
+
+
+        for image in images:
+            fs=FileSystemStorage()
+            file_path=fs.save(image.name,image)
+            room_image=Room_image(room=room,image=file_path)
+            room_image.save();
+
+
+
 
        
-        if 'image1' not in request.POST:
-            room.room_image1=request.FILES.get('image1')
+        # if 'image1' not in request.POST:
+        #     room.room_image1=request.FILES.get('image1')
            
              
 
-        else:
-           room.room_image1=room.room_image1
-        if 'image2' not in request.POST:
-            room.room_image2=request.FILES.get('image2')
+        # else:
+        #    room.room_image1=room.room_image1
+        # if 'image2' not in request.POST:
+        #     room.room_image2=request.FILES.get('image2')
                 
                     
 
-        else:
-            room.room_image2=room.room_image2
+        # else:
+        #     room.room_image2=room.room_image2
         
-        if 'image3' not in request.POST:
-            room.room_image3=request.FILES.get('image3')
+        # if 'image3' not in request.POST:
+        #     room.room_image3=request.FILES.get('image3')
                 
                     
 
-        else:
-            room.room_image3=room.room_image3
+        # else:
+        #     room.room_image3=room.room_image3
 
 
         room.save();

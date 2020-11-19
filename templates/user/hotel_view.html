@@ -143,7 +143,7 @@ top: 0px;
     <!-- End Header =============================================== -->
     
 	<!-- SubHeader =============================================== -->
-    <div class="parallax-window" id="booking" data-parallax="scroll" style="background: url('{{hotel.imageURL}}') ;"  data-natural-width="1400" data-natural-height="550">
+    <div class="parallax-window" id="booking" data-parallax="scroll" style="background: url('{{hotel.imageURL}}') center no-repeat ;"  data-natural-width="1400" data-natural-height="550">
         <div id="subheader_home">
             <div id="sub_content">
                 <div id="book_container">
@@ -318,32 +318,77 @@ top: 0px;
                                     
 
                     </div>
+                    {%for room_features in room.room_features_set.all %}
                     <div class="col-md-5 room_list_desc">
-                    	<h3>{{room.room_type}}</h3>
+                        <h3>{{room.room_type}}</h3>
+                        <p>{{room.sleeps}} Bed</p>
                         <ul>
+                            
+                            {% if room_features.king_size_bed == True %}
                         	<li>
                             <div class="tooltip_styled tooltip-effect-4">
                             	<span class="tooltip-item"><i class="icon_set_2_icon-104"></i></span>
                                 	<div class="tooltip-content">King size bed</div>
-                              </div>
+                            </div>
                               </li>
+                           
+                              {%endif%}
+                              {% if room_features.Bath_Tube == True %}
                             <li>
                             <div class="tooltip_styled tooltip-effect-4">
                             	<span class="tooltip-item"><i class="icon_set_2_icon-118"></i></span>
                                 	<div class="tooltip-content">Shower</div>
                               </div>
                               </li>
+                              {%endif%}
+                              {% if room_features.TV == True %}
                             <li>
                             <div class="tooltip_styled tooltip-effect-4">
                             	<span class="tooltip-item"><i class="icon_set_2_icon-116"></i></span>
                                 	<div class="tooltip-content">Plasma TV</div>
                               </div>
                               </li>
+                              {%endif%}
+                              {% if room_features.Safe_box == True %}
+                              <li>
+
+                              <div class="tooltip_styled tooltip-effect-4">
+                            	<span class="tooltip-item"><i class="icon_set_2_icon-106"></i></span>
+                                	<div class="tooltip-content">Safe box</div>
+                              </div>
+                              </li>
+                              {%endif%}
+                              {% if room_features.Welcome_bottle == True %}
+                              <li>
+                                <div class="tooltip_styled tooltip-effect-4">
+                                  <span class="tooltip-item"><i class="icon_set_1_icon-15"></i></span>
+                                      <div class="tooltip-content">Welcome bottle</div>
+                                </div>
+                                </li>
+                                {%endif%}
+                                {% if room_features.Bath_Tube == True %}
+                                <li>
+                                    <div class="tooltip_styled tooltip-effect-4">
+                                      <span class="tooltip-item"><i class="icon_set_2_icon-111"></i></span>
+                                          <div class="tooltip-content">Bath Tube</div>
+                                    </div>
+                                    </li>
+                                    {%endif%}
+                                    
                         </ul>
-                        <div class="price">from <strong>{{room.room_price}}</strong> /night<small>Breakafst included</small></div>
-                        <a href="{%url 'booking' %}"> <input type="submit" value="Book The Room" class="btn_1" id="submit-booking"> </a>
+                        <div class="price">from <strong class="priceroom">{{room.room_price}}</strong> /night<small>{% if room_features.Breakfast == True %}Breakafst {%endif%}{% if room_features.Lunch == True %} Lunch{%endif%}{% if room_features.Dinner == True %} Dinner {%endif%} included</small></div>
+                        <div class="form-group">
+                            <h3 for="sel1">Select Room:</h3>
+                            <select class="form-control roomselect " id="sel1" data-roomid="{{room.id}}" data-roomprice='{{room.room_price}}' >
+                                <option value=0>0</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                            </select>
+                          </div> 
                     </div>
-                   
+                    {%endfor%}
                     </div>
                 </div>{%endfor%}<!-- End row room -->  
                 
@@ -373,15 +418,47 @@ top: 0px;
 					<li><i class="icon_set_1_icon-27"></i>Parking</li>{%endif%}{%endfor%}
 				</ul>
 			</div>
-			<div class="box_style_2">
-				<i class="icon_set_1_icon-90"></i>
-				<h4>Need help? Call us</h4>
-				<a href="tel://004542344599" class="phone">+91 7559953783</a>
-				<small>Monday to Friday 9.00am - 7.30pm</small>
-			</div>
+			<div class=" ">
+                <div>
+                    <h2>BOOKING INFO</h2>
+                  </div>
+                  <form method="POST" action="" >
+                      {%csrf_token%}
+                    <input type="hidden" data-form-email="true">
+                    <div class="form-group">
+                        <input class="startDate1 form-control datepick" type="text" data-field="date" data-startend="start" data-startendelem=".endDate1" readonly placeholder="check_in" id="check_in" name="check_in" required>
+                    </div>
+                    <div class="form-group">
+                        <input class="endDate1 form-control datepick" type="text" data-field="date" data-startend="end" data-startendelem=".startDate1" readonly placeholder="check_out" id="check_out" name="check_out" required >
+                    </div>
+                    <div class="form-group">
+                       <label  for="">Adults </label>
+                        <div class="qty-buttons"  style="align-content: center;">
+                            <input type="button" value="-" class="qtyminus" name="adults">
+                            <input type="text" name="adults" id="adults" value="" class="qty form-control" placeholder="0" required readonly>
+                            <input type="button" value="+" class="qtyplus" name="adults">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h3 for="">Rooms: <span id="roomscount" style="color: red;">0</span></h3>
+                     
+                    </div>
+                    <div class="form-group">
+                        <h3 for="">Total Price: <span id="roomsprice" style="color: red;">0</span></h3>
+                     
+                    </div>
+                    <div>
+                        <input type="submit" class="btn btn-lg btn-danger" value="CONTINUE BOOKING" >
+                      <!-- <button type="submit" class="btn btn-lg btn-danger">CONTINUE BOOKING</button> -->
+                    </div>
+                  </form>
+                </div>
+              
+            </div>
+				
+		
 
-            </div>
-            </div>
+            
             
         </div><!-- End row -->        
     </div><!-- End container -->
@@ -438,19 +515,20 @@ top: 0px;
         </div><!-- End promo_full_wp -->
     </div><!-- End promo_full -->
     </section><!-- End section -->    
-    
+</div>
     <div id="dtBox"></div><!-- End datepicker -->
     
     <!-- End footer -->
 
 <div id="toTop"></div><!-- Back to top button -->
-        
+        <!-- main scripts -->
+        <script src="{% static 'user/hotel_view/js/main.js' %}"></script>
 <!-- COMMON SCRIPTS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script src="{% static 'user/hotel_view/js/jquery-1.11.2.min.js'%}"></script>
-<script src="{% static 'user/hotel_view/js/common_scripts_min.js'%}"></script>
+<!-- <script src="{% static 'user/hotel_view/js/common_scripts_min.js'%}"></script> -->
 <script src="{% static 'user/hotel_view/assets/validate.js'%}"></script>
 <script src="{% static 'user/hotel_view/js/functions.js'%}"></script>
 
