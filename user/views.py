@@ -6,12 +6,21 @@ from django.contrib.auth.models import auth,User
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
 from admn.models import *
+import razorpay
+import string
+import random
 # Create your views here.
 
 
 
 
 def home(request):
+    if request.method=='POST':
+
+        user=request.user
+        name=request.user.username
+        email=request.user.email
+        customer,created =Customer.objects.get_or_create(user=user,name=name,email=email)
     
     return render(request,'user/index.html')
 
@@ -87,8 +96,8 @@ def register_user(request):
         email=request.POST['email']
         password=request.POST['password']
         number=request.POST['mobile']
-        otp=request.POST['otp']
-        dicti = {"username":username,"email":email}
+        # otp=request.POST['otp']
+        dicti = {"username":username,"email":email,"mobile":number}
         if User.objects.filter(username=username).exists():
             messages.info(request,'username already taken')
             return render(request, "user/user_login.html", dicti)
@@ -99,37 +108,43 @@ def register_user(request):
             messages.info(request,'mobail number already taken')
             return render(request, "user/user_login.html", dicti)
         else:
-            id=request.session['id']
-            url = "https://d7networks.com/api/verifier/verify"
+            # id=request.session['id']
+            # url = "https://d7networks.com/api/verifier/verify"
 
-            payload = {'otp_id': id,
-            'otp_code': otp}
-            files = [
+            # payload = {'otp_id': id,
+            # 'otp_code': otp}
+            # files = [
 
-            ]
-            headers = {
-            'Authorization': 'Token 530907b026ae0c827d992f6842a80273b1656205'
-            }
+            # ]
+            # headers = {
+            # 'Authorization': 'Token 530907b026ae0c827d992f6842a80273b1656205'
+            # }
 
-            response = requests.request("POST", url, headers=headers, data = payload, files = files)
+            # response = requests.request("POST", url, headers=headers, data = payload, files = files)
 
-            print(response.text.encode('utf8'))
-            data=response.text.encode('utf8')
-            datadict=json.loads(data.decode('utf-8'))
-            status=datadict['status']
+            # print(response.text.encode('utf8'))
+            # data=response.text.encode('utf8')
+            # datadict=json.loads(data.decode('utf-8'))
+            # status=datadict['status']
             
-            if status=='success':
-                user=User.objects.create_user(username=username,email=email,password=password,last_name=number,first_name=password)
-                user.save();
+            # if status=='success':
 
-                login(request,user)
+            
+            letter = string.ascii_letters
+            result = ''.join(random.choice(letter) for i in range(8))
+            user=User.objects.create_user(username=username,email=email,password=password,last_name=number,first_name=password)
+            customer=Customer.objects.create(user=user,name=username,email=email,reff_code=result)
+            user.save();
+            customer.save();
 
-                return redirect(home)
+            login(request,user,backend='django.contrib.auth.backends.ModelBackend')
 
-            else:
+            return redirect(home)
+
+            # else:
                
-                messages.info(request,'incorrect otp')
-                return render(request,'user/user_login.html')
+            #     messages.info(request,'incorrect otp')
+            #     return render(request,'user/user_login.html')
     return render(request,'user/user_login.html')
 
 
@@ -178,10 +193,6 @@ def mobile_login(request):
             messages.info(request,'mobail is not registerd')
             return render(request,'user/mobile_login.html')
 
-
-
-       
-
     
     return render(request,'user/mobile_login.html')
 
@@ -195,8 +206,89 @@ def hotel_view(request,id):
     context={'hotel':hotel,'rooms':rooms}
     return render(request,'user/hotel_view.html',context)
 
-def booking(request):
+def booking(request,id):
+    hotel=Hoteladmin.objects.get(id=id)
+    rooms=Rooms.objects.filter(hotel=hotel)
+
+    
+    
+    if request.method =='POST':
+        print("hellllloo")
+        
+        try:
+            check_in=request.POST['checkin']
+            check_out=request.POST['check_out']
+        except:
+            pass
+
+        
+        total_guest=request.POST['adults']
+       
+
+        if check_in=='' or check_out=='' or total_guest=='' :
+
+            messages.info(request,"please fill details and select rooms")
+            context={'hotel':hotel,'rooms':rooms}
+
+            return render(request,'user/hotel_view.html',context)
+
+        else:
+            
+            user = User.objects.get(username=request.user.username)
+            ref=reffreal_offer.objects.all()
+            booktotal=0
+            prev_book=''
+           
+            customer=Customer.objects.get(user=user)
+            print("jkds",customer)
+            
+            booking=Booking.objects.get(hotel=hotel,customer=customer,complete=False)
+            if Booking.objects.filter(customer=customer,complete=True).exists():
+                prev_book=True
+                booktotal = booking.total_price
+            else:
+                prev_book=False
+                for off in ref:
+                    if off.offer_type == 'OfferByPercentage' :
+                        booktotal=booking.totalprice - (booking.total_price/off.ref_discount)
+
+                    elif off.offer_type == 'OfferByAmount':
+                        booktotal=booking.totalprice - off.ref_price
+
+           
+            bookedrooms=booking.roombooked_set.all()
+            
+
+            date= booking.check_out - booking.check_in
+            for bkroom in bookedrooms:
+                images=bkroom.room.room_image_set.all()
+                for image in images:
+                    image=image.image
+                    break 
+            
+
+            client=razorpay.Client(auth=("rzp_test_7i01eG7knm1628","K9H5VQX0OHOsFwPMDY8DCMzp"))
+            order_currency='INR'
+            order_receipt = 'order-rctid-11'
+            totalprice=booking.total_price * 100
+
+            response = client.order.create(dict(
+                amount=totalprice,
+                currency=order_currency,
+                receipt=order_receipt,
+                payment_capture='0'
+            
+            ))
+            order_id=response['id']
+
+            bookdetails={'booking':booking,'rooms':bookedrooms,'date':date,'order_id':order_id,'booktotal':booktotal,'ref':ref,'prev_book':prev_book}
+
+            return render(request,'user/booking.html',bookdetails)
+
     return render(request,'user/booking.html')
+    
+
+    
 
 
 def hotel_list(request,city):
@@ -209,3 +301,132 @@ def hotel_list(request,city):
 
 
     return render (request,'user/hotel_listing.html',context)
+
+
+
+def booking_details(request):
+    value = json.loads(request.body)
+    room_details=value['room_detail']
+    booking_rooms=[]
+    for room_detail in room_details:
+        
+        if int(room_detail['roomscount']) > 0:
+            booking_rooms.append(room_detail)
+    print("hello",booking_rooms)
+    
+    if request.user.is_authenticated:
+        user=request.user
+        username=request.user.username
+        email=request.user.email
+
+        
+        customer,created =Customer.objects.get_or_create(user=user,name=username,email=email)
+        for booking_room in booking_rooms:
+            print(booking_room)
+            hotel=Hoteladmin.objects.get(id=booking_room['hotelid'])
+            room=Rooms.objects.get(id=booking_room['roomid'])
+            print('date',booking_room['checkin'])
+            checkindates=booking_room['checkin'].split("-")
+            checkin=checkindates[2]+"-"+checkindates[0]+"-"+checkindates[1]
+            checkoutdates=booking_room['checkout'].split("-")
+            checkout=checkoutdates[2]+"-"+checkoutdates[0]+"-"+checkoutdates[1]
+
+
+            booking,created=Booking.objects.get_or_create(customer=customer,hotel=hotel,complete=False)
+            booking.total_price=int(booking_room['totalprice'])
+            booking.check_in=checkin
+            booking.check_out=checkout
+            booking.total_guest=booking_room['totalguest']
+            roombooked,created=Roombooked.objects.get_or_create(booking=booking,room=room)
+            roombooked.quantity=int(booking_room['roomscount'])
+            booking.save()
+            roombooked.save()
+       
+        
+    
+    return JsonResponse('items created' ,safe=False)
+
+
+def user_profile(request):
+    customer=request.user.customer
+    value=''
+    total_referd=Customer.objects.filter(refferd_user=customer.name).count()
+    ref=reffreal_offer.objects.all()
+    for off in ref:
+        wallet= total_referd * off.referd_person_discount
+    
+    if Booking.objects.filter(customer=customer).exists():
+        value=False
+    else:
+        value=True
+
+    print("cc",booking)
+
+    return render(request,'user/useraccount.html',{'customer':customer,'wallet':wallet,'value':value})
+
+
+def report(request,id,pay):
+    print(pay)
+    booking=Booking.objects.get(id=id)
+    date=booking.check_out - booking.check_in
+    if request.method =='POST':
+        name=request.POST['name']
+        phone=request.POST['phone']
+        email=request.POST['email']
+        if request.user.is_authenticated:
+            booking.complete=True
+            if pay=='COD':
+                booking.payment_status='Pay at hotel'
+            elif pay=='RAZOR':
+                booking.payment_status='RAZORPAY'
+            elif pay== 'PAY':
+                booking.payment_status='PAYPAL'
+
+            booking.save();
+    context={"booking":booking,'date':date}
+    
+    return render(request,'user/report.html',context)
+
+def reffral_signup(request,referalcode):
+    if request.user.is_authenticated:
+        return redirect(home)
+    elif request.method=='POST':
+        username=request.POST['username']
+        email=request.POST['email']
+        password=request.POST['password']
+        number=request.POST['mobile']
+        # otp=request.POST['otp']
+        dicti = {"username":username,"email":email,"mobile":number,'refcode':referalcode}
+        if User.objects.filter(username=username).exists():
+            messages.info(request,'username already taken')
+            return render(request, "user/referalreg.html", dicti)
+        elif User.objects.filter(email=email).exists():
+            messages.info(request,'email already taken')
+            return render(request, "user/referalreg.html", dicti)
+        elif User.objects.filter(last_name=number).exists():
+            messages.info(request,'mobail number already taken')
+            return render(request, "user/referalreg.html", dicti)
+        else:
+            letter = string.ascii_letters
+            result = ''.join(random.choice(letter) for i in range(8))
+            if Customer.objects.filter(reff_code=referalcode).exists():
+                
+                ref_user=Customer.objects.get(reff_code=referalcode)
+                user=User.objects.create_user(username=username,email=email,password=password,last_name=number,first_name=password)
+                customer=Customer.objects.create(user=user,name=username,email=email,reff_code=result,refferd_user=ref_user.name)
+
+                user.save();
+                customer.save();
+
+                login(request,user,backend='django.contrib.auth.backends.ModelBackend')
+
+                return redirect(home)
+            else:
+               
+                messages.info(request,'Not a valid referral Id')
+                return render(request,'user/referalreg.html',dicti)
+
+
+
+    return render(request,'user/referalreg.html',{'refcode':referalcode})
+

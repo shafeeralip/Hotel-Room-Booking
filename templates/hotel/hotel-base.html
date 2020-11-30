@@ -47,27 +47,24 @@
         <!-- ============================================================== -->
         <header class="topbar" data-navbarbg="skin5">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-                <div class="navbar-header" data-logobg="skin6">
+                <div class="" data-logobg="skin6">
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href="dashboard.html">
+                    
                         <!-- Logo icon -->
-                        <b class="logo-icon">
+                       
                             <!-- Dark Logo icon -->
-                           <img src="/static/images/logo.png" alt="homepage" /> 
-                        </b>
+                            
+                         <h1 style="color:white;">{{hotel.hotel_name}}</h1>
+                           
                         
+                      
                     
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        <span class="logo-text">
-                            <!-- dark Logo text -->
-                            
-                            
-                           
-                        </span>
-                    </a>
+                       
+                 
                     <!-- ============================================================== -->
                     <!-- End Logo -->
                     <!-- ============================================================== -->
@@ -76,7 +73,7 @@
                     <!-- ============================================================== -->
                     <a class="nav-toggler waves-effect waves-light text-dark d-block d-md-none"
                         href=""><i class="ti-menu ti-close"></i></a>
-                </div>
+                </div>   </a>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
                 <!-- ============================================================== -->
@@ -147,10 +144,17 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="basic-table.html"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'hotel_booked' hotel.id %}"
+                                aria-expanded="false">
+                                <i class="fas fa-book" aria-hidden="true"></i>
+                                <span class="hide-menu">Bookings</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{%url 'hotel_user' hotel.id %}"
                                 aria-expanded="false">
                                 <i class="fa fa-user" aria-hidden="true"></i>
-                                <span class="hide-menu">customers</span>
+                                <span class="hide-menu">Customers</span>
                             </a>
                         </li>
                         <li class="sidebar-item">

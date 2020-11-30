@@ -1,0 +1,51 @@
+{% load static %}
+{% load socialaccount %}
+{% providers_media_js %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Travelix</title>
+    <!--Font awesome CDN-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'user/login/css/main.css' %}">
+</head>
+<body>
+    
+    <div class="hero">
+       
+
+        
+        <div class="form-box">
+            <center><h3 style="color:violet;">REGISTER</h3></center>
+          <form id="login" class="input-group" method="POST" action="{% url 'reffral_signup' refcode %}">
+            
+                
+            {% csrf_token %}
+            <input type="text" class="input-field" name="username" value="{{username}}" placeholder="Username" required>
+            <input type="email" class="input-field" name="email" placeholder="Email" value="{{email}}" required>
+            
+            <input type="text" class="input-field" name="password" placeholder="Password" required>
+            <div class="mobailfield" style="display: flex;">
+              <input type="text" class="input-field" id="mobile_reg" name="mobile" placeholder="Mobail" pattern="[6-9]{1}[0-9]{9}" required></div>
+            <!--
+                <a href="" ><button class="submit-btn" id="verify">verify</button></a>
+                </div>
+                <input type="hidden" id="otp" name="otp" class="input-field" placeholder="OTP" required> -->
+                <span class="check-box"></span>
+            <button class="submit-btn" type="submit" style=" margin-top: 25px;">Register</button>
+            {%for message in messages %}
+                <p style="color: red;">{{message}}</p>
+            {%endfor%}
+            
+          </form>
+        </div>
+      </div>
+      
+<script src="{% static 'user/login/js/main.js' %}"></script>
+<script src="{% static 'user/login/js/otp.js' %}"></script>
+</body>
+</html>

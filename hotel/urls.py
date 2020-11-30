@@ -12,6 +12,10 @@ urlpatterns=[
     path('hotel_update/<int:id>/',views.hotel_update,name='hotel_update'),
     path('room_edit/<int:id>/',views.room_edit,name='room_edit'),
     path('room_delete/<int:id>/',views.room_delete,name='room_delete'),
+    path('hotel_user/<int:id>/',views.hotel_user,name='hotel_user'),
+    path('hotel_booked/<int:id>/',views.hotel_booked,name='hotel_booked'),
+    path('booking_detail/<int:id>/',views.booking_detail,name='booking_detail'),
+        path('confirm/<int:id>/<str:value>/',views.confirm,name='confirm'),
 
 
 ]

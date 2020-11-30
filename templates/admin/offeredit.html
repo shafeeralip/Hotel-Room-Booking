@@ -1,0 +1,73 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block heading %}
+<span class='location'>OFFER</span>
+{%endblock%}
+{% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<div class="container">
+<form action="{% url 'offeredit' off.id %}" method="POST">
+  {% csrf_token %}
+    <div class="form-group">
+        <label >Example select</label>
+        <select class="form-control" name="offtype" id="offertype">
+          <option>{{off.offer_type}}</option>
+          <option>OfferByPercentage</option>
+          <option>OfferByAmount</option>
+          
+        </select>
+      </div>
+      {% if off.offer_type == 'OfferByAmount' %}
+    <div class="form-group" id="price" style="display: block;">
+      <label >Ref Price Discount</label>
+      <input type="text" name="refprice" value="{{off.ref_price}}" class="form-control" id="" >
+    </div>
+    <div class="form-group" id="discount" style="display: none;">
+      <label>Ref Percentage Discount</label>
+      <input type="text" name="refdiscount" value="{{off.ref_discount}}" class="form-control" id="" >
+  </div>
+    {% else %}
+    <div class="form-group" id="discount"block style="display: block;">
+        <label>Ref Percentage Discount</label>
+        <input type="text" name="refdiscount" value="{{off.ref_discount}}" class="form-control" id="" >
+    </div>
+    <div class="form-group" id="price" style="display:none;">
+      <label >Ref Price Discount</label>
+      <input type="text" name="refprice" value="{{off.ref_price}}" class="form-control" id="" >
+    </div>
+    {% endif %}
+    <div class="form-group">
+        <label for="exampleInputPassword1">ORDER Maximum</label>
+        <input type="text" name="ordmaximum" value="{{off.order_maximum}}" class="form-control" id="" >
+    </div>
+    <div class="form-group">
+        <label >Refered Person Discount</label>
+        <input type="text" name="refpersondiscount" value="{{off.referd_person_discount}}" class="form-control" id="" >
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<script>
+var type=document.getElementById("offertype")
+
+type.addEventListener('change',function(){
+    var v = type.value
+    if(v == 'OfferByPercentage'){
+      document.getElementById("discount").style.display='block'
+      document.getElementById("price").style.display='none'
+
+
+
+    }
+    else if(v == 'OfferByAmount'){
+      document.getElementById("price").style.display='block'
+      document.getElementById("discount").style.display='none'
+      
+
+    }
+
+});
+</script>
+{% endblock %}

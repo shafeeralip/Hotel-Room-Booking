@@ -120,8 +120,8 @@ p{
   padding: 15px 0; 
 }
 
-button{
-  width: 100%;
+.button{
+  width: 50%;
   margin-top: 10px;
   padding: 10px;
   border: none;
@@ -130,85 +130,241 @@ button{
   color: #fff;
   font-size: 15px;
   font-weight: bold;
+  align-items: center;
+}
+.button:hover{
+  cursor: pointer;
+  background: #428a7d;
+}
+
+button{
+  width: auto;
+  background-color: white;
+  color: black;
+  
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 30px;
+  
+  font-size: 15px;
+  font-weight: bold;
+  align-items: center;
 }
 button:hover{
   cursor: pointer;
-  background: #428a7d;
+  background: #57ad9e;
 }
     </style>
     <div class="container">
         <div class="title">
-            <h2>Enter your details</h2>
+          
             
+            <h2>Booking details</h2>
+          
         </div>
       <div class="d-flex">
-        <form action="" method="">
+        {%  if request.user.is_authenticated %}
+        <form action="" method="POST">
+          {%csrf_token%}
           <p>We will use these details to share your booking information</p>
           <label>
             <span class="fname">Full Name <span class="required">*</span></span>
-            <input type="text" name="fname">
+            <input type="text" name="name" readonly value="{{booking.customer.name}}">
           </label>
           <label>
+            
             <span>Phone <span class="required">*</span></span>
-            <input type="tel" name="city"> 
+            <input type="tel" name="phone" value="{{user.last_name}}" readonly> 
           </label>
           <label>
             <span>Email Address <span class="required">*</span></span>
-            <input type="email" name="city"> 
+            <input type="email" name="email" value="{{booking.customer.email}}" readonly> 
           </label>
+          <div>
+            <button type="button" data-id="0" id="book" class="btn btn-primary" >Pay At Hotel</button>
+          </div>
+          <div>
+            <input type="hidden" onclick="window.myt()"  id="bk" class="button" >
+            
+          </div>
+          <div>
+            <button type="button" id="paynow" >PAY NOW</button>
+            <div class="box-element " style="display: none;" id="payment-info">
+              
+              <div id="paypal-button-container"></div>
+              <button id="rzp-button1" class="btn btn-success btn-block" style="background-color: #fe980f; width: 100%;">RazorPay</button>
+                           
+          </div>
+          </div>
+          
+         
         </form>
+{%else%}
+<form action="{%url report %}" method="">
+  <p>We will use these details to share your booking information</p>
+  <label>
+    <span class="fname">Full Name <span class="required">*</span></span>
+    <input type="text" name="name">
+  </label>
+  <label>
+    
+    <span>Phone <span class="required">*</span></span>
+    <input type="tel" name="phone"> 
+  </label>
+  <label>
+    <span>Email Address <span class="required">*</span></span>
+    <input type="email" name="email"> 
+  </label>
+  
+  
+  <a href="">
+  <button type="button">Book</button></a>
+</form>{%endif%}
+
         <div class="Yorder">
           <table>
             <tr>
-              <th colspan="2">HOTEL NAME</th>
+              <th colspan="2">{{booking.hotel.hotel_name}}</th>
               <th></th>
             </tr>
+            {% for bkroom in rooms %}
+            {%for images in bkroom.room.room_image_set.all %}
+            {%if forloop.first %}
             <tr>
-              <td>SPOT ON 72997 D C Palace</td>
+              <td><h5>{{bkroom.room.room_type}}</h5><h5>Price/night:{{bkroom.room.room_price}}</h5><br> selected rooms:{{bkroom.quantity}} </td>
               <td>
-                <img style="width: 100%; height: 100%;" src="static/images/room_1.jpg" alt="">
+                <img style="width: 100%; height: 100%;" src="{{images.image.url}}" alt="">
               </td>
             </tr>
+            {%endif%}
+            {%endfor%}
+            {%endfor%}
             <tr>
               <td>Rooms</td>
-              <td>5</td>
+              <td>{{booking.total_rooms}}</td>
             </tr>
             <tr>
               <td>guest</td>
-              <td>5</td>
+              <td>{{booking.total_guest}}</td>
             </tr>
             <tr>
-              <td>checkin</td>
-              <td>check out</td>
+              <td>Days</td>
+              <td>{{date.days}}</td>
             </tr>
             <tr>
-              <td>Price per room</td>
-              <td>5</td>
+              <td><h4>checkin</h4>{{booking.check_in}}</td>
+              <td style="color:black"><h4 >checkout</h4>{{booking.check_out}}</td>
             </tr>
+            {% if prev_book == 'False' %}
+              {% for off in ref %}
+              
+            <tr>
+              <td>Discount</td>
+              {% if off.offer_type == 'OfferByPercentage' %}
+              <td>{{off.ref_discount}}%</td>
+              {% else %}
+              <td>{{off.ref_price}}</td>
+              {% endif %}
+            </tr>
+            {% endfor %}
+            {% endif %}
+            
             <tr>
               <td>Total</td>
-              <td>25255</td>
+              <td>{{booktotal}}</td>
             </tr>
+           
           </table><br>
-          <!-- <div>
-            <input type="radio" name="dbt" value="dbt" checked> Direct Bank Transfer
-          </div>
-          <p>
-              Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.
-          </p> -->
-          <div>
-            <input type="radio" name="dbt" value="cd"> Cash on Delivery
-          </div>
-          <div>
-            <input type="radio" name="dbt" value="cd"> Paypal <span>
-            <img src="https://www.logolynx.com/images/logolynx/c3/c36093ca9fb6c250f74d319550acac4d.jpeg" alt="" width="50">
-            </span>
-          </div>
-          <a href="">
-          <button type="button">Book</button></a>
+          
+          
         </div><!-- Yorder -->
        </div>
       </div> 
 
 </body>
+<script>
+  var book=document.getElementById("book")
+  
+  book.addEventListener('click',function(){
+    document.getElementById("payment-info").style.display='none'
+    document.getElementById("bk").setAttribute('type','submit');
+    document.getElementById("bk").setAttribute('formaction','/report/{{booking.id}}/COD/');
+
+  })
+  window.myt=function(){
+    alert("booking is confirmed ")
+  }
+
+
+  var paynow=document.getElementById("paynow")
+  paynow.addEventListener("click",function(){
+    document.getElementById("bk").setAttribute('type','hidden');
+    document.getElementById("payment-info").style.display='block'
+  })
+
+</script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var total ='{{booking.total_price}}'
+    var payment_status='razorpay'
+    var options = {
+        "key": "rzp_test_7i01eG7knm1628", // Enter the Key ID generated from the Dashboard
+        "amount": total, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "INR",
+        "name": "Acme Corp",
+        "description": "Test Transaction",
+        "image": "https://example.com/your_logo",
+        "order_id": "{{order_id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "handler": function (response){
+           
+          window.location.href="/report/{{booking.id}}/RAZOR/"
+        },
+        "prefill": {
+            "name": "Gaurav Kumar",
+            "email": "gaurav.kumar@example.com",
+            "contact": "9999999999"
+        },
+        "notes": {
+            "address": "Razorpay Corporate Office"
+        },
+        "theme": {
+            "color": "#F37254"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    document.getElementById('rzp-button1').onclick = function(e){
+        rzp1.open();
+        e.preventDefault();
+    }
+    </script>
+     <script src="https://www.paypal.com/sdk/js?client-id=AYtodiSdVNbDP1Kn-G9ScgW79r5dczXhaDzz5gT8a1Jm-TB4tn9a5soO5rcNP7Q104W5s8iJoE7Es7ot&currency=USD&disable-funding=card"></script>
+     <script>
+         var total ='{{booking.total_price}}'
+        
+         // Render the PayPal button into #paypal-button-container
+         paypal.Buttons({
+             
+ 
+             // Set up the transaction
+             createOrder: function(data, actions) {
+                 return actions.order.create({
+                     purchase_units: [{
+                         amount: {
+                             value: parseFloat(total).toFixed(2)
+                         }
+                     }]
+                 });
+             },
+ 
+             // Finalize the transaction
+             onApprove: function(data, actions) {
+                 return actions.order.capture().then(function(details) {
+                  window.location.href="/report/{{booking.id}}/PAY/"
+                 });
+             }
+ 
+ 
+         }).render('#paypal-button-container');
+     </script>
 </html>

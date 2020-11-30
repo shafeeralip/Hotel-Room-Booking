@@ -1,0 +1,113 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block heading %}
+<h1 class='location'>Create Hotel</h1>
+{%endblock%}
+{% block content %}
+
+    <link href="{% static 'admin/hotel-create-form/vendor/select2/select2.min.css' %}" rel="stylesheet" media="all">
+    <!-- <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all"> -->
+
+    <!-- Main CSS-->
+    <link href="{% static 'admin/hotel-create-form/css/main.css' %}" rel="stylesheet" media="all">
+
+
+<div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
+    <div class="wrapper wrapper--w790">
+        <div class="card card-5">
+            <div class="card-heading">
+                <h2 class="title">CREATE NEW HOTEL</h2>
+            </div>
+           
+            <div class="card-body">
+                {%for message in messages %}
+                <p style="color: red;text-align: center;">{{message}}</p>
+                {%endfor%}
+                <form method="POST" action="{% url 'hotel_edit' hotel.id %}">
+                    {%csrf_token%}
+                   
+                    <div class="form-row">
+                        <div class="name">Hotel name 
+                            
+                        </div>
+                        
+                        <div class="value">
+                            <div class="input-group">
+                                <input class="input--style-5" type="text" name="hotelname" value="{{hotel.hotel_name}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="name">user name </div>
+                        <div class="value">
+                            <div class="input-group">
+                                <input class="input--style-5" type="text" name="username" value="{{hotel.username}}">
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="form-row m-b-55">
+                        <div class="name">contact number</div>
+                        <div class="value">
+                            <div class="row row-refine">
+                                
+                                <div class="col-9">
+                                    <div class="input-group-desc">
+                                        <input class="input--style-5" type="tel" name="contactnumber" value="{{hotel.contact}}" pattern="[5-9]{1}[0-9]{9}">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="name">Location</div>
+                        <div class="value">
+                            <div class="input-group">
+                                <div class="rs-select2 js-select-simple select--no-search">
+                                    <select name="location" >
+                                       
+                                        <option>{{hotel.location}}</option>
+                                        <option>KOCHI</option>
+                                        <option>BENGALURE</option>
+                                        <option>GOA</option>
+                                        <option>MUMBAI</option>
+                                        <option>DELHI</option>
+                                    </select>
+                                    <div class="select-dropdown"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row m-b-55">
+                        <div class="name">Password</div>
+                        <div class="value">
+                            <div class="row row-refine">
+                                
+                                <div class="col-9">
+                                    <div class="input-group-desc">
+                                        <input class="input--style-5" type="password" name="password" value="{{hotel.password}}">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn--radius-2 btn--red" type="submit">UPDATE</button>
+                       
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+  <!-- Jquery JS-->
+  <script src="{% static 'admin/hotel-create-form/vendor/jquery/jquery.min.js' %}"></script>
+  <!-- Vendor JS-->
+  <script src="{% static 'admin/hotel-create-form/vendor/select2/select2.min.js' %}"></script>
+ 
+  <!-- Main JS-->
+  <script src="{% static 'admin/hotel-create-form/js/global.js' %}"></script>
+
+{%endblock%}

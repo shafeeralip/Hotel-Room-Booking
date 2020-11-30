@@ -35,14 +35,17 @@
        
         <li class="accordion"><a>HOTELS</a> <svg width="8" height="8" viewBox="0 0 24 24"><path fill="#fff" d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg></li>
         <div class="panel">
-        <li class="submenu"><a href='' class="submenutext">Show all Hotels</a></li>
+        <li class="submenu"><a href='{% url "hotel_view" %}' class="submenutext">Show all Hotels</a></li>
         <li class="submenu"><a href='{% url "create_hotel" %}' class="submenutext">Add Hotel</a></li>
        
         </div>
       
         <li>
-        <a href=''>USERS</a>
+        <a href='{%url "user_view" %}'>USERS</a>
         </li>
+        <li>
+            <a href='{%url "refoffer" %}'>OFFER</a>
+            </li>
         </div>
         <div class='center-content'>
         <div class='all-border'>

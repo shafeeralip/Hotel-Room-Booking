@@ -10,7 +10,27 @@
     <!--Font awesome CDN-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'user/home/css/styles.css' %}">
-   
+   <script>
+       var user ='{{request.user}}'
+   </script>
+   <script>
+        function getToken(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+        }
+        }
+    }
+    return cookieValue;
+    }
+    var csrftoken = getToken('csrftoken');
+</script>
 </head>
 <body>
 
@@ -45,7 +65,7 @@
                     <div class="dropdown">
                         <a class="dropbtn"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a>
                         <div class="dropdown-content">
-                          <a href="#">Profile</a>
+                          <a href="{%url 'user_profile' %}">Profile</a>
                           <a href="{% url 'user_logout' %}">LOGOUT</a>
                         </div>
                       </div> 
@@ -97,9 +117,14 @@
 
 </main> 
 
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxy/1.6.1/scripts/jquery.ajaxy.min.js" integrity="sha512-bztGAvCE/3+a1Oh0gUro7BHukf6v7zpzrAb3ReWAVrt+bVNNphcl2tDTKCBr5zk7iEDmQ2Bv401fX3jeVXGIcA==" crossorigin="anonymous"></script> -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxy/1.6.1/scripts/jquery.ajaxy.js" integrity="sha512-4WpSQe8XU6Djt8IPJMGD9Xx9KuYsVCEeitZfMhPi8xdYlVA5hzRitm0Nt1g2AZFS136s29Nq4E4NVvouVAVrBw==" crossorigin="anonymous"></script> -->
+
     <script src="{% static 'user/home/js/main.js' %}"></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     
 </body>
 </html>

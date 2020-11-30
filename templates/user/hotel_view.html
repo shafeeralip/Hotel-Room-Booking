@@ -3,7 +3,15 @@
 {% load static %}
 {% block content%}
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style>
+
+.clickable {
+     cursor: pointer;
+     }
     /* Styles the lightbox, removes it from sight and adds the fade-in transition */
 
 .lightbox-target {
@@ -120,6 +128,8 @@ max-width: 100%;
 top: 0px;
 }
 
+
+
 </style>
     <!-- Favicons-->
     <link rel="shortcut icon" href="{% static 'user/hotel_view/img/favicon.ico' %}" type="image/x-icon">
@@ -151,12 +161,12 @@ top: 0px;
                         <div id="group_1">
                             <div id="container_1">
                                 <label>Check in</label>
-                            	<input class="startDate1 form-control datepick" type="text" data-field="date" data-startend="start" data-startendelem=".endDate1" readonly placeholder="Arrival" id="check_in" name="check_in">
+                            	<!-- <input class="startDate1 form-control datepick" type="text" data-field="date" data-startend="start" data-startendelem=".endDate1" readonly placeholder="Arrival" id="check_in" name="check_in"> -->
                                 <span class="input-icon"><i class="icon-calendar-7"></i></span>
                             </div>
                             <div id="container_2">
                                 <label>Check Out</label>
-                                 <input class="endDate1 form-control datepick" type="text" data-field="date" data-startend="end" data-startendelem=".startDate1" readonly placeholder="Departure" id="check_out" name="check_out" >
+                                 <!-- <input class="endDate1 form-control datepick" type="text" data-field="date" data-startend="end" data-startendelem=".startDate1" readonly placeholder="Departure" id="check_out" name="check_out" > -->
                                 <span class="input-icon"><i class="icon-calendar-7"></i></span>
                             </div>
                         </div><!-- End group_1 -->
@@ -378,8 +388,9 @@ top: 0px;
                         </ul>
                         <div class="price">from <strong class="priceroom">{{room.room_price}}</strong> /night<small>{% if room_features.Breakfast == True %}Breakafst {%endif%}{% if room_features.Lunch == True %} Lunch{%endif%}{% if room_features.Dinner == True %} Dinner {%endif%} included</small></div>
                         <div class="form-group">
+                        
                             <h3 for="sel1">Select Room:</h3>
-                            <select class="form-control roomselect " id="sel1" data-roomid="{{room.id}}" data-roomprice='{{room.room_price}}' >
+                            <select class="form-control roomselect " id="sel1" data-roomid="{{room.id}}" data-roomprice='{{room.room_price}}' data-hotelid="{{hotel.id}}">
                                 <option value=0>0</option>
                               <option value="1">1</option>
                               <option value="2">2</option>
@@ -391,11 +402,6 @@ top: 0px;
                     {%endfor%}
                     </div>
                 </div>{%endfor%}<!-- End row room -->  
-                
-                 
-                
-               
-                
                
                 
             </div>
@@ -422,20 +428,34 @@ top: 0px;
                 <div>
                     <h2>BOOKING INFO</h2>
                   </div>
-                  <form method="POST" action="" >
+                  
+                  <div class="alert alert-info" id="message" style="display: none;">
+                    <strong>Info!</strong><span id="messageinput"> </span>
+                  </div>
+                  {% if error %}
+                  <div class="alert alert-info"  >
+                    <strong>Info!</strong><span >{{error}} </span>
+                  </div>
+                   {%endif%}
+
+                  
+                <form method="POST" action="{%url 'booking' hotel.id %}" >
                       {%csrf_token%}
                     <input type="hidden" data-form-email="true">
                     <div class="form-group">
-                        <input class="startDate1 form-control datepick" type="text" data-field="date" data-startend="start" data-startendelem=".endDate1" readonly placeholder="check_in" id="check_in" name="check_in" required>
+                        <input type="text" id="checkin" name="checkin" placeholder="checkin" readonly >
+                       
                     </div>
                     <div class="form-group">
-                        <input class="endDate1 form-control datepick" type="text" data-field="date" data-startend="end" data-startendelem=".startDate1" readonly placeholder="check_out" id="check_out" name="check_out" required >
+                        
+                        <input type="text" id="checkout" name="check_out" placeholder="checkout" readonly>
+                        
                     </div>
                     <div class="form-group">
                        <label  for="">Adults </label>
                         <div class="qty-buttons"  style="align-content: center;">
                             <input type="button" value="-" class="qtyminus" name="adults">
-                            <input type="text" name="adults" id="adults" value="" class="qty form-control" placeholder="0" required readonly>
+                            <input type="text" name="adults" id="adults" value="" class=" qty form-control" placeholder="0" required readonly>
                             <input type="button" value="+" class="qtyplus" name="adults">
                         </div>
                     </div>
@@ -444,14 +464,26 @@ top: 0px;
                      
                     </div>
                     <div class="form-group">
+                        <h3 for="">Days: <span id="totalDays" style="color: red;">0</span></h3>
+                     
+                    </div>
+                    <div class="form-group">
                         <h3 for="">Total Price: <span id="roomsprice" style="color: red;">0</span></h3>
                      
                     </div>
+                    
                     <div>
-                        <input type="submit" class="btn btn-lg btn-danger" value="CONTINUE BOOKING" >
+                        <button type='button' id="vj" onclick="window.mytest()" class="btn btn-lg btn-primary">check availability</button> 
+     
+                        <input type="hidden" id="continue" class="btn btn-lg btn-danger" value="CONTINUE BOOKING" >
                       <!-- <button type="submit" class="btn btn-lg btn-danger">CONTINUE BOOKING</button> -->
                     </div>
-                  </form>
+                    {%for message in messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {{message}}
+                      </div>
+                    {%endfor%}
+                </form>
                 </div>
               
             </div>
@@ -521,17 +553,54 @@ top: 0px;
     <!-- End footer -->
 
 <div id="toTop"></div><!-- Back to top button -->
-        <!-- main scripts -->
-        <script src="{% static 'user/hotel_view/js/main.js' %}"></script>
+<script>
+    $(function() {
+    $( "#checkin" ).datepicker({minDate : 0, dateFormat: 'mm-dd-yy'});
+    $("#checkout").attr("disabled", "disabled");
+    $( "#checkout" ).datepicker({minDate:0, dateFormat: 'mm-dd-yy'});
+    
+$( "#checkin" ).on("change",function(){
+        onCheckin();
+        
+     });
+    
+ });
+ 
+  function onCheckin(){
+  if($("#checkin").val() !== ""){
+    $("#checkout").removeAttr("disabled");
+    var dateMin = $('#checkin').datepicker("getDate");
+        var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(), dateMin.getDate() + 1);
+    $("#checkout").datepicker('option', 'minDate', new Date(rMin));
+  }else{
+  $("#checkout").val("");
+  $("#checkout").attr("disabled", "disabled");
+  }
+  }
+
+
+</script>
+
+
+<!-- main scripts -->
+<script src="{% static 'user/hotel_view/js/main.js' %}"></script>
 <!-- COMMON SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxy/1.6.1/scripts/jquery.ajaxy.min.js" integrity="sha512-bztGAvCE/3+a1Oh0gUro7BHukf6v7zpzrAb3ReWAVrt+bVNNphcl2tDTKCBr5zk7iEDmQ2Bv401fX3jeVXGIcA==" crossorigin="anonymous"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxy/1.6.1/scripts/jquery.ajaxy.js" integrity="sha512-4WpSQe8XU6Djt8IPJMGD9Xx9KuYsVCEeitZfMhPi8xdYlVA5hzRitm0Nt1g2AZFS136s29Nq4E4NVvouVAVrBw==" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script src="{% static 'user/hotel_view/js/jquery-1.11.2.min.js'%}"></script>
-<!-- <script src="{% static 'user/hotel_view/js/common_scripts_min.js'%}"></script> -->
+<script src="{% static 'user/hotel_view/js/common_scripts_min.js'%}"></script>
 <script src="{% static 'user/hotel_view/assets/validate.js'%}"></script>
 <script src="{% static 'user/hotel_view/js/functions.js'%}"></script>
 
 <script type="text/javascript" src="{% static 'user/hotel_view/js/DateTimePicker.js'%}"></script>
-<script type="text/javascript">$("#dtBox").DateTimePicker();</script>
+
+<!-- alert box boldin -->
+
+<script src="https://rawgithub.com/davidkonrad/toUnicodeVariant/master/toUnicodeVariant.js"></script>
+
+
+<!-- <script type="text/javascript">$("#dtBox").DateTimePicker();</script> -->
 {%endblock%}

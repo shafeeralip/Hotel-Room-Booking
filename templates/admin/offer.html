@@ -1,0 +1,46 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block heading %}
+<span class='location'>OFFER</span>
+{%endblock%}
+{% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<div class="containeer">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+
+            <th scope="col">REF DISCOUNT</th>
+            <th scope="col">OFFER TYPE</th>
+            <th scope="col">Discount</th>
+            <th scope="col">ORDER MAXIMUM</th>
+            <th scope="col">REFERED PERSON</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for off in ref %}
+          <tr {% if  off.ref_status == False %}  style="opacity: 25%;" {% endif %}>
+            <td>{{off.ref_discount}}</td>
+            <td>{{off.offer_type}}</td>
+            {% if off.offer_type == 'OfferByPercentage' %}
+            <td>{{off.ref_discount}}%</td>
+            {% else %}
+            <td>{{off.ref_price}} RS</td>
+            {% endif %}
+
+            <td>{{off.order_maximum}}</td>
+            <td>{{off.referd_person_discount}}</td>
+            <td><a href="{% url 'offeredit' off.id %}"><button type="button" class="btn btn-primary">EDIT</button></a></td>
+
+            {% if off.ref_status == True %}
+            <td><a href="{% url 'offerstatus' off.id 'False' %}"><button type="button" class="btn btn-danger">Disable</button></a></td>
+            {% else %}
+            <td><a href="{% url 'offerstatus' off.id 'True' %}"><button type="button" class="btn btn-primary">Enable</button></a></td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      
+</div>
+{% endblock %}

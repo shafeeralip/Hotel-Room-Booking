@@ -9,7 +9,9 @@ class Customer(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE, null=True,blank=True)
     name=models.CharField(max_length=200,null=True)
     email=models.CharField(max_length=200,null=True)
-    mobile=models.BigIntegerField()
+    reff_code = models.CharField(max_length=100, null= True)
+    refferd_user = models.CharField(max_length=150, null= True)
+
 
 class Hoteladmin(models.Model):
 
@@ -99,11 +101,47 @@ class Room_image(models.Model):
 class Booking(models.Model):
     customer=models.ForeignKey(Customer,on_delete=models.SET_NULL,null=True,blank=True)
     hotel=models.ForeignKey(Hoteladmin,on_delete=models.SET_NULL,null=True,blank=True)
-    room=room=models.ForeignKey(Rooms,on_delete=models.SET_NULL,null=True,blank=True)
-    check_in=models.DateField()
-    check_out=models.DateField()
+    date_booked=models.DateField(auto_now=True)
+    check_in=models.DateField(null=True,blank=True)
+    check_out=models.DateField(null=True,blank=True)
     complete=models.BooleanField(default=False,null=True,blank=True)
-    total_price=models.BigIntegerField()
+    total_price=models.BigIntegerField(default=0,null=True,blank=True)
+    payment_status=models.CharField(max_length=200,null=True)
+    total_guest=models.CharField(max_length=200,null=True)
+    cancel=models.BooleanField(default=False,null=True,blank=True)
+    confirm=models.BooleanField(default=False,null=True,blank=True)
+    
+    @property
+    def total_rooms(self):
+        roombooked=self.roombooked_set.all()
+        total=sum(room.quantity for room in roombooked)
+        return total
+        
+
+class Roombooked(models.Model):
+    room=models.ForeignKey(Rooms,on_delete=models.SET_NULL,null=True,blank=True)
+    booking=models.ForeignKey(Booking,on_delete=models.SET_NULL,null=True,blank=True)
+    quantity=models.IntegerField(default=0,null=True,blank=True)
+    date_added = models.DateField(auto_now_add=True)
+    
+
+    @property
+    def get_total(self):
+        total = self.room.room_price * self.quantity
+        return total
+
+
+
+
+class reffreal_offer(models.Model):
+    ref_name = models.CharField(null = True, max_length=225)
+    ref_discount = models.IntegerField(null = True)
+    ref_price = models.IntegerField(null = True)
+    referd_person_discount = models.IntegerField(null = True)
+    order_maximum = models.IntegerField(null = True)
+    ref_status = models.BooleanField(null=True,default=True)
+    offer_type=models.CharField(max_length=200,null=True)
+
 
 
 

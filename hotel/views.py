@@ -13,9 +13,10 @@ from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
 def hotel_log(request):
+    global id
     if "hotel" in request.session:
 
-        return redirect(home)
+        return redirect(hotel_home,id=id)
 
     elif request.method=='POST':
         username=request.POST['username']
@@ -25,6 +26,8 @@ def hotel_log(request):
             hotel_admin=Hoteladmin.objects.get(username=username,password=password)
             print(hotel_admin)
             hotelname=hotel_admin.id
+            
+            id=hotel_admin.id
             request.session['hotel']=hotelname
             return redirect(hotel_home,id=hotelname)
 
@@ -473,3 +476,78 @@ def room_delete(request,id):
     room=Rooms.objects.get(id=id)
     room.delete()
     return redirect(hotel_rooms,id=room.hotel.id)
+
+
+
+@custom_decorator
+def hotel_user(request,id):
+    hotel=Hoteladmin.objects.get(id=id)
+    booking=Booking.objects.filter(hotel=hotel)
+    
+    customers=[]
+    dictionary=dict()
+    dif=dict()
+    name=[]
+    email=[]
+
+
+
+    for book in booking:
+        
+        if book.customer.name in dictionary:
+            dictionary[book.customer.name] +=1
+        else:
+            dictionary[book.customer.name]=1
+
+    for book in booking:
+        if book.customer.name not in name:
+            name.append(book.customer.name)
+            email.append(book.customer.email)
+
+
+
+    for i in range(len(email)):
+        dif={'name':name[i],
+                    'email':email[i],
+                    'booking':dictionary[name[i]]
+                    }
+        customers.append(dif)
+    
+    context={'hotel':hotel,'customers':customers}
+                    
+            
+    return render(request,'hotel/hotel_customer.html',context)
+
+    
+
+@custom_decorator
+def hotel_booked(request,id):
+    hotel=Hoteladmin.objects.get(id=id)
+    booking=Booking.objects.filter(hotel=hotel,complete=True,cancel=False).order_by('-check_in')
+
+
+
+    context={'hotel':hotel,'booking':booking}
+    return render(request,'hotel/hotel_booked.html',context)
+
+
+@custom_decorator
+def booking_detail(request,id):
+    booking=Booking.objects.get(id=id)
+    date=booking.check_out - booking.check_in
+    context={"booking":booking,'date':date}
+    return render(request,'hotel/booking_detailed.html',context)
+
+def confirm(request,id,value):
+    booking=Booking.objects.get(id=id)
+    if value == 'cancel':
+        booking.cancel = True
+    elif value == 'confirm':
+        booking.confirm = True
+    
+    booking.save()
+
+    return redirect(hotel_booked,id=booking.hotel.id)
+
+
+

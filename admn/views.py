@@ -5,7 +5,7 @@ from django.contrib.auth.models import auth,User
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
-from admn.models import Hoteladmin
+from admn.models import *
 
 
 # Create your views here.
@@ -71,7 +71,100 @@ def create_hotel(request):
 
     return render(request, 'admin/create-hotel-form.html')
 
+@user_passes_test(lambda u: u.is_superuser,login_url='/admin')
+def hotel_view(request):
+    hotels=Hoteladmin.objects.all()
+
+    return render(request,'admin/ad_hotelview.html',{'hotels':hotels})
+
+@user_passes_test(lambda u: u.is_superuser,login_url='/admin')
+def hotel_edit(request,id):
+    hotel=Hoteladmin.objects.get(id=id)
+    if request.method=='POST':
+        hotel.hotel_name=request.POST['hotelname']
+        hotel.username=request.POST['username']
+        hotel.contact=request.POST['contactnumber']
+        hotel.location=request.POST['location']
+        hotel.password=request.POST['password']
+        hotel.save();
+        return redirect(hotel_view)
+
+
+        
+
+    return render(request,'admin/ad_hoteledit.html',{"hotel":hotel})
+
+@user_passes_test(lambda u: u.is_superuser,login_url='/admin')
+def hotel_delete(request,id):
+    hotel=Hoteladmin.objects.get(id=id)
+    hotel.delete()
+    return redirect(hotel_view)
 
 
 
+@user_passes_test(lambda u: u.is_superuser,login_url='/admin')
+def user_view(request):
+    users=User.objects.filter(is_superuser = False)
+    return render(request,'admin/ad_userview.html',{'users':users})
 
+
+@user_passes_test(lambda u: u.is_superuser,login_url='/admin')
+def user_edit(request,id):
+    user=User.objects.get(id=id)
+    if request.method=='POST':
+        user.username=request.POST['username']
+        user.email=request.POST['email']
+        user.last_name=request.POST['contactnumber']
+        user.save()
+        return redirect(user_view)
+
+
+
+    return render(request,'admin/ad_useredit.html',{'user':user})
+
+@user_passes_test(lambda u: u.is_superuser,login_url='/admin')
+def user_delete(request,id):
+    user=User.objects.get(id=id)
+    user.delete()
+    return redirect(user_view)
+@user_passes_test(lambda u: u.is_superuser,login_url='/admin')
+def refoffer(request):
+    ref=reffreal_offer.objects.all()
+    return render(request,'admin/offer.html',{"ref":ref})
+@user_passes_test(lambda u: u.is_superuser,login_url='/admin')
+def offeredit(request,id):
+    off=reffreal_offer.objects.get(id=id)
+    if request.method == 'POST':
+        
+        offer_type=request.POST['offtype']
+        off.refd_persondisc=request.POST['refpersondiscount']
+        off.order_max=request.POST['ordmaximum']
+
+        if offer_type == 'OfferByPercentage':
+            off.ref_discount=request.POST['refdiscount']
+            off.offer_type = offer_type
+
+        elif offer_type == 'OfferByAmount':
+            off.ref_price=request.POST['refprice']
+            off.offer_type = offer_type
+        
+        off.save();
+        return redirect(refoffer)
+
+
+
+    return render(request,'admin/offeredit.html',{'off':off})
+@user_passes_test(lambda u: u.is_superuser,login_url='/admin')
+def offerstatus(request,id,value):
+    off=reffreal_offer.objects.get(id=id)
+    if value == 'True':
+        off.ref_status=True
+    elif value == 'False':
+        off.ref_status=False
+
+    off.save()
+    return redirect(refoffer)
+
+
+
+    
