@@ -9,6 +9,7 @@ from admn.models import *
 import razorpay
 import string
 import random
+import re
 # Create your views here.
 
 
@@ -203,21 +204,41 @@ def mobile_login(request):
 def hotel_view(request,id):
     hotel=Hoteladmin.objects.get(id=id)
     rooms=Rooms.objects.filter(hotel=hotel)
+    customer=request.user.customer
+    print("hello",customer,hotel)
+    if Booking.objects.filter(customer=customer,hotel=hotel,complete=False).exists():
+
+        booking=Booking.objects.get(customer=customer,hotel=hotel,complete=False)
+        print("helloo" ,booking)
+    
+    
+        roombooked=Roombooked.objects.filter(booking=booking)
+        print(roombooked)
+        date=booking.check_out - booking.check_in
+        checkindate =str(booking.check_in.month)  +"-"+str(booking.check_in.day) +"-"+str(booking.check_in.year) 
+        checkoutdate =str(booking.check_out.month)  +"-"+str(booking.check_out.day) +"-"+str(booking.check_out.year) 
+        print("hi ",checkindate)
+    
+
+
+        context={'hotel':hotel,'rooms':rooms,'booking':booking,'checkin':checkindate,'checkout':checkoutdate,'date':date,'roombooked':roombooked}
+        return render(request,'user/hotel_view.html',context)
     context={'hotel':hotel,'rooms':rooms}
     return render(request,'user/hotel_view.html',context)
+    
+
 
 def booking(request,id):
     hotel=Hoteladmin.objects.get(id=id)
-    rooms=Rooms.objects.filter(hotel=hotel)
-
-    
+    rooms=Rooms.objects.filter(hotel=hotel) 
     
     if request.method =='POST':
-        print("hellllloo")
+       
+        check_out=request.POST.get('checkout')
         
         try:
             check_in=request.POST['checkin']
-            check_out=request.POST['check_out']
+           
         except:
             pass
 
@@ -225,12 +246,12 @@ def booking(request,id):
         total_guest=request.POST['adults']
        
 
-        if check_in=='' or check_out=='' or total_guest=='' :
-
+        if check_in == ''  or total_guest == '0' :
+            
             messages.info(request,"please fill details and select rooms")
             context={'hotel':hotel,'rooms':rooms}
 
-            return render(request,'user/hotel_view.html',context)
+            return redirect(hotel_view,id=id)
 
         else:
             
@@ -240,7 +261,7 @@ def booking(request,id):
             prev_book=''
            
             customer=Customer.objects.get(user=user)
-            print("jkds",customer)
+            
             
             booking=Booking.objects.get(hotel=hotel,customer=customer,complete=False)
             if Booking.objects.filter(customer=customer,complete=True).exists():
@@ -250,11 +271,13 @@ def booking(request,id):
                 prev_book=False
                 for off in ref:
                     if off.offer_type == 'OfferByPercentage' :
-                        booktotal=booking.totalprice - (booking.total_price/off.ref_discount)
+                        booktotal=booking.total_price * (off.ref_discount/100)
+                        
 
                     elif off.offer_type == 'OfferByAmount':
-                        booktotal=booking.totalprice - off.ref_price
+                        booktotal=booking.total_price - off.ref_price
 
+                
            
             bookedrooms=booking.roombooked_set.all()
             
@@ -270,7 +293,7 @@ def booking(request,id):
             client=razorpay.Client(auth=("rzp_test_7i01eG7knm1628","K9H5VQX0OHOsFwPMDY8DCMzp"))
             order_currency='INR'
             order_receipt = 'order-rctid-11'
-            totalprice=booking.total_price * 100
+            totalprice=booktotal * 100
 
             response = client.order.create(dict(
                 amount=totalprice,
@@ -349,20 +372,27 @@ def booking_details(request):
 
 def user_profile(request):
     customer=request.user.customer
+    off_type=''
     value=''
     total_referd=Customer.objects.filter(refferd_user=customer.name).count()
     ref=reffreal_offer.objects.all()
     for off in ref:
         wallet= total_referd * off.referd_person_discount
+       
+            
     
     if Booking.objects.filter(customer=customer).exists():
         value=False
     else:
-        value=True
+        if customer.refferd_user:
+           value=True
+           
+
+        
 
     print("cc",booking)
 
-    return render(request,'user/useraccount.html',{'customer':customer,'wallet':wallet,'value':value})
+    return render(request,'user/useraccount.html',{'customer':customer,'wallet':wallet,'value':value,'ref':ref})
 
 
 def report(request,id,pay):
@@ -373,17 +403,34 @@ def report(request,id,pay):
         name=request.POST['name']
         phone=request.POST['phone']
         email=request.POST['email']
-        if request.user.is_authenticated:
-            booking.complete=True
-            if pay=='COD':
-                booking.payment_status='Pay at hotel'
-            elif pay=='RAZOR':
-                booking.payment_status='RAZORPAY'
-            elif pay== 'PAY':
-                booking.payment_status='PAYPAL'
+    if request.user.is_authenticated:
+        booking.complete=True
+       
+       
 
-            booking.save();
-    context={"booking":booking,'date':date}
+        if pay=='COD':
+            booking.payment_status='Pay at hotel'
+        elif pay=='RAZOR':
+            booking.payment_status='RAZORPAY'
+        elif pay== 'PAY':
+            booking.payment_status='PAYPAL'
+
+        booking.save();
+    ref=reffreal_offer.objects.all()
+    if Booking.objects.filter(id=id,complete=True).exists():
+        prev_book=True
+        booktotal = booking.total_price
+    else:
+        prev_book=False
+        for off in ref:
+            if off.offer_type == 'OfferByPercentage' :
+                booktotal=booking.total_price * (off.ref_discount/100)
+
+            elif off.offer_type == 'OfferByAmount':
+                booktotal=booking.total_price - off.ref_price
+
+
+    context={"booking":booking,'date':date,'ref':ref,'booktotal':booktotal,'prev_book':prev_book}
     
     return render(request,'user/report.html',context)
 

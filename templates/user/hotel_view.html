@@ -154,65 +154,7 @@ top: 0px;
     
 	<!-- SubHeader =============================================== -->
     <div class="parallax-window" id="booking" data-parallax="scroll" style="background: url('{{hotel.imageURL}}') center no-repeat ;"  data-natural-width="1400" data-natural-height="550">
-        <div id="subheader_home">
-            <div id="sub_content">
-                <div id="book_container">
-                    <form method="post" action="assets/check_avail_home.php" id="check_avail_home" autocomplete="off">
-                        <div id="group_1">
-                            <div id="container_1">
-                                <label>Check in</label>
-                            	<!-- <input class="startDate1 form-control datepick" type="text" data-field="date" data-startend="start" data-startendelem=".endDate1" readonly placeholder="Arrival" id="check_in" name="check_in"> -->
-                                <span class="input-icon"><i class="icon-calendar-7"></i></span>
-                            </div>
-                            <div id="container_2">
-                                <label>Check Out</label>
-                                 <!-- <input class="endDate1 form-control datepick" type="text" data-field="date" data-startend="end" data-startendelem=".startDate1" readonly placeholder="Departure" id="check_out" name="check_out" > -->
-                                <span class="input-icon"><i class="icon-calendar-7"></i></span>
-                            </div>
-                        </div><!-- End group_1 -->
-                        <div id="group_2">
-                            <div id="container_3">
-                                <label>Adults</label>
-                                <div class="qty-buttons">
-                                    <input type="button" value="-" class="qtyminus" name="adults">
-                                    <input type="text" name="adults" id="adults" value="" class="qty form-control" placeholder="0">
-                                    <input type="button" value="+" class="qtyplus" name="adults">
-                                </div>
-                            </div>
-                            <!-- <div id="container_4">
-                                <label>Children</label>
-                                <div class="qty-buttons">
-                                    <input type="button" value="-" class="qtyminus" name="children">
-                                    <input type="text" name="children" id="children" value="" class="qty form-control" placeholder="0">
-                                    <input type="button" value="+" class="qtyplus" name="children">
-                                </div>
-                            </div> -->
-                        </div><!-- End group_2 -->
-                        <div id="group_3">
-                            <div id="container_5">
-                                <label>Room</label>
-                                <select class="form-control" name="name_booking" id="name_booking" placeholder="Name and Last name">
-                                    <option value="">Choose Room </option>
-                                    <option value="">Single Room</option>
-                                    <option value="">Double Room</option>
-                                    
-                                    
-                                </select>
-                                <!-- <input type="text" class="form-control" name="name_booking" id="name_booking" placeholder="Name and Last name"> -->
-                            </div>
-                            <!-- <div id="container_6">
-                                <label>Email</label>
-                                <input type="text" class="form-control" name="email_booking" id="email_booking" placeholder="Your email">
-                            </div> -->
-                        </div><!-- End group_3 -->
-                        <div id="container_7">
-                            <input type="submit" value="Book The Room" class="btn_1" id="submit-booking">
-                        </div>
-                    </form>
-                    <div id="message-booking"></div>
-                </div><!-- End book_container -->
-            </div><!-- End sub_content -->
-        </div><!-- End subheader -->
+        
     </div><!-- End parallax-window -->
     <!-- End SubHeader ============================================ -->
             
@@ -387,17 +329,21 @@ top: 0px;
                                     
                         </ul>
                         <div class="price">from <strong class="priceroom">{{room.room_price}}</strong> /night<small>{% if room_features.Breakfast == True %}Breakafst {%endif%}{% if room_features.Lunch == True %} Lunch{%endif%}{% if room_features.Dinner == True %} Dinner {%endif%} included</small></div>
-                        <div class="form-group">
+                        <div class="form-group selectroomdiv" style="display: none;" id="selectroomdiv">
                         
                             <h3 for="sel1">Select Room:</h3>
+                            
                             <select class="form-control roomselect " id="sel1" data-roomid="{{room.id}}" data-roomprice='{{room.room_price}}' data-hotelid="{{hotel.id}}">
+                                {% for r in roombooked %}
+                                {% if r.room == room %}
+                                <option value="{{r.quantity}}">{{r.quantity}}</option>{% endif %} {% endfor %}
                                 <option value=0>0</option>
                               <option value="1">1</option>
                               <option value="2">2</option>
                               <option value="3">3</option>
                               <option value="4">4</option>
                             </select>
-                          </div> 
+                        </div> 
                     </div>
                     {%endfor%}
                     </div>
@@ -429,7 +375,7 @@ top: 0px;
                     <h2>BOOKING INFO</h2>
                   </div>
                   
-                  <div class="alert alert-info" id="message" style="display: none;">
+                  <div class="mes alert alert-info" id="message" style="display: none;">
                     <strong>Info!</strong><span id="messageinput"> </span>
                   </div>
                   {% if error %}
@@ -443,43 +389,44 @@ top: 0px;
                       {%csrf_token%}
                     <input type="hidden" data-form-email="true">
                     <div class="form-group">
-                        <input type="text" id="checkin" name="checkin" placeholder="checkin" readonly >
+                        <input type="text" id="checkin" value="{{checkin}}" name="checkin" placeholder="checkin" readonly >
                        
                     </div>
                     <div class="form-group">
                         
-                        <input type="text" id="checkout" name="check_out" placeholder="checkout" readonly>
+                        <input type="text" id="checkout" name="checkout" value="{{checkout}}" placeholder="checkout" readonly>
                         
                     </div>
                     <div class="form-group">
                        <label  for="">Adults </label>
                         <div class="qty-buttons"  style="align-content: center;">
                             <input type="button" value="-" class="qtyminus" name="adults">
-                            <input type="text" name="adults" id="adults" value="" class=" qty form-control" placeholder="0" required readonly>
-                            <input type="button" value="+" class="qtyplus" name="adults">
+                            <input type="text" name="adults" id="adults" value="{{booking.total_guest}}" class=" qty form-control" placeholder="0" required readonly>
+                            <input type="button" value="+" class="qtyplus" name="adults" onclick="window.myfun()">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <h3 for="">Rooms: <span id="roomscount" style="color: red;">0</span></h3>
-                     
-                    </div>
-                    <div class="form-group">
-                        <h3 for="">Days: <span id="totalDays" style="color: red;">0</span></h3>
-                     
-                    </div>
-                    <div class="form-group">
-                        <h3 for="">Total Price: <span id="roomsprice" style="color: red;">0</span></h3>
-                     
-                    </div>
-                    
+                    <div id="pricedetails" {% if booking.total_rooms == '' %} style="display: block;" {% else %} style="display: none;" {% endif %}>
+                        <div class="form-group">
+                            <h3 for=""  >Rooms: <span id="roomscount" style="color: red;">{{booking.total_rooms}}</span></h3>
+                        
+                        </div>
+                        <div class="form-group">
+                            <h3 for=""  >Days: <span id="totalDays" style="color: red;">{{date.days}}</span></h3>
+                        
+                        </div>
+                        <div class="form-group">
+                            <h3 for=""  >Total Price: <span id="roomsprice" style="color: red;">{{booking.total_price}}</span></h3>
+                        
+                        </div>
+                `   </div>
                     <div>
-                        <button type='button' id="vj" onclick="window.mytest()" class="btn btn-lg btn-primary">check availability</button> 
+                        <button  style="display: none;" type='button' id="vj" onclick="window.mytest()" class="btn btn-lg btn-primary">check availability</button> 
      
                         <input type="hidden" id="continue" class="btn btn-lg btn-danger" value="CONTINUE BOOKING" >
                       <!-- <button type="submit" class="btn btn-lg btn-danger">CONTINUE BOOKING</button> -->
                     </div>
                     {%for message in messages %}
-                    <div class="alert alert-danger" role="alert">
+                    <div class="alert alert-danger" id="mes" role="alert">
                         {{message}}
                       </div>
                     {%endfor%}
@@ -554,6 +501,11 @@ top: 0px;
 
 <div id="toTop"></div><!-- Back to top button -->
 <script>
+    $('.alert').delay(3000).fadeOut('slow');
+
+</script>
+
+<script>
     $(function() {
     $( "#checkin" ).datepicker({minDate : 0, dateFormat: 'mm-dd-yy'});
     $("#checkout").attr("disabled", "disabled");
@@ -580,6 +532,7 @@ $( "#checkin" ).on("change",function(){
 
 
 </script>
+
 
 
 <!-- main scripts -->

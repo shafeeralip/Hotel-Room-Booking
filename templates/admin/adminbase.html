@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travelix Admin</title>
      <!-- Icons font CSS-->
-     <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-     <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+     <script src="https://kit.fontawesome.com/ee4534655b.js" crossorigin="anonymous"></script>
+
+     
      <!-- Font special for pages-->
      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
  
     <link rel="stylesheet" href="{%static 'admin/home/css/admin-home.css' %}">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.4.6/tailwind.min.css">
 </head>
 <body>
     
@@ -20,43 +21,37 @@
         <div class='admin-header'>
         <div class='header-text'>
         <h3>TRAVELIX</h3>
-        <div class='header-greet'>
+        <div class='header-greet' style="margin: 25px; color: black;">
         <span>Hello Admin</span>
-        <a href='{% url "admin_logout" %}' class='logout-btn'><svg width="14" height="14" viewBox="0 0 24 24"><path fill="#fff" d="M14 12h-4v-12h4v12zm4.213-10.246l-1.213 1.599c2.984 1.732 5 4.955 5 8.647 0 5.514-4.486 10-10 10s-10-4.486-10-10c0-3.692 2.016-6.915 5-8.647l-1.213-1.599c-3.465 2.103-5.787 5.897-5.787 10.246 0 6.627 5.373 12 12 12s12-5.373 12-12c0-4.349-2.322-8.143-5.787-10.246z"/></svg></a>
+        <a href='{% url "admin_logout" %}' ><i class="fa fa-power-off" aria-hidden="true"></i></a>
         </div>
         </div>
         </div>
         <div class='admin-sidebar'>
         <li>
-        <a href='{%url "admin_home" %}'>HOME</a>
+        <a href='{%url "admin_home" %}' style="color: white;">HOME</a>
         </li>
         
        
        
-        <li class="accordion"><a>HOTELS</a> <svg width="8" height="8" viewBox="0 0 24 24"><path fill="#fff" d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg></li>
-        <div class="panel">
-        <li class="submenu"><a href='{% url "hotel_view" %}' class="submenutext">Show all Hotels</a></li>
+        <li class="accordion"><a style="color: white;">HOTELS</a> <svg width="8" height="8" viewBox="0 0 24 24"><path fill="#fff" d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg></li>
+        <div class="panel" style="color: white;">
+        <li class="submenu"><a href='{% url "hotel_view" %}' class="submenutext" >Show all Hotels</a></li>
         <li class="submenu"><a href='{% url "create_hotel" %}' class="submenutext">Add Hotel</a></li>
        
         </div>
       
         <li>
-        <a href='{%url "user_view" %}'>USERS</a>
+        <a href='{%url "user_view" %}' style="color: white;">USERS</a>
         </li>
         <li>
-            <a href='{%url "refoffer" %}'>OFFER</a>
+            <a href='{%url "refoffer" %}' style="color: white;">OFFER</a>
             </li>
         </div>
         <div class='center-content'>
         <div class='all-border'>
-        <div class='shows-location'>
-        <div class='location-text'>
-            {%block heading %}
-       
-        {%endblock%}
-        </div>
-    
-        </div>
+        
+        
         {%block content %}
         
         {%endblock%}

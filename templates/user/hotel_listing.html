@@ -1,111 +1,114 @@
 {%load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TRAVELIX</title>
 </head>
+
 <body>
   <!-- feature icons -->
-<link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/fontello.css' %}">
-<link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/icon_set_1.css' %}">
-<link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/icon_set_2.css' %}">
-<!-- /end feature icon -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/fontello.css' %}">
+  <link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/icon_set_1.css' %}">
+  <link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/icon_set_2.css' %}">
+  <!-- /end feature icon -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
   <header class="header">
     <div class="container">
-        <nav class="nav">
-            <a href="index.html" class="logo">
-                <img src="/static/images/logo.png" alt="">
-            </a>
-            <div class="hamburger-menu">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-times" ></i>
+      <nav class="nav">
+        <a href="index.html" class="logo">
+          <img src="/static/images/logo.png" alt="">
+        </a>
+        <div class="hamburger-menu">
+          <i class="fas fa-bars"></i>
+          <i class="fas fa-times"></i>
+        </div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">HOME</a>
+
+
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">ABOUT</a>
+
+          </li>
+
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">OFFER</a>
+
+          </li>
+          {%  if request.user.is_authenticated %}
+
+          <li class="nav-item">
+            <div class="dropdown">
+              <a class="dropbtn"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a>
+              <div class="dropdown-content">
+                <a href="#">Profile</a>
+                <a href="{% url 'user_logout' %}">LOGOUT</a>
+              </div>
             </div>
-            <ul class="nav-list">
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link">HOME</a>
 
-            
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link">ABOUT</a>
+          </li>
 
-                </li>
-                
-                <li class="nav-item">
-                  <a href="index.html" class="nav-link">OFFER</a>
+          {%else%}
+          <li class="nav-item">
+            <a href="/login" class="nav-link">Login</a>
+          </li>
+          {%endif%}
 
-              </li>
-              {%  if request.user.is_authenticated %}
-
-              <li class="nav-item">
-                  <div class="dropdown">
-                      <a class="dropbtn"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a>
-                      <div class="dropdown-content">
-                        <a href="#">Profile</a>
-                        <a href="{% url 'user_logout' %}">LOGOUT</a>
-                      </div>
-                    </div> 
-                  
-              </li>
-           
-              {%else%}
-              <li class="nav-item">
-                  <a href="/login" class="nav-link">Login</a>  
-              </li>
-              {%endif%}
-              
-            </ul>
-        </nav>
+        </ul>
+      </nav>
     </div>
-</header> 
+  </header>
 
 
-<div class="hero" {% if city_name == 'GOA' %} style="background:url('/static/images/goa.jpg')center no-repeat ;"
- {%elif city_name == 'BENGALURE'%} style="background:url('/static/images/bengalure.jpg') center no-repeat ;"
- {%else%} style="background:url('/static/images/delhiw.webp')center no-repeat ;" {{%endif%} >
+  <div class="hero" {% if city_name == 'GOA' %} style="background:url('/static/images/goa.jpg')center no-repeat ;"
+    {%elif city_name == 'BENGALURE'%} style="background:url('/static/images/bengalure.jpg') center no-repeat ;" {%else%}
+    style="background:url('/static/images/delhiw.webp')center no-repeat ;" {{%endif%} >
     <div class="container">
         <div class="main-heading">
           <h2 class="title">{{city_name}}</h2>
-          <h5 class="heading">Hotels</h5>
-           
-        </div>
-        
-    </div>
-</div>
-<section class="booking" >
-  <div class="container">
+    <h5 class="heading">Hotels</h5>
+
+  </div>
+
+  </div>
+  </div>
+  <section class="booking">
+    <div class="container">
       <form action="" class="form book-form">
-          <div class="input-group">
-              <label for="destination" class="input-label">Destination</label>
-              <input type="text" class="input" id="destination">
+        <div class="input-group">
+          <label for="destination" class="input-label">Destination</label>
+          <input type="text" class="input" id="destination">
 
-          </div>
-          <div class="input-group">
-              <label for="check-in" class="input-label">check-in</label>
-              <input type="date" class="input" id="check-in">
+        </div>
+        <div class="input-group">
+          <label for="check-in" class="input-label">check-in</label>
+          <input type="date" class="input" id="check-in">
 
-          </div>
-          <div class="input-group">
-              <label for="check-out" class="input-label">check-out</label>
-              <input type="date" class="input" id="check-out">
+        </div>
+        <div class="input-group">
+          <label for="check-out" class="input-label">check-out</label>
+          <input type="date" class="input" id="check-out">
 
-          </div>
-          <div class="input-group">
-              <label for="adults" class="input-label">Guest</label>
-              <select class="options" id="adults">
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-              </select>
+        </div>
+        <div class="input-group">
+          <label for="adults" class="input-label">Guest</label>
+          <select class="options" id="adults">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
 
-          </div>
-          <!-- <div class="input-group">
+        </div>
+        <!-- <div class="input-group">
               <label for="children" class="input-label">children</label>
               <select class="options" id="children">
                   <option value="0">0</option>
@@ -117,1029 +120,1195 @@
               </select>
 
           </div> -->
-          <button class="btn form-btn btn-purple">search
-              <span class="dots"><i class="fas fa-ellipsis-h"></i></span>
-          </button>
+        <button class="btn form-btn btn-purple">search
+          <span class="dots"><i class="fas fa-ellipsis-h"></i></span>
+        </button>
       </form>
-  </div>
-</section>
-<section class="search-container">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-3">
-        <div class="row my-3">
-          <div class="col-sm-12 text-center">
-            <input name="map" id="" class="" type="button" value="map">
+    </div>
+  </section>
+  <section class="search-container">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="row my-3">
+            <div class="col-sm-12 text-center">
+              <input name="map" id="" class="" type="button" value="map">
+            </div>
           </div>
-        </div>
-        <div class="row mt-2 pl-5 justify-content-between">
-          <div class="filter-card">
-            <h1 style="text-align: center;">Filter</h1>
-            <form action="#">
-              <div class="row form-group">
-                <div class="col-md-12">
-                  <label for="date-start">Price Range</label>: £
-                  <span id="price" class="price">1000</span>
-                  <input type="range" min="23" max="1000" value="1000" class="slider" id="myRange">
+          <div class="row mt-2 pl-5 justify-content-between">
+            <div class="filter-card">
+              <h1 style="text-align: center;">Filter</h1>
+              <form action="#">
+                <div class="row form-group">
+                  <div class="col-md-12">
+                    <p>
+                      <label for="amount">Price range:</label>
+                      <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;" >
                   </p>
+              
+                  <div id="slider-range"></div>
+                  </div>
                 </div>
-              </div>
-              <div class="row form-group">
-                <div class="col-md-12">
-                  <label for="mintopay">STAR RATING</label>
-                  <p>
-                    <div><input type="checkbox" name="startingReserves" value="starting" id="starting"><label > 5 STAR</label></div>
-                    <div><input type="checkbox" name="startingReserves" value="reserves" id="reserves"><label > 4 STAR</label></div>
-                  </p>
-                </div>
-                <div class="col-md-12">
-                  <label for="maxtopay">HOTEL FACILITIES</label>
-                  <p>
-                    <div><input type="checkbox" name="startingReserves" value="starting" id="starting"><label for="starting">Swimming Pool</label></div>
-                    <div><input type="checkbox" name="startingReserves" value="reserves" id="reserves"><label for="reserves">Parking </label></div>
+                <div class="row form-group">
+                  <div class="col-md-12 RATING">
+                    <label for="mintopay">STAR RATING</label>
+                    <p>
+                    <div><label><input type="checkbox" rel="5Star" onchange="change();"> 5 Star</label></div>
+                    <div><label><input type="checkbox" rel="4Star" onchange="change();"> 4 STAR</label></div>
+                    </p>
+                  </div>
+                  <div class="col-md-12 FACILITIES">
+                    <label for="maxtopay">HOTEL FACILITIES</label>
+                    <p>
+                    <div><label><input type="checkbox" rel="Restaurant" onchange="change();"> Restaurant</label></div>
+                    <div><label><input type="checkbox" rel="Parking" onchange="change();"> Parking </label></div>
+                    <div><label><input type="checkbox" rel="Swimming" onchange="change();"> Swimming pool</label></div>
+                    <div><label><input type="checkbox" rel="Loundry" onchange="change();"> Loundry service </label>
+                    </div>
                     <!-- <input type="date" name="checkout" id="checkout" class="form-control"> -->
-                  </p>
+                    </p>
+                  </div>
                 </div>
-              </div>
-              
-              <div class="row form-group">
-                <div class="col-md-12">
-                  <input type="submit" class="btn btn-primary btn-block" value="Limit">
+
+                <div class="row form-group">
+                  <div class="col-md-12">
+                    <!-- <input type="submit" class="btn btn-primary btn-block" value="Limit"> -->
+                  </div>
                 </div>
-              </div>
-            </form>
-          </div>
-
-        </div>
-      </div>
-
-
-
-      <div class="col-lg-9  px-4">
-        <div class="row mt-3">
-          <div class="col-md-6 align-self-center">
-            <p class="m-0">
-              <b>123</b> out of 1987</p>
-          </div>
-          <div class="col-md-6">
-            <div class="form-inline">
-              <label class="m-4" for="exampleFormControlSelect1">Sort by</label>
-              <select class="form-control" id="exampleFormControlSelect1">
-                <option>Recommended</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
+              </form>
             </div>
 
           </div>
         </div>
-{% for hotel in hotels %}
-        <div class="row search-card-result">
-          <div class="col-md-3">
-            <img class="img-fluid"  src="{{hotel.imageURL}}" style="width: 100%; height: 100%;" alt="Card image cap">
-          </div>
-          <div class="col-md-6">
-            <h1>{{hotel.hotel_name}}</h1>
-            <div class="review">
 
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
+
+
+        <div class="col-lg-9  px-4">
+          <div class="row mt-3">
+            <div class="col-md-6 align-self-center">
+              <p class="m-0">
+                <b>123</b> out of 1987</p>
             </div>
-            <h4>{{hotel.description}}</h4>
-            <h4>
-              <span class="badge badge-primary">8.5</span> Excellent (2323 reviews)</h4>
-            <h4 style="display: flex;">
-              
-{% for feature in hotel.features_set.all %}
-              {% if feature.Free_wifi == True %}
-            <p> <i class="icon_set_1_icon-86  fa-2x "></i>Free Wifi</p>{%endif%}
-            {% if feature.Loundry_service == True %}
-              <p><i  class="icon_set_2_icon-103  fa-2x "></i>Loundry service </p>{%endif%}
-              {%if feature.Swimming_pool == True %}
-              <P> <i class="icon_set_2_icon-110 fa-2x"></i> Swimming pool</P>{%endif%} </h4>
-              {%if feature.Restaurant == True %}
-              <h4 style="display: flex;">
-              <P><i class="icon_set_1_icon-58 fa-2x"></i>Restaurant</P>{%endif%}
-              {% if feature.Parking == True %}
-              <P><i class="icon_set_1_icon-27 fa-2x"></i> Parking </P>
-            </h4>{%endif%}{%endfor%}
+            <div class="col-md-6">
+              <div class="form-inline">
+                <!-- <label class="m-4" for="exampleFormControlSelect1">Sort by</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                  <option>Recommended</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select> -->
+              </div>
+
+            </div>
           </div>
          
-          <div class="col-md-3 border-left text-center more-offers">
-            <h1 class="text-danger">{{hotel.get_lowest_price}}/Night <p>lowest price</p> </h1>
-            <div class="">
-             
-              <p>
-                
-              </p>
-
+            {% for hotel in hotels %}
+            {% for feature in hotel.features_set.all %}
+            
+            <div class="hotelcard search-card-result  {% if hotel.categories == '5 Star' %}5Star{%elif hotel.categories == '4 Star' %}4Star{% else %}3Star{% endif %} 
+                          {%if feature.Restaurant == True %}Restaurant{% endif %} {% if feature.Parking == True %}Parking{% endif %} {%if feature.Swimming_pool == True %}Swimming{% endif %}
+                          {% if feature.Loundry_service == True %}Loundry{% endif %}" id="v" data-price="{{hotel.get_lowest_price}}">
+              <div class="row" >
+              <div class="col-md-3 col-lg-3">
+                <img class="img-fluid" src="{{hotel.imageURL}}" style="width: 100%; height: 100%;" alt="Card image cap">
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <h1>{{hotel.hotel_name}}</h1>
+                <div class="review">
+            
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                </div>
+                <h4>{{hotel.description}}</h4>
+                <h4>
+                  <span class="badge badge-primary">8.5</span> Excellent (2323 reviews)</h4>
+                <h4 style="display: flex;">
+            
+            
+                  {% if feature.Free_wifi == True %}
+                  <p> <i class="icon_set_1_icon-86  fa-2x "></i>Free Wifi</p>{%endif%}
+                  {% if feature.Loundry_service == True %}
+                  <p><i class="icon_set_2_icon-103  fa-2x "></i>Loundry service </p>{%endif%}
+                  {%if feature.Swimming_pool == True %}
+                  <P> <i class="icon_set_2_icon-110 fa-2x"></i> Swimming pool</P>{%endif%} </h4>
+                {%if feature.Restaurant == True %}
+                <h4 style="display: flex;">
+                  <P><i class="icon_set_1_icon-58 fa-2x"></i>Restaurant</P>{%endif%}
+                  {% if feature.Parking == True %}
+                  <P><i class="icon_set_1_icon-27 fa-2x"></i> Parking </P>
+                </h4>{%endif%}{%endfor%}
+              </div>
+            
+                <div class="col-md-3 col-lg-3 border-left text-center more-offers">
+                  <h1 class="text-danger">{{hotel.get_lowest_price}}/Night <p>lowest price</p>
+                  </h1>
+                  <div class="">
+              
+                    <p>
+              
+                    </p>
+              
+                  </div>
+                  <div class="text-success">
+                    <h3 class="text-success">excluding taxes & fees</h3>
+                    <h5></h5>
+                  </div>
+              
+                  <div class="btn btn-success "><a href="{%url 'hotel_view' hotel.id %}" style="text-decoration: none;">View
+                      deatails</a></div>
+                </div>
+              </div>
             </div>
-            <div class="text-success">
-              <h3 class="text-success">excluding taxes & fees</h3>
-              <h5</h5>
-            </div>
-
-            <div class="btn btn-success "><a href="{%url 'hotel_view' hotel.id %}" style="text-decoration: none;">View deatails</a>  ></div>
-          </div>
+         
+            {%endfor%}
+          
         </div>
-         {%endfor%}
       </div>
+
     </div>
+  </section>
 
-  </div>
-</section>
-
-<!-- <section class="py-4">
-  <div class="container">
-    <div class="row justify-content-center">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-              <span class="sr-only">Previous</span>
-            </a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">1</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">2</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">3</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-              <span class="sr-only">Next</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-</section> -->
-<style>
-  /* grouped css attributes via type */
-
-
-/* nav */
-nav {
-  margin-bottom: 1rem;
-}
-
-nav a {
-  color: white;
-  -webkit-transition: 0.5s;
-  -o-transition: 0.5s;
-  transition: 0.5s;
-}
-
-nav a:hover,
-a:active,
-a:focus {
-  color: red;
-  outline: none;
-  text-decoration: none;
-}
-
-/* jumbotron*/
-.colorful {
-  background: #4b79a1;
-  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to bottom, #283e51, #4b79a1);
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #283e51, #4b79a1);
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  border-radius: 0px;
-  padding: 0px 0 1rem 0 !important;
-}
-
-.form-card {
-  background: #fff;
-  border-bottom: 7px solid #1e3c72;
-  border-top: 7px solid #1e3c72;
-  color: black;
-  padding: 0 2rem;
-}
-
-.form-card h3 {
-  color: #000;
-  padding: 1rem 0 0.1rem 0;
-}
-
-/* hotel card */
-.hotel-card {
-  border: none !important;
-}
-.hotel-card .card-img-top {
-  border-radius: 0px;
-  height: 230px;
-}
-
-.hotel-card .card-body {
-  padding: 0px !important;
-}
-
-.hotel-card .card-body h5 {
-  margin: 0.5rem 0;
-}
-
-.hotel-card .card-body h5 a {
-  color: #777;
-}
-
-.hotel-card .card-body p {
-  font-size: 0.9rem;
-}
-/* end of hotel cards */
-
-/* business process section */
-#process {
-  background: #2980b9;
-  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to bottom, #2c3e50, #2980b9);
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #2c3e50, #2980b9);
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  color: #fff;
-}
-
-#process h2,
-h3 {
-  border-bottom: 2px solid #fff;
-  color: #fff;
-  margin: 1rem 0;
-  padding: 0 0 1rem 0;
-}
-
-#process h2 {
-  font-size: 3rem;
-  font-weight: 700;
-}
-
-#process h3 {
-  font-size: 1.7rem;
-}
-
-#process p {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.icon {
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  padding: 33px 29px;
-
-  background: #2980b9;
-  color: #fff;
-}
-
-#process .icon {
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  border-radius: 50%;
-}
-
-#process .icon .fa {
-  font-size: 2rem;
-  margin: 11px 2px;
-}
-
-#process .process-step {
-  text-align: center;
-}
-
-#process .process-step h3 {
-  color: white;
-  margin-top: 2.2rem;
-}
-
-#stat-counter {
-  text-align: center;
-}
-#stat-counter h2 {
-  font-size: 3rem;
-
-  border-bottom: 1px solid #777;
-  margin-bottom: 0.25rem;
-  padding-bottom: 0.25rem;
-}
-
-#stat-counter p {
-  padding-top: 1rem;
-}
-
-#stat-counter .counter {
-  display: block;
-
-  margin-bottom: 10px;
-
-  color: #2980b9;
-  font-size: 50px;
-  font-weight: 100;
-}
-
-#subscribe-panel {
-  background: #1e3c72; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to bottom,
-    #2a5298,
-    #1e3c72
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to bottom,
-    #2a5298,
-    #1e3c72
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-  padding: 5rem 1rem;
-}
-
-#subscribe-panel h2 {
-  position: relative;
-
-  margin-bottom: 10px;
-
-  color: white;
-  line-height: 1.5;
-  font-size: 50px;
-  font-weight: 300;
-}
-
-#subscribe-panel.form-control {
-  width: 100%;
-
-  border: 2px solid rgba(255, 255, 255, 0.2) !important;
-  -webkit-transition: 0.5s;
-  -o-transition: 0.5s;
-  transition: 0.5s;
-
-  background: #fff;
-  color: #fff;
-  font-size: 16px !important;
-}
-
-#subscribe-panel.form-control:focus {
-  background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.8) !important;
-}
-
-#subscribe-panel.form-control::-webkit-input-placeholder,
-#subscribe-panel.form-control:-moz-placeholder,
-#subscribe-panel.form-control::-moz-placeholder,
-#subscribe-panel.form-control:-ms-input-placeholder {
-  color: #fff;
-}
-
-#subscribe-panel.btn {
-  height: 46px;
-  border: none !important;
-  padding-left: 50px;
-  padding-right: 50px;
-
-  background: #09c6ab;
-
-  color: #fff;
-  font-size: 16px;
-  text-transform: uppercase;
-  font-weight: 400;
-}
-
-#subscribe-panel.form-inline .form-group {
-  width: 100% !important;
-  margin-bottom: 10px;
-}
-
-#subscribe-panel.form-inline .form-group .form-control {
-  width: 100%;
-}
-
-#subscribe-panel.gtco-heading {
-  margin-bottom: 30px;
-}
-
-#subscribe-panel.gtco-heading h2 {
-  color: #fff;
-}
-
-#subscribe-panel.gtco-heading p {
-  color: rgba(255, 255, 255, 0.5);
-}
-.copyright {
-  background: #005c97; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to bottom,
-    #363795,
-    #005c97
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to bottom,
-    #363795,
-    #005c97
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
-
-.copyright h3 {
-  color: #fff;
-  font-size: 2.5rem;
-}
-.copyright p {
-  color: #fff;
-}
-
-.footer-nav a {
-  color: #777;
-}
-
-/* destination page */
-.destination-container {
-  height: 70vh;
-  padding: 7rem;
-}
-
-.hotels-form {
-  background: #283e51; /* fallback for old browsers */
-  padding: 1rem;
-}
-
-.hotels-container {
-  padding: 0.5rem 0 7rem 0;
-}
-
-.search-container {
-  background: #d3d3d3;
-}
-
-.search-card-result {
-  box-shadow: 0px 1px 4px rgba(41, 51, 57, 0.5);
-  margin: 1rem 0;
-  padding: 0.5rem 0;
-  background-color: #fff;
-}
-.search-card-result img {
-  height: 190px;
-}
-.search-card-result h5 {
-  font-style: 1.1rem;
-  font-weight: 700;
-}
-.search-card-result p {
-  font-size: 0.9rem;
-}
-
-.search-card-result .more-offers p {
-  margin-bottom: 0.3rem;
-}
-
-.more-offers .additional {
-  padding-top: 0.2rem;
-  font-weight: 700;
-}
-
-.fa.checked {
-  color: orange;
-}
-
-.map-container-btn {
-  height: 100px;
-
-  box-shadow: 0px 1px 4px rgba(41, 51, 57, 0.5);
-  background-color: wheat;
-}
-
-.map-container-btn .btn {
-  margin-top: 30px;
-}
-
-.filter-card {
-  padding: 0;
-  background: #fff;
-  color: black;
-}
-
-.filter-card h5 {
-  margin: 10px 0;
-  padding: 1rem;
-
-  box-shadow: 0px 1px 4px rgba(41, 51, 57, 0.5);
-  color: #000;
-}
-.filter-card form {
-  box-shadow: 0px 1px 4px rgba(41, 51, 57, 0.5);
-  padding: 0.5rem 2rem;
-}
-.map-btn {
-  background-color: #fff !important;
-}
-
-/* SOCIAL ICONS.CSS */
-
-  .nav .fa {
-    margin: 5px 2px;
-    padding: 20px;
-    
-    font-size: 30px;
-    text-align: center;
-    text-decoration: none;
-  }
   
-  .fa:hover {
+  
+  <style>
+    /* grouped css attributes via type */
+
+
+    /* nav */
+    nav {
+      margin-bottom: 1rem;
+    }
+
+    nav a {
+      color: white;
+      -webkit-transition: 0.5s;
+      -o-transition: 0.5s;
+      transition: 0.5s;
+    }
+
+    nav a:hover,
+    a:active,
+    a:focus {
+      color: red;
+      outline: none;
+      text-decoration: none;
+    }
+
+    /* jumbotron*/
+    .colorful {
+      background: #4b79a1;
+      /* fallback for old browsers */
+      background: -webkit-linear-gradient(to bottom, #283e51, #4b79a1);
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to bottom, #283e51, #4b79a1);
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      border-radius: 0px;
+      padding: 0px 0 1rem 0 !important;
+    }
+
+    .form-card {
+      background: #fff;
+      border-bottom: 7px solid #1e3c72;
+      border-top: 7px solid #1e3c72;
+      color: black;
+      padding: 0 2rem;
+    }
+
+    .form-card h3 {
+      color: #000;
+      padding: 1rem 0 0.1rem 0;
+    }
+
+    /* hotel card */
+    .hotel-card {
+      border: none !important;
+    }
+
+    .hotel-card .card-img-top {
+      border-radius: 0px;
+      height: 230px;
+    }
+
+    .hotel-card .card-body {
+      padding: 0px !important;
+    }
+
+    .hotel-card .card-body h5 {
+      margin: 0.5rem 0;
+    }
+
+    .hotel-card .card-body h5 a {
+      color: #777;
+    }
+
+    .hotel-card .card-body p {
+      font-size: 0.9rem;
+    }
+
+    /* end of hotel cards */
+
+    /* business process section */
+    #process {
+      background: #2980b9;
+      /* fallback for old browsers */
+      background: -webkit-linear-gradient(to bottom, #2c3e50, #2980b9);
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to bottom, #2c3e50, #2980b9);
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      color: #fff;
+    }
+
+    #process h2,
+    h3 {
+      border-bottom: 2px solid #fff;
+      color: #fff;
+      margin: 1rem 0;
+      padding: 0 0 1rem 0;
+    }
+
+    #process h2 {
+      font-size: 3rem;
+      font-weight: 700;
+    }
+
+    #process h3 {
+      font-size: 1.7rem;
+    }
+
+    #process p {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .icon {
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      padding: 33px 29px;
+
+      background: #2980b9;
+      color: #fff;
+    }
+
+    #process .icon {
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      -ms-border-radius: 50%;
+      border-radius: 50%;
+    }
+
+    #process .icon .fa {
+      font-size: 2rem;
+      margin: 11px 2px;
+    }
+
+    #process .process-step {
+      text-align: center;
+    }
+
+    #process .process-step h3 {
+      color: white;
+      margin-top: 2.2rem;
+    }
+
+    #stat-counter {
+      text-align: center;
+    }
+
+    #stat-counter h2 {
+      font-size: 3rem;
+
+      border-bottom: 1px solid #777;
+      margin-bottom: 0.25rem;
+      padding-bottom: 0.25rem;
+    }
+
+    #stat-counter p {
+      padding-top: 1rem;
+    }
+
+    #stat-counter .counter {
+      display: block;
+
+      margin-bottom: 10px;
+
+      color: #2980b9;
+      font-size: 50px;
+      font-weight: 100;
+    }
+
+    #subscribe-panel {
+      background: #1e3c72;
+      /* fallback for old browsers */
+      background: -webkit-linear-gradient(to bottom,
+          #2a5298,
+          #1e3c72);
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to bottom,
+          #2a5298,
+          #1e3c72);
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+      padding: 5rem 1rem;
+    }
+
+    #subscribe-panel h2 {
+      position: relative;
+
+      margin-bottom: 10px;
+
+      color: white;
+      line-height: 1.5;
+      font-size: 50px;
+      font-weight: 300;
+    }
+
+    #subscribe-panel.form-control {
+      width: 100%;
+
+      border: 2px solid rgba(255, 255, 255, 0.2) !important;
+      -webkit-transition: 0.5s;
+      -o-transition: 0.5s;
+      transition: 0.5s;
+
+      background: #fff;
+      color: #fff;
+      font-size: 16px !important;
+    }
+
+    #subscribe-panel.form-control:focus {
+      background: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.8) !important;
+    }
+
+    #subscribe-panel.form-control::-webkit-input-placeholder,
+    #subscribe-panel.form-control:-moz-placeholder,
+    #subscribe-panel.form-control::-moz-placeholder,
+    #subscribe-panel.form-control:-ms-input-placeholder {
+      color: #fff;
+    }
+
+    #subscribe-panel.btn {
+      height: 46px;
+      border: none !important;
+      padding-left: 50px;
+      padding-right: 50px;
+
+      background: #09c6ab;
+
+      color: #fff;
+      font-size: 16px;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+
+    #subscribe-panel.form-inline .form-group {
+      width: 100% !important;
+      margin-bottom: 10px;
+    }
+
+    #subscribe-panel.form-inline .form-group .form-control {
+      width: 100%;
+    }
+
+    #subscribe-panel.gtco-heading {
+      margin-bottom: 30px;
+    }
+
+    #subscribe-panel.gtco-heading h2 {
+      color: #fff;
+    }
+
+    #subscribe-panel.gtco-heading p {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .copyright {
+      background: #005c97;
+      /* fallback for old browsers */
+      background: -webkit-linear-gradient(to bottom,
+          #363795,
+          #005c97);
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to bottom,
+          #363795,
+          #005c97);
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
+    .copyright h3 {
+      color: #fff;
+      font-size: 2.5rem;
+    }
+
+    .copyright p {
+      color: #fff;
+    }
+
+    .footer-nav a {
+      color: #777;
+    }
+
+    /* destination page */
+    .destination-container {
+      height: 70vh;
+      padding: 7rem;
+    }
+
+    .hotels-form {
+      background: #283e51;
+      /* fallback for old browsers */
+      padding: 1rem;
+    }
+
+    .hotels-container {
+      padding: 0.5rem 0 7rem 0;
+    }
+
+    .search-container {
+      background: #d3d3d3;
+    }
+
+    .search-card-result {
+      box-shadow: 0px 1px 4px rgba(41, 51, 57, 0.5);
+      margin: 1rem 0;
+      padding: 0.5rem 0;
+      background-color: #fff;
+    }
+
+    .search-card-result img {
+      height: 190px;
+    }
+
+    .search-card-result h5 {
+      font-style: 1.1rem;
+      font-weight: 700;
+    }
+
+    .search-card-result p {
+      font-size: 0.9rem;
+    }
+
+    .search-card-result .more-offers p {
+      margin-bottom: 0.3rem;
+    }
+
+    .more-offers .additional {
+      padding-top: 0.2rem;
+      font-weight: 700;
+    }
+
+    .fa.checked {
+      color: orange;
+    }
+
+    .map-container-btn {
+      height: 100px;
+
+      box-shadow: 0px 1px 4px rgba(41, 51, 57, 0.5);
+      background-color: wheat;
+    }
+
+    .map-container-btn .btn {
+      margin-top: 30px;
+    }
+
+    .filter-card {
+      padding: 0;
+      background: #fff;
+      color: black;
+    }
+
+    .filter-card h5 {
+      margin: 10px 0;
+      padding: 1rem;
+
+      box-shadow: 0px 1px 4px rgba(41, 51, 57, 0.5);
+      color: #000;
+    }
+
+    .filter-card form {
+      box-shadow: 0px 1px 4px rgba(41, 51, 57, 0.5);
+      padding: 0.5rem 2rem;
+    }
+
+    .map-btn {
+      background-color: #fff !important;
+    }
+
+    /* SOCIAL ICONS.CSS */
+
+    .nav .fa {
+      margin: 5px 2px;
+      padding: 20px;
+
+      font-size: 30px;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .fa:hover {
       opacity: 0.7;
-  }
-  
-  .fa-facebook {
-    background: #3B5998;
-    color: white;
-  }
-  
-  .fa-twitter {
-    background: #55ACEE;
-    color: white;
-  }
-  
-  .fa-google {
-    background: #dd4b39;
-    color: white;
-  }
-  
-  .fa-linkedin {
-    background: #007bb5;
-    color: white;
-  }
-  
-  .fa-youtube {
-    background: #bb0000;
-    color: white;
-  }
-  
-  .fa-instagram {
-    background: #DA4453;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to bottom, #89216B, #DA4453);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to bottom, #89216B, #DA4453); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
-    color: white;
-  }
-  
-  .fa-pinterest {
-    background: #cb2027;
-    color: white;
-  }
-  
-  .fa-snapchat-ghost {
-    background: #fffc00;
-    color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-  }
+    }
 
- .slidecontainer {
-    width: 100%;
-}
+    .fa-facebook {
+      background: #3B5998;
+      color: white;
+    }
 
-.slider {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 25px;
-  
-    background: #d3d3d3;
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-}
+    .fa-twitter {
+      background: #55ACEE;
+      color: white;
+    }
 
-.slider:hover {
-    opacity: 1;
-}
+    .fa-google {
+      background: #dd4b39;
+      color: white;
+    }
 
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-  
-  background: #1e3c72;
-    cursor: pointer;
-}
+    .fa-linkedin {
+      background: #007bb5;
+      color: white;
+    }
 
-.slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-  
-  background: #1e3c72;
-    cursor: pointer;
-}
+    .fa-youtube {
+      background: #bb0000;
+      color: white;
+    }
 
-</style>
+    .fa-instagram {
+      background: #DA4453;
+      /* fallback for old browsers */
+      background: -webkit-linear-gradient(to bottom, #89216B, #DA4453);
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to bottom, #89216B, #DA4453);
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      color: white;
+    }
+
+    .fa-pinterest {
+      background: #cb2027;
+      color: white;
+    }
+
+    .fa-snapchat-ghost {
+      background: #fffc00;
+      color: white;
+      text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    }
+
+    .slidecontainer {
+      width: 100%;
+    }
+
+    .slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 25px;
+
+      background: #d3d3d3;
+      outline: none;
+      opacity: 0.7;
+      -webkit-transition: .2s;
+      transition: opacity .2s;
+    }
+
+    .slider:hover {
+      opacity: 1;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 25px;
+
+      background: #1e3c72;
+      cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+
+      background: #1e3c72;
+      cursor: pointer;
+    }
+  </style>
 
 
 
 
 
-<style>
+  <style>
     /*Import the fonts used*/
-@import url('https://fonts.googleapis.com/css?family=Courgette|Open+Sans:400,800&display=swap');
-/*Basic reset*/
-*,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-/*Custom properties*/
-:root {
-    --dark-color: #2d2c2c;
-    --purple-solid: #350a4f;
-    --purple-transparent: rgba(53, 10, 79, .7);
-    --purple-transparent-alt: rgba(53, 10, 79, .5);
-    --purple-light: #8f50fb;
-    --yellow-solid: #fa9e2c;
-    --gradient-color: linear-gradient(to right, var(--yellow-solid), var(--purple-light));
-    --gradient-color-alt: linear-gradient(to right, var(--purple-light), var(--yellow-solid));
-}
+    @import url('https://fonts.googleapis.com/css?family=Courgette|Open+Sans:400,800&display=swap');
 
-/* global style */
-
-html{
-    font-size: 10px;
-}
-body{
-    font-family: 'Open Sans',sans-serif;
-    font-size: 1.6rem;
-    color: var(--dark-color);
-    
-}
-a{
-    text-decoration: none;
-    color: inherit;
-}
-ul{
-    list-style: none;
-}
-
-section{
-    padding: 5rem 0;
-    display: block;
-   
-   
-}
-/* reusable style */
-.container{     
-    width: 100%;    
-    padding: 0 1.5rem;
-    margin: 0 auto;
-}
-.btn{
-    color: white;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    padding: .5rem 3.5rem;
-    border: none;
-    border-radius: 10rem;
-    display: inline-flex;
-    align-items: center;
-}
-.form-btn{
-    margin-top: 2.5rem;
-    cursor: pointer;
-}
-.btn-purple{
-    background-color: var(--purple-solid);
-}
-.btn-purple:hover{
-    background-color:#56247f;
-}
-.btn-gradient{
-    background-image: var(--gradient-color);
-
-}
-.btn-gradient:hover{
-    background-image: var(--gradient-color-alt);
-    
-}
-.dots{
-    font-size: 2.4rem;
-    margin-left: .5rem;
-    opacity: .75;
-
-}
-.paragraph{
-    color: #a5a5a5;
-    margin-bottom: 2.5rem;
+    /*Basic reset*/
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    
-.section-head{
-        text-align: center;
-        margin-bottom:5rem ;
-    
-}
-.heading{
-        display:block;
-        font-size:4rem ;
-        text-transform: uppercase;
-}
-.sub-heading{
-        font-size: 1.7rem;
-        font-weight: 300;
-        font-family: 'Courgette',cursive;
-        color: #a5a5a5;
-    
-}
 
-/* header style */
-.header{
-    width: 100%;
-    height: 6rem;
-    display: flex;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: var(--purple-transparent);
-    z-index: 999;
-}
-.header .active{
-    background-color: var(--purple-solid);
-}
-/* header style nav */
+    /*Custom properties*/
+    :root {
+      --dark-color: #2d2c2c;
+      --purple-solid: #350a4f;
+      --purple-transparent: rgba(53, 10, 79, .7);
+      --purple-transparent-alt: rgba(53, 10, 79, .5);
+      --purple-light: #8f50fb;
+      --yellow-solid: #fa9e2c;
+      --gradient-color: linear-gradient(to right, var(--yellow-solid), var(--purple-light));
+      --gradient-color-alt: linear-gradient(to right, var(--purple-light), var(--yellow-solid));
+    }
 
-.nav{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.logo img{
-    max-width: 80%;
+    /* global style */
 
-}
-.hamburger-menu{
-    font-size: 2.6rem;
-    color:white;
-    cursor: pointer;
-    position: relative;
-    z-index: 1500;
+    html {
+      font-size: 10px;
+    }
 
-}
-
-.hamburger-menu .fa-times{
-    display: none;
-
-}
-.menu-open .hamburger-menu .fa-times{
-    display: block;
-}
-.menu-open .hamburger-menu .fa-bars{
-    display: none;
-}
-
-.nav-list{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: var(--purple-solid);
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 1400;
-    opacity: 0;
-    transform: scale(0);
-    transition: opacity .5s;
-
-
-
-
-}
-.menu-open .nav-list{
-    opacity: 1;
-    transform: scale(1);
-}
-.nav-item:not(:last-child){
-    margin-bottom: .5rem;
-}
-
-.nav-link{
-    display: block;
-    color: white;
-    font-size: 3rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    padding: 1rem;
-
-}
-
-.hero{
-    width: 100%;
-    height: 50vh;
-    /* background: url("/static/images/hero_background.jpg") center no-repeat; */
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    position: relative;
-    z-index: 0;
-
-}
-
-
-.main-heading{
-    color: white;
-    line-height: 1;
-    text-shadow: 1px 1px 1rem rgba(0,0,0,.5);
-    margin-bottom: 2.5rem;
-
-}
-.title{
-    font-size: 4.8rem;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    text-align: center;
-
-}
-.subtitle{
-    font-size: 3.6rem;
-    font-weight: 300;
-    font-family: 'Courgette',cursive;
-
-}
-
-
-/* BOOKING SECTION */
-.booking{
-    background-image: var(--gradient-color);
-    
-     
-
-}
-.input-group{
-    margin-bottom: 1.5rem;
-    padding-left: 25px;
-
-}
-.input-label{
-    display: block;
-    font-size: 1.3rem;
-    text-transform: uppercase;
-    color: white;
-    font-weight: bold;
-    margin-bottom: 1rem;
-
-}
-.input,
-.options{
-    outline: none;
-    border: none;
-    width: 100%;
-    min-height:4rem ;
-    padding: 1rem;
-    font-weight: bold;
-    color: #a5a5a5;
-    letter-spacing: 2px;
-    font-family: 'Open Sans',sans-serif;
-
-}
-
-
-::placeholder{
-    color: inherit;
-}
-@media screen and (min-width:1000px){
-         section:not(.booking){
-             padding: 10rem 0;
-         }
-
-         /* header section */
-         .hamburger-menu{
-             display: none;
-
-         }
-         .nav-list{
-             position: initial;
-             width: initial;
-             height: initial;
-             background-color: transparent;
-             flex-direction: row;
-             justify-content: initial;
-             opacity: 1;
-             transform: scale(1);
-
-
-
-         }
-         .nav-item:not(:last-child){
-             margin-right: 3rem;
-             margin-bottom: 0;
-
-         }
-         .nav-link{
-             font-size: 1.3rem;
-             font-weight: normal;
-             transition: color .5s;
-
-         }
-         .nav-link:hover{
-             color: var(--yellow-solid);
-         }
-
-         /* hero section title */
-
-         .title{
-             font-size:12rem ;
-
-         }
-         .subtitle{
-             font-size: 4.6rem;
-
-         }
-         /* booking section */
-          .book-form{
-              display: flex;
-              justify-content: space-between;
-
-          }
-          .book-form .input-group{
-              margin-bottom: 0;
-
-          }
-          .book-form .input-group:first-child{
-              flex: 0 0 25%;
-          }
-
-          .input,
-          .options{
-           min-width: 10rem;   
-          }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 1.6rem;
+      color: var(--dark-color);
 
     }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    section {
+      padding: 5rem 0;
+      display: block;
+
+
+    }
+
+    /* reusable style */
+    .container {
+      width: 100%;
+      padding: 0 1.5rem;
+      margin: 0 auto;
+    }
+
+    .btn {
+      color: white;
+      font-size: 1.3rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      padding: .5rem 3.5rem;
+      border: none;
+      border-radius: 10rem;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .form-btn {
+      margin-top: 2.5rem;
+      cursor: pointer;
+    }
+
+    .btn-purple {
+      background-color: var(--purple-solid);
+    }
+
+    .btn-purple:hover {
+      background-color: #56247f;
+    }
+
+    .btn-gradient {
+      background-image: var(--gradient-color);
+
+    }
+
+    .btn-gradient:hover {
+      background-image: var(--gradient-color-alt);
+
+    }
+
+    .dots {
+      font-size: 2.4rem;
+      margin-left: .5rem;
+      opacity: .75;
+
+    }
+
+    .paragraph {
+      color: #a5a5a5;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 5rem;
+
+    }
+
+    .heading {
+      display: block;
+      font-size: 4rem;
+      text-transform: uppercase;
+    }
+
+    .sub-heading {
+      font-size: 1.7rem;
+      font-weight: 300;
+      font-family: 'Courgette', cursive;
+      color: #a5a5a5;
+
+    }
+
+    /* header style */
+    .header {
+      width: 100%;
+      height: 6rem;
+      display: flex;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: var(--purple-transparent);
+      z-index: 999;
+    }
+
+    .header .active {
+      background-color: var(--purple-solid);
+    }
+
+    /* header style nav */
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo img {
+      max-width: 80%;
+
+    }
+
+    .hamburger-menu {
+      font-size: 2.6rem;
+      color: white;
+      cursor: pointer;
+      position: relative;
+      z-index: 1500;
+
+    }
+
+    .hamburger-menu .fa-times {
+      display: none;
+
+    }
+
+    .menu-open .hamburger-menu .fa-times {
+      display: block;
+    }
+
+    .menu-open .hamburger-menu .fa-bars {
+      display: none;
+    }
+
+    .nav-list {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: var(--purple-solid);
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1400;
+      opacity: 0;
+      transform: scale(0);
+      transition: opacity .5s;
+
+    }
+
+    .menu-open .nav-list {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .nav-item:not(:last-child) {
+      margin-bottom: .5rem;
+    }
+
+    .nav-link {
+      display: block;
+      color: white;
+      font-size: 3rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 1rem;
+
+    }
+
+    .hero {
+      width: 100%;
+      height: 50vh;
+      /* background: url("/static/images/hero_background.jpg") center no-repeat; */
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 0;
+
+    }
+
+
+    .main-heading {
+      color: white;
+      line-height: 1;
+      text-shadow: 1px 1px 1rem rgba(0, 0, 0, .5);
+      margin-bottom: 2.5rem;
+
+    }
+
+    .title {
+      font-size: 4.8rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      text-align: center;
+
+    }
+
+    .subtitle {
+      font-size: 3.6rem;
+      font-weight: 300;
+      font-family: 'Courgette', cursive;
+
+    }
+
+
+    /* BOOKING SECTION */
+    .booking {
+      background-image: var(--gradient-color);
+
+
+
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+      padding-left: 25px;
+
+    }
+
+    .input-label {
+      display: block;
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      color: white;
+      font-weight: bold;
+      margin-bottom: 1rem;
+
+    }
+
+    .input,
+    .options {
+      outline: none;
+      border: none;
+      width: 100%;
+      min-height: 4rem;
+      padding: 1rem;
+      font-weight: bold;
+      color: #a5a5a5;
+      letter-spacing: 2px;
+      font-family: 'Open Sans', sans-serif;
+
+    }
+
+
+    ::placeholder {
+      color: inherit;
+    }
+
+    @media screen and (min-width:1000px) {
+      section:not(.booking) {
+        padding: 10rem 0;
+      }
+
+      /* header section */
+      .hamburger-menu {
+        display: none;
+
+      }
+
+      .nav-list {
+        position: initial;
+        width: initial;
+        height: initial;
+        background-color: transparent;
+        flex-direction: row;
+        justify-content: initial;
+        opacity: 1;
+        transform: scale(1);
+
+
+
+      }
+
+      .nav-item:not(:last-child) {
+        margin-right: 3rem;
+        margin-bottom: 0;
+
+      }
+
+      .nav-link {
+        font-size: 1.3rem;
+        font-weight: normal;
+        transition: color .5s;
+
+      }
+
+      .nav-link:hover {
+        color: var(--yellow-solid);
+      }
+
+      /* hero section title */
+
+      .title {
+        font-size: 12rem;
+
+      }
+
+      .subtitle {
+        font-size: 4.6rem;
+
+      }
+
+      /* booking section */
+      .book-form {
+        display: flex;
+        justify-content: space-between;
+
+      }
+
+      .book-form .input-group {
+        margin-bottom: 0;
+
+      }
+
+      .book-form .input-group:first-child {
+        flex: 0 0 25%;
+      }
+
+      .input,
+      .options {
+        min-width: 10rem;
+      }
+
+    }
+
     /* rooms section */
 
-    .rooms-grid{
-        grid-template-columns: repeat(auto-fit,minmax(40rem,1fr));
-        grid-gap: 8rem;
-    }
-    .featured-rooms{
-        flex-direction: row;
-        align-items: flex-start;
-
-    }
-    .room-info-wrap{
-        margin-left: 1.5rem;
+    .rooms-grid {
+      grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
+      grid-gap: 8rem;
     }
 
- /* Dropdown Button */
- .dropbtn {
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-  }
-  
-  /* The container <div> - needed to position the dropdown content */
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  /* Dropdown Content (Hidden by Default) */
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  /* Links inside the dropdown */
-  .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: #ddd;}
-  
-  /* Show the dropdown menu on hover */
-  .dropdown:hover .dropdown-content {display: block;}
-  
-  /* Change the background color of the dropdown button when the dropdown content is shown */
-  .dropdown:hover .dropbtn {background-color: #3e8e41;} 
+    .featured-rooms {
+      flex-direction: row;
+      align-items: flex-start;
 
-</style>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    }
+
+    .room-info-wrap {
+      margin-left: 1.5rem;
+    }
+
+    /* Dropdown Button */
+    .dropbtn {
+      color: white;
+      padding: 16px;
+      font-size: 16px;
+      border: none;
+    }
+
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f1f1f1;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    /* Links inside the dropdown */
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    /* Change color of dropdown links on hover */
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    /* Change the background color of the dropdown button when the dropdown content is shown */
+    .dropdown:hover .dropbtn {
+      background-color: #3e8e41;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" type="text/css" media="all" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>
+    <script>
+      function change() {
+        var modelCbs = document.querySelectorAll(".RATING input[type='checkbox']");
+        var processorCbs = document.querySelectorAll(".FACILITIES input[type='checkbox']");
+
+        var filters = {
+          models: getClassOfCheckedCheckboxes(modelCbs),
+          processors: getClassOfCheckedCheckboxes(processorCbs)
+        };
+        filterResults(filters);
+
+      }
+      function getClassOfCheckedCheckboxes(checkboxes) {
+        var classes = [];
+
+        if (checkboxes && checkboxes.length > 0) {
+          for (var i = 0; i < checkboxes.length; i++) {
+            var cb = checkboxes[i];
+
+            if (cb.checked) {
+              classes.push(cb.getAttribute("rel"));
+            }
+          }
+        }
+
+        return classes;
+      }
+
+
+      function filterResults(filters) {
+        var rElems = document.querySelectorAll(".hotelcard");
+        var hiddenElems = [];
+
+        if (!rElems || rElems.length <= 0) {
+          return;
+        }
+
+        for (var i = 0; i < rElems.length; i++) {
+          var el = rElems[i];
+
+          if (filters.models.length > 0) {
+            var isHidden = true;
+
+            for (var j = 0; j < filters.models.length; j++) {
+              var filter = filters.models[j];
+
+              if (el.classList.contains(filter)) {
+                isHidden = false;
+                break;
+              }
+            }
+
+            if (isHidden) {
+              hiddenElems.push(el);
+            }
+          }
+
+          if (filters.processors.length > 0) {
+            var isHidden = true;
+
+            for (var j = 0; j < filters.processors.length; j++) {
+              var filter = filters.processors[j];
+
+              if (el.classList.contains(filter)) {
+                isHidden = false;
+                break;
+              }
+            }
+
+            if (isHidden) {
+              hiddenElems.push(el);
+            }
+          }
+        }
+
+        for (var i = 0; i < rElems.length; i++) {
+          rElems[i].style.display = "block";
+        }
+
+        if (hiddenElems.length <= 0) {
+          return;
+        }
+
+        for (var i = 0; i < hiddenElems.length; i++) {
+          hiddenElems[i].style.display = "none";
+        }
+      }
+    </script>
+    <script>
+      function showProducts(minPrice, maxPrice) {
+                $(".hotelcard").hide().filter(function () {
+                    var price = parseInt($(this).data("price"), 10);
+                    return price >= minPrice && price <= maxPrice;
+                }).show();
+            }
+
+            $(function () {
+                var options = {
+                    range: true,
+                    min: 1000,
+                    max: 8000,
+                    values: [1000,2000],
+                    slide: function (event, ui) {
+                        var min = ui.values[0],
+                            max = ui.values[1];
+
+                        $("#amount").val("$" + min + " - $" + max);
+                        showProducts(min, max);
+                    }
+                }, min, max;
+
+                $("#slider-range").slider(options);
+
+                min = $("#slider-range").slider("values", 0);
+                max = $("#slider-range").slider("values", 1);
+
+                $("#amount").val("$" + min + " - $" + max);
+
+                showProducts(min, max);
+            });
+    </script>
+
+
 </body>
+
 </html>

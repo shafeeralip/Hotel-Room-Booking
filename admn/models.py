@@ -5,12 +5,6 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-class Customer(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE, null=True,blank=True)
-    name=models.CharField(max_length=200,null=True)
-    email=models.CharField(max_length=200,null=True)
-    reff_code = models.CharField(max_length=100, null= True)
-    refferd_user = models.CharField(max_length=150, null= True)
 
 
 class Hoteladmin(models.Model):
@@ -51,6 +45,12 @@ class Hoteladmin(models.Model):
 
             
 
+class Customer(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE, null=True,blank=True)
+    name=models.CharField(max_length=200,null=True)
+    email=models.CharField(max_length=200,null=True)
+    reff_code = models.CharField(max_length=100, null= True)
+    refferd_user = models.CharField(max_length=150, null= True)
     
 
 class Features(models.Model):

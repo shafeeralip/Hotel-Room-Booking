@@ -34,6 +34,7 @@ for(var i=0;i<room_selected.length;i++){
             var diffdate=(checkoutdate-checkindate)
             var diffDays =(diffdate / 1000 / 60 / 60 / 24);
 
+            document.getElementById("pricedetails").style.display='block'
             document.getElementById("totalDays").textContent=diffDays
 
             var peoples=parseInt(guest.value)
@@ -77,11 +78,15 @@ for(var i=0;i<room_selected.length;i++){
                var person_room_want= peoples - ( 2 * totalrooms) 
                 document.getElementById('messageinput').innerHTML='you still need to fit  '+ person_room_want +'  more adults'
                message.style.display='block'
+               document.getElementById("vj").style.display = 'none'
+               
+
                
                
             }
             else{
                 message.style.display='none'
+                document.getElementById("vj").style.display = 'block'
             }
 
            
@@ -95,7 +100,7 @@ for(var i=0;i<room_selected.length;i++){
             }
             
             document.getElementById('roomsprice').textContent=totalprice
-
+            
 
         }
         else{
@@ -109,50 +114,163 @@ for(var i=0;i<room_selected.length;i++){
 
 }
 
+
+
 window.mytest=function(){
     var totalprice=document.getElementById('roomsprice').textContent
     var checkintime=checkin.value
     var checkouttime=checkout.value
     var totalguest=document.getElementById("adults").value
-    
 
-    room_detail=[]
-    
+    var peoples=parseInt(guest.value)
+            
+    if(peoples % 2 == 0){
+        
+        var person_allowed=peoples/2  
+    }
+    else{
+        var people=peoples +1
+        var person_allowed=people/2
+    }
+
+    var totalrooms = 0
+
     document.querySelectorAll('.roomselect').forEach(ele=>{
-        // console.log(ele.dataset.roomid)
-        room_detail.push({
-            roomid:ele.dataset.roomid,
-            roomscount:ele.value,
-            hotelid:ele.dataset.hotelid,
-            totalprice:totalprice,
-            checkin:checkintime,
-            checkout:checkouttime,
-            totalguest:totalguest
-
-        });
+                
+        totalrooms=totalrooms +parseInt(ele.value) 
+        
     })
 
-    var url='/booking_details/'
+    if(totalrooms < person_allowed ){
+        var person_room_want= peoples - ( 2 * totalrooms) 
+        document.getElementById('messageinput').innerHTML='you still need to fit  '+ person_room_want +'  more adults'
+        message.style.display='block'
+        
+        
 
-    fetch(url, {
-            method:'POST',
-            headers:{'X-CSRFToken':csrftoken,
-                'Content-Type':'application/json',
-     
-            },
-            body:JSON.stringify({'room_detail':room_detail})
+        
+        
+    }
+    
+    else{
+        message.style.display='none'
+        room_detail=[]
+    
+        document.querySelectorAll('.roomselect').forEach(ele=>{
+            // console.log(ele.dataset.roomid)
+            room_detail.push({
+                roomid:ele.dataset.roomid,
+                roomscount:ele.value,
+                hotelid:ele.dataset.hotelid,
+                totalprice:totalprice,
+                checkin:checkintime,
+                checkout:checkouttime,
+                totalguest:totalguest
+    
+            });
         })
-        .then((response) =>{
-            return response.json()
-        })
-        .then((data)=>{
-            console.log('data :',data)
-            document.getElementById("continue").type='submit'
-            document.getElementById("vj").style.display='none'
-          
+    
+        var url='/booking_details/'
+    
+        fetch(url, {
+                method:'POST',
+                headers:{'X-CSRFToken':csrftoken,
+                    'Content-Type':'application/json',
          
-         })
+                },
+                body:JSON.stringify({'room_detail':room_detail})
+            })
+            .then((response) =>{
+                return response.json()
+            })
+            .then((data)=>{
+                console.log('data :',data)
+                document.getElementById("continue").type='submit'
+                document.getElementById("vj").style.display='none'
+              
+             
+             })
+        
+    }
+
+        
+
+   
 
    
     
 }
+
+var peoples=parseInt(guest.value)
+            
+if(peoples % 2 == 0){
+    
+    var person_allowed=peoples/2  
+}
+else{
+    var people=peoples +1
+    var person_allowed=people/2
+}
+
+var totalrooms = 0
+
+document.querySelectorAll('.roomselect').forEach(ele=>{
+               
+    totalrooms=totalrooms +parseInt(ele.value) 
+    
+})
+
+if(totalrooms < person_allowed ){
+    var person_room_want= peoples - ( 2 * totalrooms) 
+    document.getElementById('messageinput').innerHTML='you still need to fit  '+ person_room_want +'  more adults'
+    message.style.display='block'
+    document.getElementById("vj").style.display = 'none'
+    
+
+    
+    
+ }
+ else if(totalrooms == 0 ){
+    document.getElementById("vj").style.display = 'none'
+
+ }
+ else{
+     message.style.display='none'
+     document.getElementById("vj").style.display = 'block'
+ }
+
+
+window.myfun=function(){
+     console.log("hellooo")
+    
+    if (checkin.value && checkout.value){
+        selectroomdiv = document.getElementsByClassName('selectroomdiv')
+        for(var j=0;j < selectroomdiv.length;j++ ){
+            selectroomdiv[j].style.display ='block'
+        }
+        message.style.display='none'
+    }
+    else{
+        document.getElementById('messageinput').innerHTML='Please add checkin and checkout time'
+        message.style.display='block'
+        guest.value=0
+
+    }
+
+}
+
+
+document.querySelectorAll('.roomselect').forEach(ele=>{
+               
+    if(ele.value > 0){
+        selectroomdiv = document.getElementsByClassName('selectroomdiv')
+        for(var j=0;j < selectroomdiv.length;j++ ){
+            selectroomdiv[j].style.display ='block'
+        }
+
+    document.getElementById("pricedetails").style.display='block'
+
+    }
+    
+})
+

@@ -10,13 +10,17 @@
 </head>
 
 <body>
-<div class="container">
-    <div class="head p-5">
-        <h2 style="color: green;">Great! Your stay is confirmed.</h2>
-        <div>
-            <button onclick="printpage()" type="button" class="btn btn-outline-primary">Print</button></div>
+    <div class="container">
+        <div class="head p-5">
+            <h2 style="color: green;">Great! Your stay is confirmed.</h2>
+           
+               <a href="{% url 'home' %}"> <button style="float: right;" type="button" class="btn btn-outline-primary">BACK TO HOME</button></a>
+            
+            <div>
+                <button onclick="printpage()" type="button" class="btn btn-outline-primary">Print</button></div>
+        </div>
+        
     </div>
-</div>
     <div class="container border">
         <div class="row">
 
@@ -43,7 +47,7 @@
                         </div>
                         <div class="pt-5">
                             <h4>
-                               HOTEL LOCATION
+                                HOTEL LOCATION
 
                             </h4>
                             <p>
@@ -116,69 +120,81 @@
                         <div class="col-md-12">
                             <h3 class="text-center">{{date.days}} NIGHT</h3>
                         </div>
-                       
-                            <div class="col-md-12 pt-5">
-                               Guest: {{booking.total_guest}}
-    
-                            </div>
-                            <div class="col-md-12 pt-5">
-                               Room:{{booking.total_rooms}}
-                            </div>
-                       
+
+                        <div class="col-md-12 pt-5">
+                            Guest: {{booking.total_guest}}
+
+                        </div>
+                        <div class="col-md-12 pt-5">
+                            Room:{{booking.total_rooms}}
+                        </div>
+
 
                     </div>
-                    
+
                 </div>
 
-            <div class="row m-3 border-bottom pt-5">
-                <div class="col-md-12 ">
+                <div class="row m-3 border-bottom pt-5">
+                    <div class="col-md-12 ">
                         <h2>Payment Status</h2>
                         <table class="table">
                             <thead>
-                                
-                              <tr>
-                                
-                                <th scope="col">ROOM</th>
-                                <th scope="col">Price Per Night</th>
-                                <th scope="col">selected</th>
-                                <th scope="col">total</th>
-                                
-                              </tr>
+
+                                <tr>
+
+                                    <th scope="col">ROOM</th>
+                                    <th scope="col">Price Per Night</th>
+                                    <th scope="col">selected</th>
+                                    <th scope="col">total</th>
+
+                                </tr>
                             </thead>
                             <tbody>
                                 {%for rooms in booking.roombooked_set.all %}
-                              <tr>
-                                
-                                <td>{{rooms.room.room_type}}</td>
-                                <td>{{rooms.room.room_price}}</td>
-                                <td>{{rooms.quantity}}</td>
-                                <td>{{rooms.get_total}}</td>
-                              </tr>
-                              {%endfor%}
-                          </table>
-                        
-                          <div class="col-md-12">
-                              <div class="col-md-6">
+                                <tr>
 
-                              </div>
-                              <div class="col-md-6 float-right pl-5">
-                                  <div>
-                                      <h5 class="p-3">
-                                          DAYS:{{date.days}}
-                                      </h5>
-                                      <h3 class="p-3">
-                                          Total Price:{{booking.total_price}}
-                                      </h3>
+                                    <td>{{rooms.room.room_type}}</td>
+                                    <td>{{rooms.room.room_price}}</td>
+                                    <td>{{rooms.quantity}}</td>
+                                    <td>{{rooms.get_total}}</td>
+                                </tr>
+                                {%endfor%}
+                        </table>
 
-                                  </div>
+                        <div class="col-md-12">
+                            <div class="col-md-6">
 
-                              </div>
-                          </div>
+                            </div>
+                            <div class="col-md-6 float-right pl-5">
+                                <div>
+                                    <h5 class="p-3">
+                                        DAYS:{{date.days}}
+                                    </h5>
+                                    <h5 class="p-3">
+                                        Price:{{booking.total_price}}
+                                    </h5>
+                                    {% if prev_book == False %}
+                                    {% for off in ref %}
+                                    <h5 class="p-3">
+                                        Discount:{% if off.offer_type == 'OfferByPercentage' %}
+                                        {{off.ref_discount}}%{% else %}{{off.ref_price}}{% endif %}
+                                        {% endfor %}
+                                        {% endif %}
+                                    </h5>
+                                    <h3 class="p-3" style="color:red;">
+                                        Total Price:{{booktotal}}
+                                    </h3>
+
+                                </div>
+
+                            </div>
+                           <h7>Payment:{{booking.payment_status}}</h7>
+                        </div>
+
+                    </div>
 
                 </div>
 
-            </div>
-                
 
             </div>
 
@@ -188,17 +204,15 @@
 
         </div>
 
-        <div class="text-center">
-        <button type="button" class="btn btn-primary btn-lg">PAY NOW</button>
-    </div>
+        
     </div>
     </div>
 
-<script>
-    function printpage(){
- window.print();
-}
-</script>
+    <script>
+        function printpage() {
+            window.print();
+        }
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

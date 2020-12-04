@@ -256,7 +256,11 @@ button:hover{
               <td><h4>checkin</h4>{{booking.check_in}}</td>
               <td style="color:black"><h4 >checkout</h4>{{booking.check_out}}</td>
             </tr>
-            {% if prev_book == 'False' %}
+            <tr>
+              <td>Price</td>
+              <td>{{booking.total_price}}</td>
+            </tr>
+            {% if prev_book == False %}
               {% for off in ref %}
               
             <tr>
@@ -306,7 +310,7 @@ button:hover{
 </script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
-    var total ='{{booking.total_price}}'
+    var total ='{{booktotal}}'
     var payment_status='razorpay'
     var options = {
         "key": "rzp_test_7i01eG7knm1628", // Enter the Key ID generated from the Dashboard
@@ -340,7 +344,7 @@ button:hover{
     </script>
      <script src="https://www.paypal.com/sdk/js?client-id=AYtodiSdVNbDP1Kn-G9ScgW79r5dczXhaDzz5gT8a1Jm-TB4tn9a5soO5rcNP7Q104W5s8iJoE7Es7ot&currency=USD&disable-funding=card"></script>
      <script>
-         var total ='{{booking.total_price}}'
+         var total ='{{booktotal}}'
         
          // Render the PayPal button into #paypal-button-container
          paypal.Buttons({

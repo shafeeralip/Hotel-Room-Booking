@@ -35,40 +35,80 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-4 col-sm-6 col-xs-12">
                         <div class="white-box analytics-info">
-                            <h3 class="box-title">Total booking</h3>
+                            <h3 class="box-title">Today Booking</h3>
+                            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                <li>
+                                    <div id="sparklinedash4"><canvas width="67" height="30"
+                                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                                    </div>
+                                </li>
+                                <li class="ml-auto"><span class="counter text-success">{{todaybook}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">Total Booking</h3>
+                            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                <li>
+                                    <div id="sparklinedash3"><canvas width="67" height="30"
+                                        style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                                </div>
+                                </li>
+                                <li class="ml-auto"><span class="counter text-purple">{{totalbook}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">CUSTOMERS</h3>
+                            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                <li>
+                                    <div id="sparklinedash3"><i class="fa fa-user fa-3x" aria-hidden="true" style="color:blue;"></i>
+                                    </div>
+                                </li>
+                                <li class="ml-auto"><span class="counter text-info">{{customer}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">Today Income</h3>
                             <ul class="list-inline two-part d-flex align-items-center mb-0">
                                 <li>
                                     <div id="sparklinedash"><canvas width="67" height="30"
                                             style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
                                     </div>
                                 </li>
-                                <li class="ml-auto"><span class="counter text-success">659</span></li>
+                                <li class="ml-auto"><span class="counter text-success">{{todayinc}}</span></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xs-12">
                         <div class="white-box analytics-info">
-                            <h3 class="box-title">Total income</h3>
+                            <h3 class="box-title">Total Income</h3>
                             <ul class="list-inline two-part d-flex align-items-center mb-0">
                                 <li>
                                     <div id="sparklinedash2"><canvas width="67" height="30"
                                             style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
                                     </div>
                                 </li>
-                                <li class="ml-auto"><span class="counter text-purple">869</span></li>
+                                <li class="ml-auto"><span class="counter text-purple">{{totalinc}}</span></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-6 col-xs-12">
                         <div class="white-box analytics-info">
-                            <h3 class="box-title">Unique Visitor</h3>
+                            <h3 class="box-title">TOTAL ROOMS</h3>
                             <ul class="list-inline two-part d-flex align-items-center mb-0">
                                 <li>
-                                    <div id="sparklinedash3"><canvas width="67" height="30"
-                                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                                    <div id="sparklinedash3"><i class="fas fa-bed fa-3x" style="color: pink;"></i>
                                     </div>
                                 </li>
-                                <li class="ml-auto"><span class="counter text-info">911</span>
+                                <li class="ml-auto"><span class="counter text-info">{{totalroom}}</span>
                                 </li>
                             </ul>
                         </div>
@@ -166,7 +206,7 @@
                                         </tr>
                                         <tr>
                                             <td>6</td>
-                                            <td class="txt-oflo">Digital Agency PSD</td>
+                                            <td class="txt-oflo">DigitalTOTAL BOOKING Agency PSD</td>
                                             <td>SALE</td>
                                             <td class="txt-oflo">April 23, 2017</td>
                                             <td><span class="text-danger">-$14</span></td>
@@ -378,4 +418,5 @@
                     <!-- /.col -->
                 <!-- </div> -->
             </div>
+            
 {% endblock %}

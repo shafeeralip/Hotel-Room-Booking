@@ -14,8 +14,12 @@
   
     </div>
     <div>
-      {% if value == 'True' %}
-      <h1><center style="color:green;">CONGRATS YOU HAVE <span style="color: blue;">10%</span>  DISCOUNT  ON FIRST BOOK</center></h1>{% endif %}
+      {% if value == True %}
+        {% for off in ref %}
+     
+         <h1><center style="color:green;">CONGRATS YOU HAVE <span style="color: blue;"> {% if off.offer_type == 'OfferByPercentage' %}{{off.ref_discount}}% {% else %}{{off.ref_price}} Rupees {% endif %}</span>  DISCOUNT  ON FIRST BOOK</center></h1>
+        {% endfor %}
+      {% endif %}
     </div>
     <div class="row " style="height: 25rem;">
       <div class="col-md-4 border">
@@ -47,6 +51,7 @@
           </thead>
           <tbody>
             {% for booking in customer.booking_set.all %}
+            {% if booking.complete == True %}
             <tr>
             
             
@@ -62,13 +67,14 @@
                 <p>Pending Amount: ₹764</p>
                  </td>
                  {%else%}
-                 <td><h5>Confirmed Booking</h5>
+                 <td><h5 style="color: blue;">Booking is Confirmed</h5>
                   
                    </td>
                    {%endif%}
 
                  <td><a href="{%url 'report' booking.id booking.payment_status %}">view details</a></td>
            </tr>
+           {% endif %}
            {%endfor%}
           </tbody>
         </table>

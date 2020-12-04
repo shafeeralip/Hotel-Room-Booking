@@ -36,8 +36,22 @@ def admin_login(request):
           
 @user_passes_test(lambda u: u.is_superuser,login_url='/admin')
 def admin_home(request):
+    customer = Customer.objects.all().count()
+    hotels=Hoteladmin.objects.all().count()
+    booking=Booking.objects.filter(complete=True,cancel=False).count()
+    goahotels=Hoteladmin.objects.filter(location='GOA').count()
+    benghotels=Hoteladmin.objects.filter(location='GOA').count()
+    mumbaihotels=Hoteladmin.objects.filter(location='MUMBAI').count()
+    kochihotels=Hoteladmin.objects.filter(location='KOCHI').count()
 
-    return render(request,'admin/admin_home.html')
+    context={'customer':customer,'hotels':hotels,'booking':booking,
+            'goa':goahotels,'beng':benghotels,'mumbai':mumbaihotels,'kochi':kochihotels}
+
+
+
+    
+
+    return render(request,'admin/admin_home.html',context)
 
 @user_passes_test(lambda u: u.is_superuser,login_url='/admin')
 def admin_logout(request):

@@ -1,167 +1,111 @@
 {% extends 'admin/adminbase.html' %}
 {% load static %}
-{% block heading %}
-<span class='location'>HOME</span>
-{%endblock%}
-{% block content %}
 
-<div class="container" style="display: flex;">
-    <div class="card card-1">
-      <div class="card__icon"><i class="fas fa-bolt"></i></div>
-      <p class="card__exit"><i class="fas fa-times"></i></p>
-      <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-      <p class="card__apply"><a href="#">Apply Now <i class="fas fa-arrow-right"></i></a></p>
-      
-    </div>
-    <div class="card card-1">
-        <div class="card__icon"><i class="fas fa-bolt"></i></div>
-        <p class="card__exit"><i class="fas fa-times"></i></p>
-        <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-        <p class="card__apply"><a href="#">Apply Now <i class="fas fa-arrow-right"></i></a></p>
-        
-      </div>
-      <div class="card card-1">
-        <div class="card__icon"><i class="fas fa-bolt"></i></div>
-        <p class="card__exit"><i class="fas fa-times"></i></p>
-        <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-        <p class="card__apply"><a href="#">Apply Now <i class="fas fa-arrow-right"></i></a></p>
-        
-      </div>
-      <div class="card card-1">
-        <div class="card__icon"><i class="fas fa-bolt"></i></div>
-        <p class="card__exit"><i class="fas fa-times"></i></p>
-        <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-        <p class="card__apply"><a href="#">Apply Now <i class="fas fa-arrow-right"></i></a></p>
-        
-      </div>
-      <div class="card card-1">
-        <div class="card__icon"><i class="fas fa-bolt"></i></div>
-        <p class="card__exit"><i class="fas fa-times"></i></p>
-        <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-        <p class="card__apply"><a href="#">Apply Now <i class="fas fa-arrow-right"></i></a></p>
-        
-      </div>
+{% block content %}
+<div class='location-text' >
+  <span class='location' style="font-weight: bold;" >HOME</span>
 </div>
 
-  <style>
-      a,
-.card__exit,
-.card__icon {
-  position: relative;
-  text-decoration: none;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-a::after {
-  position: absolute;
-  top: 25px;
-  left: 0;
-  content: "";
-  width: 0%;
-  height: 3px;
-  background-color: rgba(255, 255, 255, 0.6);
-  transition: all 0.5s;
-}
-
-a:hover::after {
-  width: 100%;
-}
-
-.main-container {
-  padding: 30px;
-}
-
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.card {
-  margin: 20px;
-  padding: 20px;
-  width: 500px;
-  min-height: 200px;
-  display: grid;
-  grid-template-rows: 20px 50px 1fr 50px;
-  border-radius: 10px;
-  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
-  transition: all 0.5s;
-}
-
-.card:hover {
-  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
-  transform: scale(1.01);
-}
-
-.card__exit {
-  grid-row: 1/2;
-  justify-self: end;
-}
-
-.card__icon {
-  grid-row: 2/3;
-  font-size: 30px;
-}
-
-.card__title {
-  grid-row: 3/4;
-  font-weight: 400;
-  color: #ffffff;
-}
-
-.card__apply {
-  grid-row: 4/5;
-  align-self: center;
-}
-
-.card-1 {
-  background: radial-gradient(#1fe4f5, #3fbafe);
-}
-
-.card-2 {
-  background: radial-gradient(#fbc1cc, #fa99b2);
-}
-
-.card-3 {
-  background: radial-gradient(#76b2fe, #b69efe);
-}
-
-.card-4 {
-  background: radial-gradient(#60efbc, #58d5c9);
-}
-
-.card-5 {
-  background: radial-gradient(#f588d8, #c0a3e5);
-}
-
-@media (max-width: 1600px) {
-  .card-container {
-    justify-content: center;
-  }
-}
-  </style>
-<!-- <div class="card card-1"></div>
-<style>
-    .card {
-  background: #fff;
-  border-radius: 2px;
-  display: inline-block;
-  height: 150px;
-  margin: 1rem;
-  position: relative;
-  width: 400px;
-}
-
-.card-1 {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-
-}
-
-.card-1:hover {
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-}
-
-</style> -->
+</div>
+<div class="p-6 container ">
+  <div class="grid grid-cols-2 gap-4 md:grid md:grid-cols-3 lg:grid lg:grid-cols-3">
+    <div class="p-4 border border-gray-400 shadow-md bg-white">
+      <div class="text-sm font-thin text-gray-800">TOTAL HOTELS</div>
+      <div class="text-xl font-semibold truncate leading-none lg:text-3xl mt-2 mb-4 text-gray-800 group-hover:text-gray-100">{{hotels}}</div>
+      <!-- <div class="relative mt-2">
+        <div class="bg-gray-300 h-2 rounded-full"></div>
+        <div class="absolute top-0 w-1/6 bg-indigo-600 h-full rounded-lg"></div>
+      </div>
+      <div class="flex justify-between">
+        <div class="text-xs text-right text-gray-400">14%</div>
+        <div class="text-xs text-right text-gray-400">$25,000</div>
+      </div> -->
+    </div>
+    <div class="p-4 shadow bg-indigo-700">
+      <div class="text-sm font-light text-indigo-100">TOTAL BOOKING</div>
+      <div class="text-xl font-semibold leading-none lg:text-3xl my-2 text-indigo-100">{{booking}}</div>
+      <!-- <div class="relative mt-2">
+        <div class="bg-gray-300 h-2 rounded-full"></div>
+        <div class="absolute top-0 w-8/12 bg-indigo-900 h-full rounded-lg"></div>
+      </div>
+      <div class="flex justify-between text-indigo-300">
+        <div class="text-xs text-right">78%</div>
+        <div class="text-xs text-right">$25,000</div>
+      </div> -->
+    </div>
+    <div class="p-4 border-1 border-gray-400 shadow bg-red-500">
+      <div class="text-sm font-light text-indigo-100">USERS</div>
+      <div class="text-xl font-semibold leading-none lg:text-3xl mt-2 mb-4 text-indigo-100">{{customer}}</div>
+      <!-- <div class="relative mt-2">
+        <div class="bg-gray-300 h-2 rounded-full"></div>
+        <div class="absolute top-0 w-8/12 bg-red-700 h-full rounded-lg"></div>
+      </div>
+      <div class="flex justify-between text-red-100">
+        <div class="text-xs text-right">78%</div>
+        <div class="text-xs text-right">$25,000</div>
+      </div> -->
+    </div>
+    <!-- <div class="p-4 shadow bg-gray-900 text-gray-100 md:col-span-3 lg:col-span-1">
+      <div class="text-sm font-light text-gray-200">Today's Orders</div>
+      <div class="text-xl font-semibold leading-none lg:text-3xl mt-2 mb-4 text-gray-100">$1420</div>
+      <div class="relative mt-2">
+        <div class="bg-gray-100 h-2 rounded-full"></div>
+        <div class="absolute top-0 w-1/6 bg-gray-700 h-full rounded-lg"></div>
+      </div>
+      <div class="flex justify-between">
+        <div class="text-xs text-right text-gray-500">14%</div>
+        <div class="text-xs text-right text-gray-500">$25,000</div>
+      </div>
+    </div> -->
+  </div>
+  
+  
+  </div>
+  <div class='location-text' >
+    <span class='location' style="font-weight: bold;" >HOTELS</span>
+  </div>
+  <div class="p-6 container ">
+    <div class="grid grid-cols-2 gap-4 md:grid md:grid-cols-3 lg:grid lg:grid-cols-4">
+      <div class="p-4 border border-gray-400 shadow-md bg-white">
+        <div class="text-sm font-thin text-blue-700">HOTELS IN GOA</div>
+        <div class="text-xl font-semibold truncate leading-none lg:text-3xl mt-2 mb-4 text-gray-800 group-hover:text-gray-100">{{goa}}</div>
+        <!-- <div class="relative mt-2">
+          <div class="bg-gray-300 h-2 rounded-full"></div>
+          <div class="absolute top-0 w-1/6 bg-indigo-600 h-full rounded-lg"></div>
+        </div>
+        <div class="flex justify-between">
+          <div class="text-xs text-right text-gray-400">14%</div>
+          <div class="text-xs text-right text-gray-400">$25,000</div>
+        </div> -->
+      </div>
+      <div class="p-4 shadow bg-indigo-700">
+        <div class="text-sm font-light text-indigo-100">HOTELS IN BENGALURE</div>
+        <div class="text-xl font-semibold leading-none lg:text-3xl my-2 text-indigo-100">{{beng}}</div>
+        <!-- <div class="relative mt-2">
+          <div class="bg-gray-300 h-2 rounded-full"></div>
+          <div class="absolute top-0 w-8/12 bg-indigo-900 h-full rounded-lg"></div>
+        </div>
+        <div class="flex justify-between text-indigo-300">
+          <div class="text-xs text-right">78%</div>
+          <div class="text-xs text-right">$25,000</div>
+        </div> -->
+      </div>
+      <div class="p-4 border-1 border-gray-400 shadow bg-red-500">
+        <div class="text-sm font-light text-indigo-100">HOTELS IN MUMBAI</div>
+        <div class="text-xl font-semibold leading-none lg:text-3xl mt-2 mb-4 text-indigo-100">{{mumbai}}</div>
+        <!-- <div class="relative mt-2">
+          <div class="bg-gray-300 h-2 rounded-full"></div>
+          <div class="absolute top-0 w-8/12 bg-red-700 h-full rounded-lg"></div>
+        </div>
+        <div class="flex justify-between text-red-100">
+          <div class="text-xs text-right">78%</div>
+          <div class="text-xs text-right">$25,000</div>
+        </div> -->
+      </div>
+      <div class="p-4 shadow bg-gray-900 text-gray-100 md:col-span-3 lg:col-span-1">
+        <div class="text-sm font-light text-gray-200">HOTELS IN KOCHI</div>
+        <div class="text-xl font-semibold leading-none lg:text-3xl mt-2 mb-4 text-gray-100">{{kochi}}</div>
+        
+      </div>
+    </div>
 {%endblock%}

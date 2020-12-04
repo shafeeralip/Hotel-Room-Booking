@@ -10,6 +10,7 @@ from .decorators import custom_decorator
 from django.core.files import File
 from django.core.files.base import ContentFile
 from django.core.files.storage import FileSystemStorage
+from datetime import date
 # Create your views here.
 
 def hotel_log(request):
@@ -42,18 +43,40 @@ def hotel_log(request):
 def hotel_home(request,id):
 
     hotel=Hoteladmin.objects.get(id=id)
+    today=date.today()
+    todaybooking=Booking.objects.filter(hotel=hotel,complete=True,date_booked=today)
+    booking=Booking.objects.filter(hotel=hotel,complete=True)
+    bookcount=booking.count()
+    todaybookcount=todaybooking.count()
+    customers=[]
+    for book in booking:
+        if book.customer.name not in customers:
+            customers.append(book.customer.name)
+    
+    customerscount=len(customers)
+
+    today_income=0
+    for todaybook in todaybooking:
+        today_income=today_income + todaybook.total_price
+    
+    total_income=0
+
+    for book in booking:
+        total_income=total_income + book.total_price
+
+    
+    total_rooms=Rooms.objects.filter(hotel=hotel).count()
+
+    context={'hotel':hotel,'todayinc':today_income,'totalinc':total_income,'totalroom':total_rooms,
+            'todaybook':todaybookcount,'totalbook':bookcount,'customer':customerscount}
+
 
    
 
     if request.session.get('hotel') is None:
         return redirect(hotel_log)
     else:
-        return render(request,'hotel/hotel-home.html',{'hotel':hotel})
-
-
-   
-    
-        
+        return render(request,'hotel/hotel-home.html',context)
 
 
 
