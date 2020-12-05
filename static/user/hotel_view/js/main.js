@@ -262,7 +262,7 @@ window.myfun=function(){
 
 document.querySelectorAll('.roomselect').forEach(ele=>{
                
-    if(ele.value > 0){
+    if(ele.value > 0 ){
         selectroomdiv = document.getElementsByClassName('selectroomdiv')
         for(var j=0;j < selectroomdiv.length;j++ ){
             selectroomdiv[j].style.display ='block'
@@ -273,4 +273,19 @@ document.querySelectorAll('.roomselect').forEach(ele=>{
     }
     
 })
+
+document.querySelectorAll('.roomselect').forEach(ele=>{
+               
+    if(guest.value > 0 ){
+        selectroomdiv = document.getElementsByClassName('selectroomdiv')
+        for(var j=0;j < selectroomdiv.length;j++ ){
+            selectroomdiv[j].style.display ='block'
+        }
+
+    
+
+    }
+    
+})
+
 

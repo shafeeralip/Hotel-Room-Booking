@@ -1,7 +1,10 @@
 {% extends 'user/base.html' %}
 {% load static %}
 {% block content%}
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <link rel="stylesheet" href="{% static 'user/home/css/styles.css' %}">
 <div class="hero">
@@ -16,25 +19,28 @@
 </div>
 <section class="booking">
   <div class="container">
-      <form action="" class="form book-form">
+      <form action="{% url 'search' %}" class="form book-form" method="POST">
+          {% csrf_token %}
           <div class="input-group">
               <label for="destination" class="input-label">Destination</label>
-              <input type="text" class="input" id="destination">
+              <input type="text" name="location" class="input" id="destination">
 
           </div>
           <div class="input-group">
               <label for="check-in" class="input-label">check-in</label>
-              <input type="date" class="input" id="check-in">
+              <!-- <input type="date" class="input" id="check-in"> -->
+              <input type="text" name="checkin" id="checkin" class="input" name="checkin" placeholder="checkin" readonly >
 
           </div>
           <div class="input-group">
               <label for="check-out" class="input-label">check-out</label>
-              <input type="date" class="input" id="check-out">
+              <!-- <input type="date" class="input" id="check-out"> -->
+              <input type="text" name="checkout" id="checkout" class="input" name="checkout"  placeholder="checkout" readonly>
 
           </div>
           <div class="input-group">
-              <label for="adults" class="input-label">adults</label>
-              <select class="options" id="adults">
+              <label for="adults" class="input-label">GUEST</label>
+              <select class="options" name="guest" id="adults">
                   <option value="0">0</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -44,7 +50,7 @@
               </select>
 
           </div>
-          <div class="input-group">
+          <!-- <div class="input-group">
               <label for="children" class="input-label">children</label>
               <select class="options" id="children">
                   <option value="0">0</option>
@@ -55,8 +61,8 @@
                   <option value="5">5</option>
               </select>
 
-          </div>
-          <button class="btn form-btn btn-purple">search
+          </div> -->
+          <button type="submit" class="btn form-btn btn-purple">search
               <span class="dots"><i class="fas fa-ellipsis-h"></i></span>
           </button>
       </form>
@@ -259,4 +265,46 @@
 
   </div>
 </section>
+<script>
+      $( function() {
+    var availableTags = [
+      "KOCHI",
+      "BENGALURE",
+      "GOA",
+      "MUMBAI"
+    ];
+    $( "#destination" ).autocomplete({
+      source: availableTags
+    });
+} );
+</script>
+<script>
+    $(function() {
+    $( "#checkin" ).datepicker({minDate : 0, dateFormat: 'mm-dd-yy'});
+    $("#checkout").attr("disabled", "disabled");
+    $( "#checkout" ).datepicker({minDate:0, dateFormat: 'mm-dd-yy'});
+    
+$( "#checkin" ).on("change",function(){
+        onCheckin();
+        
+     });
+    
+ });
+ 
+  function onCheckin(){
+  if($("#checkin").val() !== ""){
+    $("#checkout").removeAttr("disabled");
+    var dateMin = $('#checkin').datepicker("getDate");
+        var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(), dateMin.getDate() + 1);
+    $("#checkout").datepicker('option', 'minDate', new Date(rMin));
+  }else{
+  $("#checkout").val("");
+  $("#checkout").attr("disabled", "disabled");
+  }
+  }
+
+
+</script>
+
+
 {%endblock%}

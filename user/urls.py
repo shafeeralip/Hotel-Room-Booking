@@ -16,7 +16,8 @@ urlpatterns=[
     path('booking_details/',views.booking_details,name='booking_details'),
     path('user_profile/',views.user_profile,name='user_profile'),
     path('report/<int:id>/<str:pay>/',views.report,name='report'),
-    path('reffral_signup/<str:referalcode>/',views.reffral_signup,name='reffral_signup')
+    path('reffral_signup/<str:referalcode>/',views.reffral_signup,name='reffral_signup'),
+    path('search',views.search,name='search')
 
 
     

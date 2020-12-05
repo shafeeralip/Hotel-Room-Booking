@@ -210,7 +210,8 @@ def hotel_view(request,id):
 
         booking=Booking.objects.get(customer=customer,hotel=hotel,complete=False)
         print("helloo" ,booking)
-    
+        
+        guest = booking.total_guest
     
         roombooked=Roombooked.objects.filter(booking=booking)
         print(roombooked)
@@ -221,9 +222,13 @@ def hotel_view(request,id):
     
 
 
-        context={'hotel':hotel,'rooms':rooms,'booking':booking,'checkin':checkindate,'checkout':checkoutdate,'date':date,'roombooked':roombooked}
+        context={'hotel':hotel,'rooms':rooms,'booking':booking,'checkin':checkindate,'checkout':checkoutdate,'date':date,'roombooked':roombooked,'guest':guest}
         return render(request,'user/hotel_view.html',context)
-    context={'hotel':hotel,'rooms':rooms}
+    
+    checkin=request.session['checkin']
+    checkout=request.session['checkout']
+    guest=request.session['guest']
+    context={'hotel':hotel,'rooms':rooms,'checkin':checkin,'checkout':checkout,'guest':guest}
     return render(request,'user/hotel_view.html',context)
     
 
@@ -317,9 +322,17 @@ def booking(request,id):
 def hotel_list(request,city):
     city_name=city
     hotels= Hoteladmin.objects.filter(location=city)
+    location=request.session['location']
+    checkin=request.session['checkin']
+    checkout=request.session['checkout']
+    guest=request.session['guest']
+    print("helloo",location)
+
+    bla='hellooo'
+
     
     
-    context={'city_name':city_name,'hotels':hotels}
+    context={'city_name':city_name,'hotels':hotels,'location':location,'checkin':checkin,'checkout':checkout,'guest':guest,'bla':bla}
 
 
 
@@ -476,4 +489,19 @@ def reffral_signup(request,referalcode):
 
 
     return render(request,'user/referalreg.html',{'refcode':referalcode})
+
+
+def search(request):
+    if request.method == 'POST':
+        location = request.POST['location']
+        checkin = request.POST['checkin']
+        checkout = request.POST['checkout']
+        guest = request.POST['guest']
+
+        request.session['location'] = location
+        request.session['checkin'] = checkin
+        request.session['checkout'] = checkout
+        request.session['guest'] = guest
+
+        return redirect(hotel_list,city=location)
 

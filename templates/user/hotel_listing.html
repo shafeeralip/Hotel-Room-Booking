@@ -9,6 +9,9 @@
 </head>
 
 <body>
+    
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <!-- feature icons -->
   <link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/fontello.css' %}">
   <link rel="stylesheet" href="{% static 'hotel/room_add/fontello/css/icon_set_1.css' %}">
@@ -83,23 +86,22 @@
       <form action="" class="form book-form">
         <div class="input-group">
           <label for="destination" class="input-label">Destination</label>
-          <input type="text" class="input" id="destination">
+          <input type="text" value="{{location}}" class="input" id="destination">
 
         </div>
         <div class="input-group">
           <label for="check-in" class="input-label">check-in</label>
-          <input type="date" class="input" id="check-in">
-
+          <input type="text" name="checkin" value="{{checkin}}" id="checkin" class="input" name="checkin" placeholder="checkin" readonly >
         </div>
         <div class="input-group">
           <label for="check-out" class="input-label">check-out</label>
-          <input type="date" class="input" id="check-out">
+          <input type="text" name="checkout" id="checkout" value="{{checkout}}" class="input" name="checkout"  placeholder="checkout" readonly>
 
         </div>
         <div class="input-group">
           <label for="adults" class="input-label">Guest</label>
           <select class="options" id="adults">
-            <option value="0">0</option>
+            <option value="0">{{guest}}</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -450,7 +452,7 @@
           #2a5298,
           #1e3c72);
       /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+      location
       padding: 5rem 1rem;
     }
 
@@ -1308,7 +1310,46 @@
             });
     </script>
 
+<script>
+    $(function() {
+    $( "#checkin" ).datepicker({minDate : 0, dateFormat: 'mm-dd-yy'});
+    $("#checkout").attr("disabled", "disabled");
+    $( "#checkout" ).datepicker({minDate:0, dateFormat: 'mm-dd-yy'});
+    
+  $( "#checkin" ).on("change",function(){
+        onCheckin();
+        
+    });
+    
+  });
 
+  function onCheckin(){
+  if($("#checkin").val() !== ""){
+    $("#checkout").removeAttr("disabled");
+    var dateMin = $('#checkin').datepicker("getDate");
+        var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(), dateMin.getDate() + 1);
+    $("#checkout").datepicker('option', 'minDate', new Date(rMin));
+  }else{
+  $("#checkout").val("");
+  $("#checkout").attr("disabled", "disabled");
+  }
+  }
+
+
+</script>
+<script>
+  $( function() {
+  var availableTags = [
+    "KOCHI",
+    "BENGALURE",
+    "GOA",
+    "MUMBAI"
+  ];
+  $( "#destination" ).autocomplete({
+    source: availableTags
+  });
+  } );
+</script>
 </body>
 
 </html>
