@@ -23,7 +23,7 @@ def hotel_log(request):
         username=request.POST['username']
         password=request.POST['password']
         
-        if Hoteladmin.objects.filter(username=username,password=password).exists():
+        if Hoteladmin.objects.filter(username=username,password=password,is_active=True).exists():
             hotel_admin=Hoteladmin.objects.get(username=username,password=password)
             print(hotel_admin)
             hotelname=hotel_admin.id

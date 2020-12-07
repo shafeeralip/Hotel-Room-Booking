@@ -204,30 +204,38 @@ def mobile_login(request):
 def hotel_view(request,id):
     hotel=Hoteladmin.objects.get(id=id)
     rooms=Rooms.objects.filter(hotel=hotel)
-    customer=request.user.customer
-    print("hello",customer,hotel)
-    if Booking.objects.filter(customer=customer,hotel=hotel,complete=False).exists():
+    if request.user.is_authenticated:
 
-        booking=Booking.objects.get(customer=customer,hotel=hotel,complete=False)
-        print("helloo" ,booking)
+        customer=request.user.customer
+        print("hello",customer,hotel)
+        if Booking.objects.filter(customer=customer,hotel=hotel,complete=False).exists():
+
+            booking=Booking.objects.get(customer=customer,hotel=hotel,complete=False)
+            print("helloo" ,booking)
+            
+            guest = booking.total_guest
         
-        guest = booking.total_guest
-    
-        roombooked=Roombooked.objects.filter(booking=booking)
-        print(roombooked)
-        date=booking.check_out - booking.check_in
-        checkindate =str(booking.check_in.month)  +"-"+str(booking.check_in.day) +"-"+str(booking.check_in.year) 
-        checkoutdate =str(booking.check_out.month)  +"-"+str(booking.check_out.day) +"-"+str(booking.check_out.year) 
-        print("hi ",checkindate)
-    
+            roombooked=Roombooked.objects.filter(booking=booking)
+            print(roombooked)
+            date=booking.check_out - booking.check_in
+            checkindate =str(booking.check_in.month)  +"-"+str(booking.check_in.day) +"-"+str(booking.check_in.year) 
+            checkoutdate =str(booking.check_out.month)  +"-"+str(booking.check_out.day) +"-"+str(booking.check_out.year) 
+            print("hi ",checkindate)
+        
 
 
-        context={'hotel':hotel,'rooms':rooms,'booking':booking,'checkin':checkindate,'checkout':checkoutdate,'date':date,'roombooked':roombooked,'guest':guest}
-        return render(request,'user/hotel_view.html',context)
-    
-    checkin=request.session['checkin']
-    checkout=request.session['checkout']
-    guest=request.session['guest']
+            context={'hotel':hotel,'rooms':rooms,'booking':booking,'checkin':checkindate,'checkout':checkoutdate,'date':date,'roombooked':roombooked,'guest':guest}
+            return render(request,'user/hotel_view.html',context)
+    try:
+
+        checkin=request.session['checkin']
+        checkout=request.session['checkout']
+        guest=request.session['guest']
+    except:
+        checkin=''
+        checkout=''
+        guest=''
+
     context={'hotel':hotel,'rooms':rooms,'checkin':checkin,'checkout':checkout,'guest':guest}
     return render(request,'user/hotel_view.html',context)
     
@@ -236,6 +244,8 @@ def hotel_view(request,id):
 def booking(request,id):
     hotel=Hoteladmin.objects.get(id=id)
     rooms=Rooms.objects.filter(hotel=hotel) 
+   
+
     
     if request.method =='POST':
        
@@ -258,17 +268,21 @@ def booking(request,id):
 
             return redirect(hotel_view,id=id)
 
-        else:
-            
-            user = User.objects.get(username=request.user.username)
-            ref=reffreal_offer.objects.all()
-            booktotal=0
-            prev_book=''
-           
-            customer=Customer.objects.get(user=user)
-            
-            
-            booking=Booking.objects.get(hotel=hotel,customer=customer,complete=False)
+        
+    if request.user.is_authenticated:
+
+
+        user = User.objects.get(username=request.user.username)
+        ref=reffreal_offer.objects.all()
+        booktotal=0
+        prev_book=''
+    
+        customer=Customer.objects.get(user=user)
+        
+        
+        booking=Booking.objects.get(hotel=hotel,customer=customer,complete=False)
+        if customer.refferd_user:
+
             if Booking.objects.filter(customer=customer,complete=True).exists():
                 prev_book=True
                 booktotal = booking.total_price
@@ -281,37 +295,100 @@ def booking(request,id):
 
                     elif off.offer_type == 'OfferByAmount':
                         booktotal=booking.total_price - off.ref_price
+        else:
+            booktotal = booking.total_price
 
-                
-           
-            bookedrooms=booking.roombooked_set.all()
             
+    
+        bookedrooms=booking.roombooked_set.all()
+        
 
-            date= booking.check_out - booking.check_in
-            for bkroom in bookedrooms:
-                images=bkroom.room.room_image_set.all()
-                for image in images:
-                    image=image.image
-                    break 
-            
+        date= booking.check_out - booking.check_in
+        for bkroom in bookedrooms:
+            images=bkroom.room.room_image_set.all()
+            for image in images:
+                image=image.image
+                break 
+    
 
-            client=razorpay.Client(auth=("rzp_test_7i01eG7knm1628","K9H5VQX0OHOsFwPMDY8DCMzp"))
-            order_currency='INR'
-            order_receipt = 'order-rctid-11'
-            totalprice=booktotal * 100
+        client=razorpay.Client(auth=("rzp_test_7i01eG7knm1628","K9H5VQX0OHOsFwPMDY8DCMzp"))
+        order_currency='INR'
+        order_receipt = 'order-rctid-11'
+        totalprice=booktotal * 100
 
-            response = client.order.create(dict(
-                amount=totalprice,
-                currency=order_currency,
-                receipt=order_receipt,
-                payment_capture='0'
-            
-            ))
-            order_id=response['id']
+        response = client.order.create(dict(
+            amount=totalprice,
+            currency=order_currency,
+            receipt=order_receipt,
+            payment_capture='0'
+        
+        ))
+        order_id=response['id']
 
-            bookdetails={'booking':booking,'rooms':bookedrooms,'date':date,'order_id':order_id,'booktotal':booktotal,'ref':ref,'prev_book':prev_book}
+        bookdetails={'booking':booking,'rooms':bookedrooms,'date':date,'order_id':order_id,'booktotal':booktotal,'ref':ref,'prev_book':prev_book}
 
-            return render(request,'user/booking.html',bookdetails)
+        return render(request,'user/booking.html',bookdetails)
+    else:
+        
+        booking_rooms=request.COOKIES['booking-details'] 
+        book_details = list(eval(booking_rooms))
+        
+        print("hiiiiilooooo",book_details)
+        
+        rooms=[]
+        hotel=''
+        total_price=''
+        total_guest=''
+        total_rooms=0
+        total_days=''
+        checkin = ''
+        checkout = ''
+        dic={}
+        roomscount=[]
+
+        for booking_details in book_details:
+
+
+            room = Rooms.objects.get(id =int(booking_details['roomid']))
+            rooms.append(room)
+            dic['room']=room
+            dic['count']=booking_details['roomscount']
+            roomscount.append(dic)
+            hotel = Hoteladmin.objects.get(id=int(booking_details['hotelid']))
+            total_price = booking_details['totalprice']
+            total_guest = booking_details['totalguest']
+            total_rooms +=1
+            total_days = booking_details['totaldays']
+            checkin = booking_details['checkin']
+            checkout = booking_details['checkout']
+
+
+
+        zippedList = zip(rooms,roomscount)
+
+        client=razorpay.Client(auth=("rzp_test_7i01eG7knm1628","K9H5VQX0OHOsFwPMDY8DCMzp"))
+        order_currency='INR'
+        order_receipt = 'order-rctid-11'
+        totalprice= int(total_price) * 100
+
+        response = client.order.create(dict(
+            amount=totalprice,
+            currency=order_currency,
+            receipt=order_receipt,
+            payment_capture='0'
+        
+        ))
+        order_id=response['id']
+
+        
+        context={'hotel':hotel,'total_price':total_price,'total_guest':total_guest,'total_rooms':total_rooms,'total_days':total_days,'checkin':checkin,'checkout':checkout,'rooms':rooms,'zip':zippedList,'order_id':order_id}
+
+        return render(request,'user/booking.html',context)
+
+
+
+
+
 
     return render(request,'user/booking.html')
     
@@ -322,10 +399,19 @@ def booking(request,id):
 def hotel_list(request,city):
     city_name=city
     hotels= Hoteladmin.objects.filter(location=city)
-    location=request.session['location']
-    checkin=request.session['checkin']
-    checkout=request.session['checkout']
-    guest=request.session['guest']
+    try:
+
+        location=request.session['location']
+        checkin=request.session['checkin']
+        checkout=request.session['checkout']
+        guest=request.session['guest']
+    except:
+        location = ''
+        checkin = ''
+        checkout = ''
+        guest = ''
+
+
     print("helloo",location)
 
     bla='hellooo'
@@ -359,8 +445,8 @@ def booking_details(request):
         customer,created =Customer.objects.get_or_create(user=user,name=username,email=email)
         for booking_room in booking_rooms:
             print(booking_room)
-            hotel=Hoteladmin.objects.get(id=booking_room['hotelid'])
-            room=Rooms.objects.get(id=booking_room['roomid'])
+            hotel=Hoteladmin.objects.get(id=int(booking_room['hotelid']))
+            room=Rooms.objects.get(id=int(booking_room['roomid']))
             print('date',booking_room['checkin'])
             checkindates=booking_room['checkin'].split("-")
             checkin=checkindates[2]+"-"+checkindates[0]+"-"+checkindates[1]
@@ -377,10 +463,16 @@ def booking_details(request):
             roombooked.quantity=int(booking_room['roomscount'])
             booking.save()
             roombooked.save()
-       
+        return JsonResponse('items created' ,safe=False)
+    
+    else:
+        response = JsonResponse('items created' ,safe=False)
+        response.set_cookie('booking-details',booking_rooms) 
+        
+
         
     
-    return JsonResponse('items created' ,safe=False)
+    return response
 
 
 def user_profile(request):
@@ -418,6 +510,7 @@ def report(request,id,pay):
         email=request.POST['email']
     if request.user.is_authenticated:
         booking.complete=True
+        booking.confirm = True
        
        
 
@@ -505,3 +598,58 @@ def search(request):
 
         return redirect(hotel_list,city=location)
 
+def guestreg(request):
+    if request.method=='POST':
+        username=request.POST['name']
+        email=request.POST['email']
+        password=request.POST['password']
+        number=request.POST['mobile']
+        # otp=request.POST['otp']
+        dicti = {"username":username,"email":email,"mobile":number}
+        if User.objects.filter(username=username).exists():
+            messages.info(request,'username already taken')
+            return render(request, "user/booking.html", dicti)
+        elif User.objects.filter(email=email).exists():
+            messages.info(request,'email already taken')
+            return render(request, "user/booking.html", dicti)
+        elif User.objects.filter(last_name=number).exists():
+            messages.info(request,'mobail number already taken')
+            return render(request, "user/booking.html", dicti)
+        else:
+            letter = string.ascii_letters
+            result = ''.join(random.choice(letter) for i in range(8))
+            user=User.objects.create_user(username=username,email=email,password=password,last_name=number,first_name=password)
+            customer=Customer.objects.create(user=user,name=username,email=email,reff_code=result)
+            user.save();
+            customer.save();
+
+            login(request,user,backend='django.contrib.auth.backends.ModelBackend')
+
+            booking_rooms=request.COOKIES['booking-details'] 
+            booking_rooms = list(eval(booking_rooms))
+            hotelid = 0
+
+            for booking_room in booking_rooms:
+
+                print(booking_room)
+                hotel=Hoteladmin.objects.get(id=int(booking_room['hotelid']))
+                hotelid = hotel.id
+                room=Rooms.objects.get(id=int(booking_room['roomid']))
+                print('date',booking_room['checkin'])
+                checkindates=booking_room['checkin'].split("-")
+                checkin=checkindates[2]+"-"+checkindates[0]+"-"+checkindates[1]
+                checkoutdates=booking_room['checkout'].split("-")
+                checkout=checkoutdates[2]+"-"+checkoutdates[0]+"-"+checkoutdates[1]
+
+
+                booking,created=Booking.objects.get_or_create(customer=customer,hotel=hotel,complete=False)
+                booking.total_price=int(booking_room['totalprice'])
+                booking.check_in=checkin
+                booking.check_out=checkout
+                booking.total_guest=booking_room['totalguest']
+                roombooked,created=Roombooked.objects.get_or_create(booking=booking,room=room)
+                roombooked.quantity=int(booking_room['roomscount'])
+                booking.save()
+                roombooked.save()
+
+            return redirect( 'booking',id=hotel.id)

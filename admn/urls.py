@@ -16,5 +16,7 @@ urlpatterns=[
     path('refoffer',views.refoffer,name='refoffer'),
     path('offeredit/<int:id>/',views.offeredit,name='offeredit'),
     path('offerstatus/<int:id>/<str:value>/',views.offerstatus,name='offerstatus'),
+    path('userBlock/<int:id>/',views.userBlock,name='userBlock'),
+    path('hotelblock/<int:id>/',views.hotelblock,name='hotelblock'),
 
 ]

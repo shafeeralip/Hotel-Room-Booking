@@ -104,8 +104,6 @@ def hotel_edit(request,id):
         return redirect(hotel_view)
 
 
-        
-
     return render(request,'admin/ad_hoteledit.html',{"hotel":hotel})
 
 @user_passes_test(lambda u: u.is_superuser,login_url='/admin')
@@ -131,7 +129,6 @@ def user_edit(request,id):
         user.last_name=request.POST['contactnumber']
         user.save()
         return redirect(user_view)
-
 
 
     return render(request,'admin/ad_useredit.html',{'user':user})
@@ -166,7 +163,6 @@ def offeredit(request,id):
         return redirect(refoffer)
 
 
-
     return render(request,'admin/offeredit.html',{'off':off})
 @user_passes_test(lambda u: u.is_superuser,login_url='/admin')
 def offerstatus(request,id,value):
@@ -180,5 +176,30 @@ def offerstatus(request,id,value):
     return redirect(refoffer)
 
 
+def userBlock(request,id):
+  user=User.objects.get(id=id)
+  if user.is_active == False:
 
+    user.is_active = True
+  else:
+    
+    user.is_active = False
+   
+  user.save()
+
+  return redirect(user_view)
+
+
+def hotelblock(request,id):
+  hotel=Hoteladmin.objects.get(id=id)
+  if hotel.is_active == False:
+
+    hotel.is_active = True
+  else:
+    
+    hotel.is_active = False
+   
+  hotel.save()
+
+  return redirect(hotel_view)
     

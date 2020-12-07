@@ -12,6 +12,7 @@ class Hoteladmin(models.Model):
     hotel_name=models.CharField(max_length=200,null=True)
     username=models.CharField(max_length=200,null=True)
     password=models.CharField(max_length=200,null=True)
+    is_active = models.BooleanField(default=True)
     location=models.CharField(max_length=200,null=True)
     contact=models.BigIntegerField()
     description=models.TextField(max_length=1000,verbose_name='description')

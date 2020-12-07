@@ -31,10 +31,17 @@
                
                 <td>{{user.username}}</td>
                 <td>{{user.email}}</td>
-                <td>{{user.last_name}}</td>
+				<td>{{user.last_name}}</td>
+				{% if user.is_active == True %}
+						<td>Active</td>	
+						{%else%}
+						<td>Blocked</td>
+						{%endif%}	
+				
                 
                 <td>
-                    <a href="{%url 'user_edit' user.id %}" class="edit" ><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+					<a href="{%url 'user_edit' user.id %}" class="edit" ><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+					<a href="{% url 'userBlock' user.id %}"  onclick="window.mytest('{{user}}')" data-id="{{user.username}}"  id="blockcheck{{user}}" data-id="" class="delete"><i class="fa fa-ban" aria-hidden="true"></i></a>
                     <a href="{% url 'user_delete' user.id %}" onclick="window.my('{{user}}')" class="delete"  id="deluser{{user}}"
                     data-id="{{user.username}}"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                 </td>
@@ -262,6 +269,15 @@
 	}
 </style>
 <script>
+	window.mytest=function(user){
+		var v= document.getElementById("blockcheck"+user)
+		var productid = v.dataset.id
+		var isValid =confirm("are you sure do you want block user  "+productid+ " ?");
+		if(!isValid){
+			event.preventDefault();
+			alert("it wont be block");
+		}
+	}
        
     window.my=function(user){
 

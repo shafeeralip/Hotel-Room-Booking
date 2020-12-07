@@ -118,6 +118,7 @@ for(var i=0;i<room_selected.length;i++){
 
 window.mytest=function(){
     var totalprice=document.getElementById('roomsprice').textContent
+    var totaldays=document.getElementById("totalDays").textContent
     var checkintime=checkin.value
     var checkouttime=checkout.value
     var totalguest=document.getElementById("adults").value
@@ -165,7 +166,8 @@ window.mytest=function(){
                 totalprice:totalprice,
                 checkin:checkintime,
                 checkout:checkouttime,
-                totalguest:totalguest
+                totalguest:totalguest,
+                totaldays:totaldays
     
             });
         })

@@ -39,9 +39,15 @@
                 <td>{{hotel.contact}}</td>
                 <td>
                     {{hotel.categories}}
-                </td>
+				</td>
+				{% if hotel.is_active == True %}
+						<td>Active</td>	
+						{%else%}
+						<td>Blocked</td>
+						{%endif%}
                 <td>
-                    <a href="{%url 'hotel_edit' hotel.id %}" class="edit" ><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+					<a href="{%url 'hotel_edit' hotel.id %}" class="edit" ><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+					<a href="{% url 'hotelblock' hotel.id %}"  onclick="window.mytest('{{hotel}}')" data-id="{{hotel.hotel_name}}"  id="blockcheck{{hotel}}" data-id="" class="delete"><i class="fa fa-ban" aria-hidden="true"></i></a>
                     <a href="{% url 'hotel_delete' hotel.id %}" class="delete" onclick="window.myt('{{hotel}}')" id="delhotel{{hotel}}"
                     data-id="{{hotel.hotel_name}}"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                 </td>
@@ -284,7 +290,21 @@
 
         }
         
-    }
+	}
+	window.mytest=function(hotel){
+
+      
+	var v= document.getElementById("delhotel"+hotel)
+	var hotelname = v.dataset.id
+
+	var isValid =confirm("are you sure do you want block  "+hotelname+" hotel");
+	if(!isValid){
+		event.preventDefault();
+		alert("it wont be block");
+
+}
+
+}
 </script>
 
 
