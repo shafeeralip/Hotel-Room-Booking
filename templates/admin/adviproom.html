@@ -1,0 +1,104 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<div class="container">
+    {% for message in messages %}
+    <b><h6 class=text-danger>{{message}}</h6></b>{% endfor %}
+    <div class="heading">
+        <center><u><h3>ADD VIP ROOMS</h3></u></center>
+
+    </div>
+<form action="{% url 'viproom' %}" method="POST">
+  {% csrf_token %}
+    <div class="form-group">
+        <label >LOCATION OF HOTEL</label>
+        <select class="form-control" name="location" id="location">
+          <option></option>
+          <option>GOA</option>
+          <option>KOCHI</option>
+          <option>BENGALURE</option>
+          <option>MUMBAI</option>
+
+          
+        </select>
+      </div>
+      <div class="form-group">
+        <label >HOTEL</label>
+        <select class="form-control" name="hotel" id="hotel">
+          <option id="opt1" >Please Select Location</option> 
+        </select>
+      </div>
+      <div class="form-group">
+        <label >ROOMS</label>
+        <select class="form-control" name="room" id="room">
+          <option id="opt1" >Please Select Hotel</option> 
+        </select>
+      </div>
+      
+      
+      
+    
+    
+    <button type="submit" class="btn btn-primary">ADD VIP ROOM</button>
+  </form>
+</div>
+
+<script>
+    var hotel=document.getElementById("hotel")
+    var room=document.getElementById("room")
+    document.getElementById("location").addEventListener("change",function(){
+        let location = document.getElementById("location").value;
+        $.ajax(
+    {
+        type:"GET",
+        url: "/admin/location",
+        data:{
+                location:location
+        },
+        success: function( data ) 
+        {
+            hotel.innerHTML=""
+            room.innerHTML=""
+            var op =document.createElement("option");
+            hotel.add(op);
+           data.map((ho,k)=>{
+            var option = document.createElement("option");
+            option.text = ho;
+            hotel.add(option);
+           })
+        }
+     })
+})
+
+document.getElementById("hotel").addEventListener("change",function(){
+        var hotel = document.getElementById("hotel").value;
+        let location = document.getElementById("location").value;
+        $.ajax(
+    {
+        type:"GET",
+        url: "/admin/hotel",
+        data:{
+                hotel:hotel,
+                location:location
+        },
+        success: function( data ) 
+        {
+            room.innerHTML=""
+            var op =document.createElement("option");
+            room.add(op);
+           data.map((ro,v)=>{
+            var option = document.createElement("option");
+            option.text = ro;
+            room.add(option);
+           })
+        }
+     })
+})
+</script>
+
+
+
+
+{% endblock %}

@@ -18,5 +18,13 @@ urlpatterns=[
     path('offerstatus/<int:id>/<str:value>/',views.offerstatus,name='offerstatus'),
     path('userBlock/<int:id>/',views.userBlock,name='userBlock'),
     path('hotelblock/<int:id>/',views.hotelblock,name='hotelblock'),
+    path('vip',views.vip,name='vip'),
+    path('viphotel',views.viphotel,name='viphotel'),
+    path('viproom',views.viproom,name='viproom'),
+    path('location',views.location,name='location'),
+   path('hotel',views.hotel,name='hotel'),
+    path('act/<int:id>/<str:value>/',views.act,name='act'),
+
+
 
 ]

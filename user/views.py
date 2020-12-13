@@ -16,14 +16,26 @@ import re
 
 
 def home(request):
-    if request.method=='POST':
+    if request.user.is_authenticated:
+        
 
         user=request.user
         name=request.user.username
         email=request.user.email
         customer,created =Customer.objects.get_or_create(user=user,name=name,email=email)
+
     
-    return render(request,'user/index.html')
+    goahotel=Hoteladmin.objects.filter(location="GOA").count()
+    kochihotel=Hoteladmin.objects.filter(location="KOCHI").count()
+    benghotel=Hoteladmin.objects.filter(location="BENGALURE").count()
+    mumbihotel=Hoteladmin.objects.filter(location="MUMBAI").count()
+    viphotel=VIP.objects.filter(hotel__isnull=False)
+    viproom=VIP.objects.filter(room__isnull=False)
+
+    context={'goahotel':goahotel,'kochihotel':kochihotel,'benghotel':benghotel,
+            'mumbihotel':mumbihotel,'viphotel':viphotel,'viproom':viproom}
+    
+    return render(request,'user/index.html',context)
 
 
 def user_login(request):

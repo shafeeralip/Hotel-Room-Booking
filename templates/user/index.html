@@ -81,7 +81,7 @@
                     <a href="{% url 'hotel_list' city='GOA' %}">
                     <img src="/static/images/GOA.jpg" alt="" class="room-image">
                     <h5 class="room-name">GOA</h5>
-                    <span class="per-night">520 hotels</span></a>
+                    <span class="per-night">{{goahotel}} hotels</span></a>
                 </div>
             </div>
             <div class="gird rooms-grid featured-rooms">
@@ -89,7 +89,7 @@
                     <a href="{% url 'hotel_list' city='BENGALURE' %}">
                     <img src="/static/images/Bengaluru.jpg" alt="" class="room-image">
                     <h5 class="room-name">BENGALURE</h5>
-                    <span class="per-night">520 hotels</span></a>
+                    <span class="per-night">{{benghotel}} hotels</span></a>
                 </div>
                 
   
@@ -99,7 +99,7 @@
                     <a href="{% url 'hotel_list' city='MUMBAI' %}">
                     <img src="/static/images/Mumbaijpg" alt="" class="room-image">
                     <h5 class="room-name">MUMBAI</h5>
-                    <span class="per-night">520 hotels</span></a>
+                    <span class="per-night">{{mumbihotel}} hotels</span></a>
                     
                 </div>
                 
@@ -110,7 +110,7 @@
                     <a href="{% url 'hotel_list' city='MUMBAI' %}">
                     <img src="/static/images/KOCHI-1-1.jpg" alt="" class="room-image">
                     <h5 class="room-name">KOCHI</h5>
-                    <span class="per-night">520 hotels</span></a>
+                    <span class="per-night">{{kochihotel}} hotels</span></a>
                     
                 </div>
                 
@@ -128,10 +128,11 @@
 
       </h5>
       <div class="grid">
+          {% for vi in viphotel %}
           <div class="grid-item featured-hotels">
-             <img src="/static/images/hotel_astro_resort.jpg" alt="" class="hotel-image"></a>
-              <h5 class="hotel-name">Astro hotel</h5>
-              <span class="hotel-price">From $200/Night</span>
+             <img src="{{vi.hotel.imageURL}}" alt="" class="hotel-image"></a>
+              <h5 class="hotel-name">{{vi.hotel.hotel_name}}</h5>
+              <span class="hotel-price">From ${{vi.hotel.get_lowest_price}}/Night</span>
               <div class="hotel-rating">
                   <i class="fas fa-star rating"></i>
                   <i class="fas fa-star rating"></i>
@@ -139,43 +140,15 @@
                   <i class="fas fa-star rating"></i>
                   <i class="fas fa-star-half rating"></i>
               </div>
-              <a href="#" class="btn btn-gradient">Book now
+              <a href="{%url 'hotel_view' vi.hotel.id %}" class="btn btn-gradient">Book now
               <span class="dots"><i class="fas fa-ellipsis-h"></i></span>
               </a>
           </div>
-          <div class="grid-item featured-hotels">
-              <img src="/static/images/hotel_astro_resort.jpg" alt="" class="hotel-image">
-              <h5 class="hotel-name">Astro hotel</h5>
-              <span class="hotel-price">From $200/Night</span>
-              <div class="hotel-rating">
-                  <i class="fas fa-star rating"></i>
-                  <i class="fas fa-star rating"></i>
-                  <i class="fas fa-star rating"></i>
-                  <i class="fas fa-star rating"></i>
-                  <i class="fas fa-star-half rating"></i>
-              </div>
-              <a href="#" class="btn btn-gradient">Book now
-              <span class="dots"><i class="fas fa-ellipsis-h"></i></span>
-              </a>
-          </div>
-          <div class="grid-item featured-hotels">
-              <img src="/static/images/hotel_astro_resort.jpg" alt="" class="hotel-image">
-              <h5 class="hotel-name">Astro hotel</h5>
-              <span class="hotel-price">From $200/Night</span>
-              <div class="hotel-rating">
-                  <i class="fas fa-star rating"></i>
-                  <i class="fas fa-star rating"></i>
-                  <i class="fas fa-star rating"></i>
-                  <i class="fas fa-star rating"></i>
-                  <i class="fas fa-star-half rating"></i>
-              </div>
-              <a href="#" class="btn btn-gradient">Book now
-              <span class="dots"><i class="fas fa-ellipsis-h"></i></span>
-              </a>
-          </div>
+          {% endfor %}
+          
          
          
-      </div>
+        </div>
   </div>
 </section>
 <!-- <section class="offer">
@@ -210,60 +183,34 @@
 
       </h5>
       <div class="grid">
+          {% for vi in viproom %}
+          {%for images in vi.room.room_image_set.all %}
+            {%if forloop.first%}
           <div class="gird rooms-grid featured-rooms">
               <div class="image-wrap">
-                  <img src="/static/images/room_1.jpg" alt="" class="room-image">
-                  <h5 class="room-name">Astro hotel</h5>
+                  <img src="{{images.image.url}}" alt="" class="room-image">
+                  {% endif %}
+                  {% endfor %}
+                  <h5 class="room-name">{{vi.room.hotel.hotel_name}}</h5>
               </div>
               <div class="room-info-wrap">
-                  <span class="room-price">$200 <span class="per-night">per Night</span></span>
+                  <span class="room-price">${{vi.room.room_price}} <span class="per-night">per Night</span></span>
                   <p class="paragraph">
-                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                      the industry's standard dummy
+                      
 
                   </p>
-                  <a href="#" class="btn rooms-btn">Book now &rarr;</a>
+                  <a href="{%url 'hotel_view' vi.room.hotel.id %}" class="btn rooms-btn">Book now &rarr;</a>
 
-              </div>
+                </div>
 
-          </div>
-          <div class="gird rooms-grid featured-rooms">
-              <div class="image-wrap">
-                  <img src="/static/images/room_2.jpg" alt="" class="room-image">
-                  <h5 class="room-name">Astro hotel</h5>
-              </div>
-              <div class="room-info-wrap">
-                  <span class="room-price">$200 <span class="per-night">per Night</span></span>
-                  <p class="paragraph">
-                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                      the industry's standard dummy
+            </div>
+            {% endfor %}
+          
 
-                  </p>
-                  <a href="#" class="btn rooms-btn">Book now &rarr;</a>
+          
+         </div>
 
-              </div>
-
-          </div>
-           <div class="gird rooms-grid featured-rooms">
-              <div class="image-wrap">
-                  <img src="/static/images/room_2.jpg" alt="" class="room-image">
-                  <h5 class="room-name">Astro hotel</h5>
-              </div>
-              <div class="room-info-wrap">
-                  <span class="room-price">$200 <span class="per-night">per Night</span></span>
-                  <p class="paragraph">
-                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                      the industry's standard dummy
-
-                  </p>
-                  <a href="#" class="btn rooms-btn">Book now &rarr;</a>
-
-              </div>
-
-          </div>
-      </div>
-
-  </div>
+    </div>
 </section>
 <script>
       $( function() {

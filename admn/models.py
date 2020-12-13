@@ -144,8 +144,11 @@ class reffreal_offer(models.Model):
     offer_type=models.CharField(max_length=200,null=True)
 
 
-
-
+class VIP(models.Model):
+    hotel=hotel=models.ForeignKey(Hoteladmin,on_delete=models.SET_NULL,null=True,blank=True)
+    room=models.ForeignKey(Rooms,on_delete=models.SET_NULL,null=True,blank=True)
+    status= models.BooleanField(null=True,default=True)
+    
 
 
 

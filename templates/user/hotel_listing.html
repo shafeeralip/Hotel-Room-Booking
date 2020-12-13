@@ -23,7 +23,7 @@
   <header class="header">
     <div class="container">
       <nav class="nav">
-        <a href="index.html" class="logo">
+        <a href="{% url 'home' %}" class="logo">
           <img src="/static/images/logo.png" alt="">
         </a>
         <div class="hamburger-menu">
@@ -32,16 +32,16 @@
         </div>
         <ul class="nav-list">
           <li class="nav-item">
-            <a href="index.html" class="nav-link">HOME</a>
+            <!-- <a href="index.html" class="nav-link">HOME</a> -->
 
 
           <li class="nav-item">
-            <a href="index.html" class="nav-link">ABOUT</a>
+            <!-- <a href="index.html" class="nav-link">ABOUT</a> -->
 
           </li>
 
           <li class="nav-item">
-            <a href="index.html" class="nav-link">OFFER</a>
+            <!-- <a href="index.html" class="nav-link">OFFER</a> -->
 
           </li>
           {%  if request.user.is_authenticated %}

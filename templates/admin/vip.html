@@ -1,0 +1,119 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block heading %}
+<span class='location'>OFFER</span>
+{%endblock%}
+{% block content %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<div class="container-fluid pt-5">
+    <div class="button float-right" >
+  <a href="{% url 'viphotel' %}"> <button class="btn btn-primary">ADD VIP  HOTEL</button></a>
+ <a href="{% url 'viproom' %}">  <button class="btn btn-success">ADD VIP ROOMS</button></a>
+</div>
+    <div class="pt-5">
+      <CENter><h3>VIP HOTEL</h3> </CENter> 
+      <thead>
+            <table class="table table-striped table-border ">
+          <tr>
+            <th scope="col">HOTEL</th>
+
+            <th scope="col">LOCATION</th>
+            <th>ACTION</th>
+          </tr>
+        </thead>
+        <tbody>
+         {% for vi in viphotel %}
+         
+          <tr {% if vi.status == False %} style="opacity: 50%;" {% endif %}>
+            <td>{{vi.hotel.hotel_name}}</td>
+            <td>{{vi.hotel.location}}</td>
+            {% if vi.status == True %}
+            <td>Active</td>
+            {% else %}
+            <td >Blocked</td>
+            {% endif %}
+            <td>
+            
+                <a href='{% url "act" vi.id "block" %}'  onclick="window.mytest('{{vi}}')" 
+                data-id="{{vi.hotel.hotel_name}}"  id="blockcheck{{vi}}" data-id="" class="delete"><i class="fa fa-ban fa-2x" aria-hidden="true"></i></a>
+                <a class="pl-2" href='{% url "act" vi.id "delete" %}'   onclick="window.my('{{vi}}')" class="delete"  id="deluser{{vi}}"
+                data-id="{{vi.hotel.hotel_name}}"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></a>
+            </td>
+          
+            
+          </tr>
+         {% endfor %}
+        </tbody>
+      </table>
+    </div>
+</div>
+<div class="pt-5">
+    <CENter><h3>VIP ROOMS</h3> </CENter> 
+  <table class="table table-striped ">
+      <thead>
+        
+        <tr>
+
+          <th scope="col">ROOM</th>
+          <th scope="col">HOTEL</th>
+          <th scope="col">LOCATION</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% for vi in viproom %}
+        <tr {% if vi.status == False %} style="opacity: 50%;" {% endif %}>
+          <td>{{vi.room.room_type}}</td>
+          <td>{{vi.room.hotel.hotel_name}}</td>
+          <td>{{vi.room.hotel.location}}</td>
+          {% if vi.status == True %}
+          <td>Active</td>
+          {% else %}
+          <td >Blocked</td>
+          {% endif %}
+          
+          <td>
+            
+            <a href='{% url "act" vi.id "block" %}'  onclick="window.mytest('{{vi}}')" 
+            data-id="{{vi.hotel.hotel_name}}"  id="blockcheck{{vi}}" data-id="" class="delete"><i class="fa fa-ban fa-2x" aria-hidden="true"></i></a>
+            <a class="pl-2" href='{% url "act" vi.id "delete" %}'   onclick="window.my('{{vi}}')" class="delete"  id="deluser{{vi}}"
+            data-id="{{vi.hotel.hotel_name}}"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></a>
+        </td>
+          
+          
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+	window.mytest=function(user){
+		var v= document.getElementById("blockcheck"+user)
+		var productid = v.dataset.id
+		var isValid =confirm("are you sure do you want block   "+productid+ " ?");
+		if(!isValid){
+			event.preventDefault();
+			alert("it wont be block");
+		}
+	}
+       
+    window.my=function(user){
+
+      
+        var v= document.getElementById("deluser"+user)
+        var username = v.dataset.id
+       
+        var isValid =confirm("are you sure do you want delete  "+username+ " ");
+        if(!isValid){
+            event.preventDefault();
+            alert("it won't be delete");
+
+        }
+        
+    }
+</script>
+
+{% endblock %}

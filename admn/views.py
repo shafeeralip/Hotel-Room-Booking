@@ -6,6 +6,8 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
 from admn.models import *
+import json
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -202,4 +204,88 @@ def hotelblock(request,id):
   hotel.save()
 
   return redirect(hotel_view)
+
+
+
+def vip(request):
+    viphotel=VIP.objects.filter(hotel__isnull=False)
+    viproom=VIP.objects.filter(room__isnull=False)
+
+    return render(request,'admin/vip.html',{'viphotel':viphotel,'viproom':viproom})
     
+def viphotel(request):
+    if request.method == "POST":
+        vi=VIP.objects.filter(status=True,hotel__isnull=False).count()
+        if vi < 5:
+            location=request.POST['location']
+            hotel_name=request.POST['hotel']
+            
+            hotel=Hoteladmin.objects.get(hotel_name=hotel_name,location=location)
+            vip=VIP.objects.create(hotel=hotel)
+            vip.save();
+            return redirect('vip')
+        else:
+            messages.info(request,"YOU EXCEED THE HOTEL COUNT IN FRONT PAGE OF YOUR WEBSITE IF YOU WANT TO ADD YOU NEED TO DELETE OR BLOCK OTHER HOTELS")
+            return render(request,'admin/adviphotel.html')
+
+
+
+    return render(request,'admin/adviphotel.html')
+
+
+def viproom(request):
+    if request.method == "POST":
+        vi=VIP.objects.filter(status=True,room__isnull=False).count()
+        if vi < 5:
+            location=request.POST['location']
+            hotel_name=request.POST['hotel']
+            room=request.POST['room']
+
+            hotel=Hoteladmin.objects.get(hotel_name=hotel_name,location=location)
+            rooms=Rooms.objects.get(hotel=hotel,room_type=room)
+
+            vip=VIP.objects.create(room=rooms)
+            vip.save();
+            return redirect('vip')
+        else:
+            messages.info(request,"YOU EXCEED THE HOTEL COUNT IN FRONT PAGE OF YOUR WEBSITE IF YOU WANT TO ADD YOU NEED TO DELETE OR BLOCK OTHER HOTELS")
+            return render(request,'admin/adviproom.html')
+    return render(request,'admin/adviproom.html')
+
+def location(request):
+    location = request.GET['location']
+    hotels=Hoteladmin.objects.values_list("hotel_name",flat=True).filter(location=location)
+    
+    hotel=list(hotels)
+    
+    return JsonResponse(hotel,safe=False)
+
+
+
+def act(request,id,value):
+    if value == 'block':
+       vip= VIP.objects.get(id=id)
+       if vip.status==False:
+            vip.status=True
+       elif vip.status==True:
+            vip.status=False
+            
+       vip.save()
+        
+        
+    elif value == "delete":
+        VIP.objects.filter(id=id).delete()
+    
+    return redirect('vip')
+
+
+def hotel(request):
+    hotel = request.GET['hotel']
+    location = request.GET['location']
+    hotels=Hoteladmin.objects.get(hotel_name=hotel,location=location)
+
+    rooms=Rooms.objects.values_list("room_type",flat=True).filter(hotel=hotels)
+    
+    room=list(rooms)
+    
+    return JsonResponse(room,safe=False)

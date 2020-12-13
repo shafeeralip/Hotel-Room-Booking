@@ -9,7 +9,7 @@
 <form action="{% url 'offeredit' off.id %}" method="POST">
   {% csrf_token %}
     <div class="form-group">
-        <label >Example select</label>
+        <label >Offer select</label>
         <select class="form-control" name="offtype" id="offertype">
           <option>{{off.offer_type}}</option>
           <option>OfferByPercentage</option>
