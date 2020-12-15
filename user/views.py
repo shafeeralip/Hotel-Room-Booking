@@ -233,22 +233,66 @@ def hotel_view(request,id):
             checkindate =str(booking.check_in.month)  +"-"+str(booking.check_in.day) +"-"+str(booking.check_in.year) 
             checkoutdate =str(booking.check_out.month)  +"-"+str(booking.check_out.day) +"-"+str(booking.check_out.year) 
             print("hi ",checkindate)
-        
+            total_rooms = booking.total_rooms
+            total_days=date.days
+            total_price=booking.total_price
+
+        else:
+
+            total_price=''
+            total_guest=''
+            total_days=''
+            total_rooms=0
+            checkindate = ''
+            checkoutdate = ''
+            roombooked=[]
+            guest=''
 
 
-            context={'hotel':hotel,'rooms':rooms,'booking':booking,'checkin':checkindate,'checkout':checkoutdate,'date':date,'roombooked':roombooked,'guest':guest}
-            return render(request,'user/hotel_view.html',context)
-    try:
+            
+    else:
+        try:
 
-        checkin=request.session['checkin']
-        checkout=request.session['checkout']
-        guest=request.session['guest']
-    except:
-        checkin=''
-        checkout=''
-        guest=''
+            booking_rooms=request.COOKIES['booking-details'] 
+            book_details = list(eval(booking_rooms))
+            total_price=''
+            guest=''
+            total_days=''
+            total_rooms=0
+            checkindate = ''
+            checkoutdate = ''
+            
+            roombooked=[]
 
-    context={'hotel':hotel,'rooms':rooms,'checkin':checkin,'checkout':checkout,'guest':guest}
+            for booking_details in book_details:
+
+
+                room = Rooms.objects.get(id =int(booking_details['roomid']))
+                dic={}
+                dic['room']=room
+                dic['quantity']=booking_details['roomscount']
+                roombooked.append(dic)
+                hotel = Hoteladmin.objects.get(id=int(booking_details['hotelid']))
+                total_price = booking_details['totalprice']
+                guest = booking_details['totalguest']
+                total_rooms +=1
+                total_days = booking_details['totaldays']
+                checkindate = booking_details['checkin']
+                checkoutdate = booking_details['checkout']
+        except:
+            total_price=''
+            total_guest=''
+            total_days=''
+            total_rooms=0
+            checkindate = ''
+            checkoutdate = ''
+            roombooked=[]
+            guest=''
+            
+
+
+
+    context={'hotel':hotel,'rooms':rooms,'total_rooms':total_rooms,'total_days':total_days,'total_price':total_price,'checkin':checkindate,'checkout':checkoutdate,'roombooked':roombooked,'guest':guest}
     return render(request,'user/hotel_view.html',context)
     
 
@@ -355,7 +399,7 @@ def booking(request,id):
         total_days=''
         checkin = ''
         checkout = ''
-        dic={}
+        
         roomscount=[]
 
         for booking_details in book_details:
@@ -363,6 +407,7 @@ def booking(request,id):
 
             room = Rooms.objects.get(id =int(booking_details['roomid']))
             rooms.append(room)
+            dic={}
             dic['room']=room
             dic['count']=booking_details['roomscount']
             roomscount.append(dic)
@@ -375,7 +420,7 @@ def booking(request,id):
             checkout = booking_details['checkout']
 
 
-
+        print("helloo",roomscount)
         zippedList = zip(rooms,roomscount)
 
         client=razorpay.Client(auth=("rzp_test_7i01eG7knm1628","K9H5VQX0OHOsFwPMDY8DCMzp"))

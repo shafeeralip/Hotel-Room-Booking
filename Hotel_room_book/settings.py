@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '4&nvdjjor=hlpik2!iws-a*gg!u!&x+ebq&57+_6q!y42rvqf)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['travelix.shafeerali.co']
 
 
 # Application definition
