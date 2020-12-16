@@ -70,8 +70,9 @@
 
 
   <div class="hero" {% if city_name == 'GOA' %} style="background:url('/static/images/goa.jpg')center no-repeat ;"
-    {%elif city_name == 'BENGALURE'%} style="background:url('/static/images/bengalure.jpg') center no-repeat ;" {%else%}
-    style="background:url('/static/images/delhiw.webp')center no-repeat ;" {{%endif%} >
+    {%elif city_name == 'BENGALURE'%} style="background:url('/static/images/bengalure.jpg') center no-repeat ;" {%elif city_name == 'MUMBAI'%}
+    style="background:url('/static/images/mu.jpg')center no-repeat ;" {%elif city_name == 'KOCHI'%}
+    style="background:url('/static/images/kochi.jpg')center no-repeat ;"{{%endif%} >
     <div class="container">
         <div class="main-heading">
           <h2 class="title">{{city_name}}</h2>
