@@ -14,6 +14,8 @@ import re
 
 
 
+first_booking =False
+
 
 def home(request):
     if request.user.is_authenticated:
@@ -300,6 +302,11 @@ def hotel_view(request,id):
 def booking(request,id):
     hotel=Hoteladmin.objects.get(id=id)
     rooms=Rooms.objects.filter(hotel=hotel) 
+    global first_booking
+
+
+  
+
    
 
     
@@ -344,9 +351,10 @@ def booking(request,id):
                 booktotal = booking.total_price
             else:
                 prev_book=False
+                first_booking = True
                 for off in ref:
                     if off.offer_type == 'OfferByPercentage' :
-                        booktotal=booking.total_price * (off.ref_discount/100)
+                        booktotal=booking.total_price - (booking.total_price * (off.ref_discount/100))
                         
 
                     elif off.offer_type == 'OfferByAmount':
@@ -533,6 +541,7 @@ def booking_details(request):
 
 
 def user_profile(request):
+    
     customer=request.user.customer
     off_type=''
     value=''
@@ -558,6 +567,7 @@ def user_profile(request):
 
 
 def report(request,id,pay):
+    global first_booking
     print(pay)
     booking=Booking.objects.get(id=id)
     date=booking.check_out - booking.check_in
@@ -580,17 +590,33 @@ def report(request,id,pay):
 
         booking.save();
     ref=reffreal_offer.objects.all()
-    if Booking.objects.filter(id=id,complete=True).exists():
-        prev_book=True
-        booktotal = booking.total_price
-    else:
+
+    if first_booking == True:
+        first_booking = False
         prev_book=False
         for off in ref:
             if off.offer_type == 'OfferByPercentage' :
-                booktotal=booking.total_price * (off.ref_discount/100)
+                booktotal=booking.total_price - booking.total_price * (off.ref_discount/100)
 
             elif off.offer_type == 'OfferByAmount':
                 booktotal=booking.total_price - off.ref_price
+    else:
+        prev_book=True
+        booktotal = booking.total_price
+
+
+
+    # if Booking.objects.filter(id=id,complete=True).exists():
+        # prev_book=True
+        # booktotal = booking.total_price
+    # else:
+        # prev_book=False
+        # for off in ref:
+        #     if off.offer_type == 'OfferByPercentage' :
+        #         booktotal=booking.total_price - booking.total_price * (off.ref_discount/100)
+
+        #     elif off.offer_type == 'OfferByAmount':
+        #         booktotal=booking.total_price - off.ref_price
 
 
     context={"booking":booking,'date':date,'ref':ref,'booktotal':booktotal,'prev_book':prev_book}
